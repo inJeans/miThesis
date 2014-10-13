@@ -1,0 +1,79 @@
+%Appendix Motion Integration 
+
+\chapter{ Motion Integration }
+
+%--------------------------------------------------------------------------
+
+In this appendix we will explain in detail the different methods of integrating the Newtonian motion of particles and specifically how we have gone about it.
+
+\section{ Euler Method }
+
+\begin{align}
+    x_{n+1} &= x_{n} + v_{n} \Delta t,\\
+    v_{n+1} &= v_{n} + a_{n} \Delta t.
+\end{align}
+
+%--------------------------------------------------------------------------
+
+\section{ Semi-Implicit Euler Method }
+
+\begin{align}
+    x_{n+1} &= x_{n} + v_{n} \Delta t,\\
+    v_{n+1} &= v_{n} + a_{n+1} \Delta t.
+\end{align}
+
+
+%--------------------------------------------------------------------------
+
+\section{ Verlet Algorithm }
+
+Sometimes referred to as the St\"ormer-Verlet method (see wikipedia page it's pretty good), it was made popular by Verlet in 1976 \cite{Verlet1967}. The Verlet algorithm can be derived from the Taylor series expansions for position as follows,
+\begin{subequations}
+\begin{align}
+    \mathbf{r}(t_{n+1}) &= \mathbf{r}(t_{n}) + k \mathbf{v}( t_{n} ) + \frac{1}{2}k^2\mathbf{a}(t_{n}) + {\mathcal O}(k^3), \label{eq:TaylorPlus}\\
+    \mathbf{r}(t_{n-1}) &= \mathbf{r}(t_{n}) - k \mathbf{v}( t_{n} ) + \frac{1}{2}k^2\mathbf{a}(t_{n}) + {\mathcal O}(k^3),\label{eq:TaylorMinus}
+\end{align}
+\end{subequations}
+we can now add equations \eqref{eq:TaylorPlus} and \eqref{eq:TaylorMinus} together to get
+\begin{align}
+    \mathbf{r}(t_{n+1}) + \mathbf{r}(t_{n-1}) &= 2\mathbf{r}(t_{n}) + k^2\mathbf{a}(t_{n}) + {\mathcal O}(k^4),\notag\\
+    \Rightarrow \mathbf{r}(t_{n+1}) &= 2\mathbf{r}(t_{n}) - \mathbf{r}(t_{n-1}) + k^2\mathbf{a}(t_{n}) + {\mathcal O}(k^4),\label{eq:LeapFrog}.
+\end{align}
+We can see from equation \eqref{eq:LeapFrog} that the leap frog method is fourth order in time. However, we can also note that the velocities do not explicitly appear in the method, this means we need to derive them from positions. A simple approximation would be to use the midpoint method
+\begin{equation}
+    \mathbf{v}(t_{n}) = \frac{1}{2}k\left(\mathbf{r}(t_{n+1}) - \mathbf{r}(t_{n-1})\right)
+\end{equation}
+
+
+%--------------------------------------------------------------------------
+
+\section{ Leap Frog Method }
+
+\cite{Hockney1970}
+
+\begin{align}
+    x_{n} &= x_{n-1} + v_{i-1/2} \Delta t,\\
+    v_{n+1/2} &= v_{n-1/2} + a_{n} \Delta t.
+\end{align}
+
+%--------------------------------------------------------------------------
+
+\section{ Velocity Verlet }
+
+\cite{Swope1982}
+
+\begin{align}
+    x_{n+1} &= x_{n} + v_{i} \Delta t + \frac{1}{2} a_{n}{\Delta t}^2 ,\\
+    v_{n+1} &= v_{n} + \frac{1}{2} \left( a_{n} + a_{n+1} \right) \Delta t.
+\end{align}
+
+%--------------------------------------------------------------------------
+
+\section{ Beeman's Algorithm }
+
+\cite{Beeman1976}
+
+\begin{align}
+    x_{n+1} &= x_{n} + v_{n} \Delta t + \frac{1}{6}\left( 4a_{n} - a_{n-1} \right) {\Delta t}^{2},\\
+    v_{n+1} &= v_{n} + \frac{1}{6} \left( 2a_{n+1} + 5a_{n} - a_{n-1} \right) \Delta t.
+\end{align}

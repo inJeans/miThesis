@@ -1,0 +1,138 @@
+% Appendix B
+
+\chapter{Non-Dimensionalisation}
+
+%----------------------------------------------------------------------------------------
+
+\section{Quasi - 1D GPE}
+
+Let's just start with writing out the full quasi-one-dimensional three component equation in a harmonic potential
+\begin{subequations}
+    \begin{align}
+        \imath\hbar\frac{\partial}{\partial t} f_{+} &= \bigg(-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial z^2} + \frac{1}{2}m{\omega_z}^2z^2+ E_+ + E_\perp + c_0 N\eta\rho \notag \\
+        & \quad\quad\quad+ c_2 N\eta\left( \rho_+ + \rho_0 - \rho_- \right) \bigg)f_+ + c_2 N\eta{f_0}^2{f_-}^*,\label{eq:fplus}\\
+        \imath\hbar\frac{\partial}{\partial t} f_{0} &= \bigg(-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial z^2} + \frac{1}{2}m{\omega_z}^2z^2 + E_0 + E_\perp + c_0 N\eta\rho \notag \\
+        & \quad\quad\quad+ c_2 N\eta\left( \rho_+ + \rho_- \right) \bigg)f_0 + 2c_2 N\eta{f_+}{f_-}{f_0}^*,\\
+        \imath\hbar\frac{\partial}{\partial t} f_{-} &= \bigg(-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial z^2} + \frac{1}{2}m{\omega_z}^2z^2 + E_- + E_\perp + c_0 N\eta\rho \notag \\
+        & \quad\quad\quad+ c_2 N\eta\left( \rho_- + \rho_0 - \rho_+ \right) \bigg)f_- + c_2 N\eta{f_0}^2{f_+}^*,\\
+        & \quad \rho\frac{\partial E_\perp}{\partial\chi} + \left(\frac{c_0 N}{2}\rho^2 + \frac{c_2 N}{2}S_2\right)\frac{\partial\eta}{\partial\chi} = 0. \label{rhoEqn}
+    \end{align}
+\end{subequations}
+If we make the Thomas Fermi ansatz then the transverse mode energy and the scaling factor are given by
+\begin{align}
+    E_\perp &= \frac{\hbar\omega_\perp}{6}\frac{\chi^2}{{a_\perp}^2},\label{Eperp}\\
+    \eta &= \frac{4}{3\pi\chi^2}, \label{eta}
+\end{align}
+where $a_\perp = \sqrt{\hbar / m\omega_\perp}$. If we substitute \eqref{Eperp} and \eqref{eta} into \eqref{rhoEqn} then we find
+\begin{equation}
+    \chi = \left(\frac{4 c_0 N \rho^2 + c_2 N S_2}{m\pi\rho{\omega_\perp}^2}\right)^{\frac{1}{4}}. \label{eq:chi}
+\end{equation}
+Now substituting \eqref{eq:chi} back into \eqref{Eperp} and \eqref{eta} and simplifying we have
+\begin{align}
+    E_\perp &= \sqrt{\frac{mN{\omega_\perp}^2 \left(c_0 \rho^2 + c_2 S_2\right)}{9\pi\rho}},\\
+    \eta &= \frac{2}{3}\sqrt{\frac{m\rho{\omega_\perp}^2}{\pi N \left(c_0 \rho^2 + c_2 S_2\right)}}.
+\end{align}
+Now we can begin to non-dimensionalise the equations. Let us only consider the non-dimensionalisation of the positive component since the procedure will be exactly the same for all components. We begin by making the substitutions
+\begin{align*}
+    t &\to t_c \tau,\\
+    z &\to z_c \zeta,\\
+    f_+ &\to f_c u_+.
+\end{align*}
+Equation \eqref{eq:fplus} now becomes
+\begin{align*}
+    \imath\hbar\frac{f_c}{t_c}\frac{\partial}{\partial \tau} u_{+} &= \bigg(-\frac{\hbar^2}{2m{z_c}^2}\frac{\partial^2}{\partial \zeta^2} + \frac{1}{2}m{\omega_z}^2{z_c}^2\zeta^2 + f_c E_+ + f_c E_\perp + c_0 f_c N\eta\rho \notag \\
+        &\quad \quad\quad + c_2 f_c N\eta\left( \rho_+ + \rho_0 - \rho_- \right) \bigg)f_c u_+ + c_2 {f_c}^2 N\eta{u_0}^2{u_-}^*,\\
+    \imath\frac{m{z_c}^2}{\hbar t_c}\frac{\partial}{\partial \tau} u_{+} &= \bigg(-\frac{1}{2}\frac{\partial^2}{\partial \zeta^2} + \frac{1}{2}\frac{m^2{\omega_z}^2{z_c}^4}{\hbar^2}\zeta^2 + \frac{m{z_c}^2}{\hbar^2}f_c\big[E_+ + E_\perp + c_0  N\eta\rho \notag \\
+        &\quad \quad\quad + c_2 N\eta\left( \rho_+ + \rho_0 - \rho_- \right) \big]\bigg) u_+ + \frac{m{z_c}^2}{\hbar^2} c_2 f_c N\eta{u_0}^2{u_-}^*.
+\end{align*}
+Looking at the coefficient of the $\zeta^2$ term we can see that if we set it to 1/2 we will be able to solve for $z_c$,
+\begin{align}
+    1 &= \frac{m^2 {w_z}^2 {z_c}^4}{\hbar^2},\notag\\
+    \Rightarrow z_c &= \sqrt{\frac{\hbar}{m\omega_z}},
+\end{align}
+which is the harmonic oscillator length along the $z$ axis, a natural length scale for the $z$ dimension. Now we can turn our attention to the coefficient of the time derivative, and set it to $\imath$,
+\begin{align}
+    1 &= \frac{m{z_c}^2}{\hbar t_c},\notag\\
+      &= \frac{m \hbar}{m \hbar \omega_z t_c},\notag\\
+    \Rightarrow t_c &= \frac{1}{w_z},
+\end{align}
+which is the angular period of the oscillator, again a natural length scale. Finally we can consider the energy terms. With these we need to choose $f_c$ such that the dimension of the energy term is one. To cut a long story short, this makes a suitable choice for $f_c$ to be $1/\sqrt{z_c}$. Giving us the final form of the non-dimensionalised equation
+\begin{align}
+    \imath\frac{\partial}{\partial \tau} u_{+} &= \bigg(-\frac{1}{2}\frac{\partial^2}{\partial \zeta^2} + \frac{1}{2}\zeta^2 + \frac{m}{\hbar^2}\left(\frac{\hbar}{m\omega_z}\right)^{\frac{3}{4}}\big[E_+ + E_\perp + c_0  N\eta\rho \notag \\
+        &\quad \quad\quad + c_2 N\eta\left( \rho_+ + \rho_0 - \rho_- \right) \big]\bigg) u_+ + \frac{m}{\hbar^2}\left(\frac{\hbar}{m\omega_z}\right)^{\frac{3}{4}} c_2 N\eta{u_0}^2{u_-}^*.
+\end{align}
+
+
+
+%----------------------------------------------------------------------------------------
+
+\section{Majorana Problem Spin Half}
+The potential energy operator \cite{foot:2005} for a magnetic dipole in a field is given by
+\begin{equation}
+    \hat{V} = -\hat{\boldsymbol\mu}\cdot\bf{B},
+\end{equation}
+where $\hat{\boldsymbol\mu}$ is the magnetic dipole operator and $\bf{B}$ is the magnetic field. Which for a spin half particle is 
+\begin{equation*}
+    \hat{V} = \frac{1}{2}\mu_{B}g_{s} \begin{bmatrix} B_{z}                & B_{x} - \imath B_{y} \\
+                                                      B_{x} + \imath B_{y} & -B_{z} \end{bmatrix},
+\end{equation*}
+where $\mu_{B}$ is the Bohr magneton \cite{??} and $g_s$ is the Land\'e g-factor of the spin-$\frac{1}{2}$ particle. Now we can write the time dependant Schr\"odinger equation for our system (\textcolor{red}{need to introduce kinetic energy operator as well})
+\begin{align}
+    \imath \hbar \partial_t \psi_\uparrow &= -\frac{\hbar^{2}}{2m}\partial_{zz} \psi_\uparrow  + \frac{1}{2}\mu_{B}g_{s}B_{z} \psi_\uparrow + \frac{1}{2}\mu_{B}g_{s} \left(B_{x} - \imath B{y}\right) \psi_\downarrow,\\
+    \imath \hbar \partial_t \psi_\downarrow  &= -\frac{\hbar^{2}}{2m}\partial_{zz} \psi_\downarrow - \frac{1}{2}\mu_{B}g_{s}B_{z} \psi_\downarrow + \frac{1}{2}\mu_{B}g_{s} \left(B_{x} + \imath B{y}\right) \psi_\uparrow.
+\end{align}
+Maybe before we non-dimensionalise we will insert or actual values for the magnetic field, ${\bf B} = \left(B_x, 0, -dB_{z} z\right)$. Now to non-dimensionalise. We make the substitutions
+\begin{align*}
+    z &\to z_{c}\zeta,\\
+    t &\to t_{c}\tau,\\
+    \psi_{i} &\to \psi_{c}\phi.
+\end{align*}
+From here we will only consider the equation for the spin up component as the two will have the same non-dimensionalisation. After making these substitutions the above equation becomes
+\begin{equation*}
+    \imath \hbar \frac{\psi_{c}}{t_{c}}\partial_{\tau} \phi_\uparrow = -\frac{\hbar^{2}}{2m}\frac{\psi_c}{{z_{c}}^2}\partial_{\zeta\zeta} \phi_\uparrow - \frac{1}{2}\mu_{B}g_{s}dB_{z} z_{c} \zeta \psi_{c}\phi_\uparrow + \frac{1}{2}\mu_{B}g_{s}\psi_{c} B_{x} \phi_\downarrow,
+\end{equation*}
+rearranging so that the coefficient of the highest derivative is dimensionless
+\begin{equation*}
+    \imath \frac{m}{\hbar} \frac{{z_{c}}^2}{t_{c}}\partial_{\tau} \phi_\uparrow = -\frac{1}{2}\partial_{\zeta\zeta} \phi_\uparrow - \frac{1}{2}\frac{\mu_{B}g_{s}mdB_{z}{z_{c}}^3}{\hbar^{2}}\zeta \phi_\uparrow +  \frac{1}{2}\frac{\mu_{B}g_{s}m{z_{c}}^2}{\hbar^{2}} B_{x} \phi_\downarrow.
+\end{equation*}
+From here we can see
+\begin{align}
+    z_{c} &= \frac{B_{x}}{dB_{z}},\\
+    t_{c} &= \frac{\hbar}{B_{x} g_{s} \mu_{B}},\text{\textcolor{red}{ 1 / Larmor frequency around Bx}}\\
+    \psi_{c} &= \frac{{dB_{z}}^2\hbar^{2}}{{B_{x}}^{3}g_{s}m\mu_{B}}.
+\end{align}
+Leaving us with the non-dimensionalised equation
+\begin{equation*}
+    \partial_{\tau} \phi_\uparrow = \frac{\imath}{2}\partial_{\zeta\zeta} \phi_\uparrow + \frac{\imath}{2}\zeta \phi_\uparrow -  \frac{\imath}{2} \phi_\downarrow.
+\end{equation*}
+
+\graffito{More dummy text}
+
+%----------------------------------------------------------------------------------------
+
+\section{Another Appendix Section Test}
+\lipsum[17]
+
+\begin{table}
+\myfloatalign
+\begin{tabularx}{\textwidth}{Xll} \toprule
+\tableheadline{labitur bonorum pri no} & \tableheadline{que vista}
+& \tableheadline{human} \\ \midrule
+fastidii ea ius & germano &  demonstratea \\
+suscipit instructior & titulo & personas \\
+\midrule
+quaestio philosophia & facto & demonstrated \\
+\bottomrule
+\end{tabularx}
+\caption[Autem usu id]{Autem usu id.}
+\label{tab:moreexample}
+\end{table}
+
+\lipsum[18]
+
+\begin{lstlisting}[float,caption=A floating example]
+for i:=maxint to 0 do
+begin
+{ do nothing }
+end;
+\end{lstlisting}
