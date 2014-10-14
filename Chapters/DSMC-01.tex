@@ -8,13 +8,15 @@
 
 Need to introduce the usefulness of the method here. References to many kinds of applications and such things. I also need to perform a literature review of all DSMC used in cold atoms physics.
 
+Compare to molecular dynamic approaches, when is DSMC appropriate / good? When does it fail? 
+
+Find out the knudsen number for typical cold atom conditions. Wade has numbers for stamper kern and shvatchuck.
+
 DSMC - Birds Book \cite{Bird1994}
 
-Evaporative Colling and Expansion Dynamics: \cite{Wu1996, Wu1997, Wu1998}
+Evaporative Cooling and Expansion Dynamics: \cite{Wu1996, Wu1997, Wu1998}
 
-Bosonic Collective-Mode dynamics: \cite{Jackson2001, Jackson2001b, Jackson2002, Jackson2002b, Jackson2002c}, Can't find 
-
-Jackson Zaremba 2002 Laser Physics, 12, 93
+Bosonic Collective-Mode dynamics: \cite{Jackson2001, Jackson2001b, Jackson2002, Jackson2002b, Jackson2002c}, Can't find Jackson Zaremba 2002 Laser Physics, 12, 93
 
 Fermion Dynamics: \cite{Urban2006, Urban2007, Urban2008, Lepers2010} (see also \cite{Vignolo2002, Toschi2003, Capuzzi2004, Toschi2004})
 
@@ -22,46 +24,56 @@ Sympathetic Cooling: \cite{Barletta2010, Barletta2011}
 
 Applications - Rayleigh Bernard Flow: \cite{Watanabe1994}
 
-Spacecraft aerodynamics: [39]
+Spacecraft aerodynamics: \cite{Oran1998}
 
-Chemical reactions: [40]
+Chemical reactions: \cite{Anderson2003} Goldsworthy?
 
-Microfluidics: [41]
+Microfluidics: \cite{Frangi2003}
 
-Acoustics on Earth, Mars and Titan: [42]
+Acoustics on Earth, Mars and Titan: \cite{Hanford2009}
 
-Volcanic plumes on Jupiter: [43]
-
-Low Knudsen number: [46-47]
+Volcanic plumes on Jupiter: \cite{Zhang2004}
 
 Read: \sout{\cite{Minguzzi2004}}, [45]
+
+Refer to cuda section \ref{ch:cudadsmc} Should also discuss the development of this parallel implementation of the code. Compare to CPU implementations. Goldsworthy has a few references for other CUDA codes.
 
 %----------------------------------------------------------------------------------------
 
 \section{Collision Rates in Inhomogeneous Gases}
 
-Content
+Overall collision rate, spatial collision rate, talk about number of cells, the occupancy of cells and the effect of inhomogeniety.
 
-%------------------------------------------------
-
-\subsection{Subsection Title}
-
-Content
-
-%------------------------------------------------
-
-\subsection{Subsection Title}
-
-Content
+The heart of the DSMC method is to simplify the simulation of interparticle interactions in the form of two body collisions. 
+The DSMC method offers some free parameters which we can optimise to balance the accuracy and efficiency, namely the number of cells, $n_c$, and the number of test particles, $N_p$.
+We wish to see the effect of varying these parameters on the results of the simulation.
+One of the most basic tests for the application of the DSMC method to cold atom physics is to investigate the collision rate for a thermal gas. 
+We saw in section \ref{sec:colrates} that the thermally averaged collision rate per unit density for a single species atomic gas bound by the potential $\cal{U}(\mathbf{r})$ is given by
+\begin{equation}
+    {\tau_c}^{-1} = \frac{1}{2}\dot{n}_{0}\langle v\sigma \rangle \frac{V_{2e}}{V_e}.
+\end{equation}
+The simplest scenario we can use to investigate the effects of changing the free parameters is that of a thermal gas in a box. 
+In this case the collision rate simply reduces to 
+\begin{equation*}
+    {\tau_{c,box}}^{-1} = \frac{1}{\sqrt{2}}n_0\bar{v}\sigma,
+\end{equation*}
+where $\bar{v}=\sqrt{8k_{B}T/\pi m}$, is the average speed of the atoms.
+Include a surface plot of the collision rate as a function of cell number and test particle number.
+Should make the z axis percentage error. See fig 14. in wade.
 
 %----------------------------------------------------------------------------------------
 
 \section{Thermalisation}
 
-Content
+Show how things can thermalise in the required number of collision times.
+Walraven section 6.4, 3 collisions to thermalise.
 
 %----------------------------------------------------------------------------------------
 
 \section{Evaporation}
 
-Content
+Compare some results to those predicted by the theory of walraven and the other guy.
+
+\section{Adiabaticity}
+
+Have a look at squeezing the magnetic trap both diabaticaly and adiabatically.
