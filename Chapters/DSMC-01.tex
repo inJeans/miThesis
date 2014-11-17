@@ -52,27 +52,115 @@ We saw in section \ref{sec:colrates} that the thermally averaged collision rate 
 \begin{equation}
     {\tau_c}^{-1} = \frac{1}{2}\dot{n}_{0}\langle v\sigma \rangle \frac{V_{2e}}{V_e}.
 \end{equation}
-The simplest scenario we can use to investigate the effects of changing the free parameters is that of a thermal gas in a box. 
+The simplest scenario we can use to investigate the effects of changing the free parameters is that of a homogeneous gas. 
 In this case the collision rate simply reduces to 
 \begin{equation*}
     {\tau_{c,box}}^{-1} = \frac{1}{\sqrt{2}}n_0\bar{v}\sigma,
 \end{equation*}
 where $\bar{v}=\sqrt{8k_{B}T/\pi m}$, is the average speed of the atoms.
-Include a surface plot of the collision rate as a function of cell number and test particle number.
-Should make the z axis percentage error. See fig 14. in wade.
+
+**Include a surface plot of the collision rate as a function of cell number and test particle number.
+Should make the z axis percentage error. See fig 14. in wade. **
+
+\begin{figure}[bth]
+\myfloatalign
+\subfloat[Homegeneous gas error. ** DO THIS FOR DIFFERENT NUMBER OF ATOMS / 10 AND / 100. TO TEST OVER RANGE OF COLLISION RATES. DISPLAY AS INDIVIDUAL SHEETS **]
+{\label{fig:dsmchomoerr}
+\includegraphics[width=.45\linewidth]{gfx/HomoError}} \quad
+\subfloat[QUADRUPOLE GAS ERROR. ** SAME AS ABOVE **]
+{\label{fig:dsmcquaderr}
+\includegraphics[width=.45\linewidth]{gfx/HomoError}}
+\caption[]{Error of DSMC method as a function of test particle number and cell number.}\label{fig:dsmccolerr}
+\end{figure}
+
+Figure \ref{fig:dsmchomoerr} shows how well the DSMC method performs over a wide range of test particle and cell numbers. 
+We can see in the corner the method beginning to fail. 
+This is the region where, on average, we have less than two test particles per cell. 
+This means that there is not enough atoms to perform a collision within a cell. 
+One way to avoid this (which has not been implemented here) is to search neighbouring cells for collision pairs when a partner can not be found in the current cell.
+The main thing to observe here is the increase in the error as the number of test particles is reduced.
 
 %----------------------------------------------------------------------------------------
 
 \section{Thermalisation}
 
-Show how things can thermalise in the required number of collision times.
-Walraven section 6.4, 3 collisions to thermalise.
+\subsection{Walraven Thermlisation}
+In \cite{Walraven2010} we are shown that if we perturb the energy of a small fraction of atoms in a single component gas then the rethermalisation time is given by
+\begin{equation}
+    \tau_{th}^{-1} = \frac{1}{2\left(\gamma + 3/2\right)} \tau_{c}^{-1},
+\end{equation}
+where $\gamma$ describes the geometry of the trap. For a homogeneous, harmonic and linear trap $\gamma$ is equal to 0, 3/2 and 3 respectively. Thus we would expect these traps to thermalise in 3, 6 and 9 collision times.
+
+\begin{figure}[bth]
+\myfloatalign
+\subfloat[Walraven homegeneous gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 1.2$ should equal 3? ]
+{\label{fig:dsmchomoerr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/walravenHomo}} \quad
+\subfloat[Walraven ip gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 1.6$ should equal 6?]
+{\label{fig:dsmcquaderr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/walravenIP}}
+\subfloat[Walraven quad gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 10.45$ should equal 9?]
+{\label{fig:dsmcquaderr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/walravenQuad}}
+\caption[]{Error of DSMC method as a function of test particle number and cell number.}\label{fig:dsmccolerr}
+\end{figure}
+
+\subsection{Monroe Thermalisation}
+Also simulations of Monroe et al.
+I need to somehow think about this problem analytically.
+Is there anyway to find an analytic expression for this directional thermalisation?
+
+\begin{figure}[bth]
+\myfloatalign
+\subfloat[Monroe homegeneous gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 0.77$ ]
+{\label{fig:dsmchomoerr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/monroeHomo}} \quad
+\subfloat[Walraven homegeneous gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 2.21$]
+{\label{fig:dsmcquaderr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/monroeIP}}
+\subfloat[Walraven quad gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 6.09$]
+{\label{fig:dsmcquaderr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/monroeQuad}}
+\caption[]{Error of DSMC method as a function of test particle number and cell number.}\label{fig:dsmccolerr}
+\end{figure}
+
+Also do it for different temperatures or trap numbers.
+
+*** MUST REDO ALL OF THESE SIMULATIONS WITH COLLISIONS WORKING CORRECTLY (I.E. WITH THE NEW SORTING FIX IMPLEMENTED). ***
 
 %----------------------------------------------------------------------------------------
 
 \section{Evaporation}
 
-Compare some results to those predicted by the theory of walraven and the other guy.
+Compare some results to those predicted by the theory of walraven and the other guy. 
+
+\begin{figure}[bth]
+\myfloatalign
+\subfloat[$\eta$ should equal 7, here it is equal to 7.86 ]
+{\label{fig:dsmchomoerr}
+\includegraphics[width=.45\linewidth]{gfx/Evaporation/evapIP}} \quad
+\subfloat[I want this to be a plot of n0 vs N.]
+{\label{fig:dsmcquaderr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/monroeIP}}
+\subfloat[Not sure what plot tp put here]
+{\label{fig:dsmcquaderr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/monroeQuad}}
+\caption[]{IP trap evaporation.}\label{fig:dsmccolerr}
+\end{figure}
+
+\begin{figure}[bth]
+\myfloatalign
+\subfloat[$\eta$ should equal ?(check the paper), here it is equal to 5 ]
+{\label{fig:dsmchomoerr}
+\includegraphics[width=.45\linewidth]{gfx/Evaporation/evapQuad}} \quad
+\subfloat[I want this to be a plot of n0 vs N.]
+{\label{fig:dsmcquaderr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/monroeIP}}
+\subfloat[Not sure what plot tp put here]
+{\label{fig:dsmcquaderr}
+\includegraphics[width=.45\linewidth]{gfx/Thermalisation/monroeQuad}}
+\caption[]{Quadrupole trap evaporation.}\label{fig:dsmccolerr}
+\end{figure}
 
 \section{Adiabaticity}
 
