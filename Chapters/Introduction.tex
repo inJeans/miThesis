@@ -6,12 +6,27 @@
 
 %----------------------------------------------------------------------------------------
 
-\section{Thermal Physics}
+I am going to need to introduce the different trapping potentials in here some where I think.
 
-Content
+\section{Magnetic Trapping} \label{sec:intromag}
 
-%------------------------------------------------
+Ioffe Pritchard trap
+\begin{equation}
+    \mathbf{B}_{\mathrm{IP}}(x,y,z) = B_0 \begin{bmatrix} 0\\ 0\\ 0 \end{bmatrix}
+                      + B' \begin{bmatrix} x\\-y\\ 0 \end{bmatrix}
+                      + \frac{1}{2}B'' \begin{bmatrix}-xz\\-yz\\ z^2-\frac{1}{2}\left(x^2+y^2\right) \end{bmatrix}
+\end{equation}
+the magnitude of this field can be approximated as the following for small position
+\begin{equation}
+    \left| \mathbf{B}_{\mathrm{IP}} \right| = \frac{1}{2}\left(B_{\rho}''\left(x^2+y^2\right) + B''z^2\right), \label{eq:ipmag}
+\end{equation}
+where 
+\begin{equation*}
+    B_\rho''= \frac{B'^2}{B_0} - \frac{B''}{2}. 
+\end{equation*}
 
-\subsection{Collision Rates} \label{sec:colrates}
 
-Content
+Quadrupole trap
+\begin{equation}
+    \mathbf{B}_{\mathrm{Q}}(x,y,z) = \frac{1}{2} B_z \begin{bmatrix} x\\ y\\ -2z \end{bmatrix}
+\end{equation}

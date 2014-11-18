@@ -1,6 +1,6 @@
 % Chapter X
 
-\chapter{INHOMOGENEOUS GASES} % Chapter title
+\chapter{Simulating Collisions in Thermal Gases} % Chapter title
 
 \label{ch:inhomogas} % For referencing the chapter elsewhere, use \autoref{ch:inhomogas} 
 
@@ -38,40 +38,83 @@ Read: \sout{\cite{Minguzzi2004}}, [45]
 
 Refer to cuda section \ref{ch:cudadsmc} Should also discuss the development of this parallel implementation of the code. Compare to CPU implementations. Goldsworthy has a few references for other CUDA codes.
 
+The heart of the DSMC method is to simplify the simulation of interparticle interactions in the form of two body collisions.
+In this sense there are two aspects we need to ensure are modelled accurately; the number and frequency of collisions (collision rate) and the collisions themselves, wether or not they are correctly distributing the kinetic energy.
+In the following sections I carefully analyse these two aspects to ensure the utmost accuracy in our simulations.
+
 %----------------------------------------------------------------------------------------
 
-\section{Collision Rates in Inhomogeneous Gases}
+\section{Collision Rates in Thermal Gases}
 
 Overall collision rate, spatial collision rate, talk about number of cells, the occupancy of cells and the effect of inhomogeniety.
-
-The heart of the DSMC method is to simplify the simulation of interparticle interactions in the form of two body collisions. 
-The DSMC method offers some free parameters which we can optimise to balance the accuracy and efficiency, namely the number of cells, $n_c$, and the number of test particles, $N_p$.
-We wish to see the effect of varying these parameters on the results of the simulation.
+ 
 One of the most basic tests for the application of the DSMC method to cold atom physics is to investigate the collision rate for a thermal gas. 
-We saw in section \ref{sec:colrates} that the thermally averaged collision rate per unit density for a single species atomic gas bound by the potential $\cal{U}(\mathbf{r})$ is given by
+Using the Boltzmann equation we can derive \cite{Walraven2010} the thermally averaged collision rate per unit density for a single species atomic gas bound by the potential ${\cal U}(\mathbf{r})$,
+\marginpar{Maybe say something about the Boltzmann equation here and give some references.}
 \begin{equation}
-    {\tau_c}^{-1} = \frac{1}{2}\dot{n}_{0}\langle v\sigma \rangle \frac{V_{2e}}{V_e}.
+    {\tau_c}^{-1} = \frac{1}{2} n_{0}\langle v\sigma \rangle \frac{V_{2e}}{V_e},
 \end{equation}
+where $n_0 = N / V_e$ is the central density of the gas, $\langle v\sigma \rangle$ is the thermally averaged product of the atomic velocity and collision cross section, $V_e = \int \exp\left[-{\cal U}(\mathbf{r})/kBT\right]\, d\mathbf{r}$ is the effective volume of the gas, and $V_{2e} = \int \exp\left[-2{\cal U}(\mathbf{r})/kBT\right]\, d\mathbf{r}$ the effective volume corresponding to the distribution of pairs.
+\marginpar{ The effective volume, $V_e$, of an inhomogeneous gas equals the volume of a homogeneous gas with the same number of atoms and density. }
+For the bulk of this work we will consider collisions in three unique trapping potentials: no trapping potential, \ie a homogeneous gas, an Ioffe Pritchard trap(cite) and a spherical quadrupole trap(cite - is it really spherical?)\footnote{We have a more in depth discussion of magnetic trapping in appendix \ref{sec:magneticTrapping}.}.
 The simplest scenario we can use to investigate the effects of changing the free parameters is that of a homogeneous gas. 
 In this case the collision rate simply reduces to 
 \begin{equation*}
-    {\tau_{c,box}}^{-1} = \frac{1}{\sqrt{2}}n_0\bar{v}\sigma,
+    {\tau_{c,\mathrm{box}}}^{-1} = \frac{1}{\sqrt{2}}n_0\bar{v}\sigma,
 \end{equation*}
-where $\bar{v}=\sqrt{8k_{B}T/\pi m}$, is the average speed of the atoms.
+where $\bar{v}=\sqrt{8k_{B}T/\pi m}$, is the average speed of the atoms\footnote{It is interesting to note that the average velocity of the atoms depends only on the temperature of the gas. It is completely \emph{independent} of position and trapping potential. In appendix \ref{sec:thermalPhysics} we have carefully derived this expression for the average velocity of atoms.}. In this case the effective volume, $V_e$, is simply the volume of the box, $V$.
+
+If we use the expression, \eqref{eq:ipmag}, for the magnetic field produced by an Ioffe Pritchard trap from section \ref{sec:intromag} we find the collision rate to be
+\begin{equation*}
+    {\tau_{c,\mathrm{IP}}}^{-1} = \frac{1}{4}n_0\bar{v}\sigma.
+\end{equation*}
+However this time the expression for the effective volume is a little more complex
+\begin{equation*}
+    V_{e,\mathrm{IP}} = \frac{1}{\sqrt{B''}B_\rho''}\left(\frac{4 \pi k_B T}{g_s \mu_B}\right)^{3/2}.
+\end{equation*}
+We can combine these two equations to form an expression explicit in the temperature and trapping parameters
+\begin{equation}
+    {\tau_{c,\mathrm{IP}}}^{-1} = \sqrt{B''}B_\rho'' \frac{N \left(g_s \mu_B\right)^{3/2}\sigma}{8\pi^2\sqrt{2m}k_BT}.
+\end{equation}
+The interesting thing to note here is that the collision rate \emph{increases} as the temperature \emph{decreases}, which is the converse to the homogeneous gas. This is because for a trapped gas the density 
+
+\begin{table}
+\myfloatalign
+\begin{tabularx}{\textwidth}{|l|c|c|c|} \toprule
+\tableheadline{Trapping Potential} & \tableheadline{Trap Power} & \tableheadline{Effective Volume, $V_e$} & \tableheadline{ Collision Rate, ${\tau_c}^{-1}$} \\ \midrule
+Homogeneous Gas & 0 &  V & $\frac{1}{\sqrt{2}}n_0\bar{v}\sigma$ \\
+\midrule
+Spherical Quadrupole & 1 & $256\left(\frac{\pi k_B T}{g_s \mu_B B_z}\right)^3$ & $\frac{1}{8\sqrt{2}}n_0\bar{v}\sigma$ \\
+\midrule
+Ioffe Pritchard & 2 & $\frac{1}{\sqrt{B''}B_\rho''}\left(\frac{4 \pi k_B T}{g_s \mu_B}\right)^{3/2}$ & $\frac{1}{4}n_0\bar{v}\sigma$ \\
+\midrule
+Power Law & $3/\gamma$ & $\frac{4}{3}\pi{r_e}^3\Gamma\left[\gamma+1\right]\left(\frac{k_B T}{{\cal U}_0}\right)^{\gamma}$ & $\frac{1}{2^{\gamma+0.5}}n_0\bar{v}\sigma$\\
+\bottomrule
+\end{tabularx}
+\caption[Autem timeam deleniti usu id]{Collision rates for different trapping potentials.}  
+\label{tab:example}
+\end{table}
+
+%----------------------------------------------------------------------------------------
+
+\section{DSMC simulations of collisions}
+
+The DSMC method offers some free parameters which we can optimise to balance the accuracy and efficiency, namely the number of cells, $n_c$, and the number of test particles, $N_p$.
+We wish to see the effect of varying these parameters on the results of the simulation.
 
 **Include a surface plot of the collision rate as a function of cell number and test particle number.
 Should make the z axis percentage error. See fig 14. in wade. **
 
-\begin{figure}[bth]
-\myfloatalign
-\subfloat[Homegeneous gas error. ** DO THIS FOR DIFFERENT NUMBER OF ATOMS / 10 AND / 100. TO TEST OVER RANGE OF COLLISION RATES. DISPLAY AS INDIVIDUAL SHEETS **]
-{\label{fig:dsmchomoerr}
-\includegraphics[width=.45\linewidth]{gfx/HomoError}} \quad
-\subfloat[QUADRUPOLE GAS ERROR. ** SAME AS ABOVE **]
-{\label{fig:dsmcquaderr}
-\includegraphics[width=.45\linewidth]{gfx/HomoError}}
-\caption[]{Error of DSMC method as a function of test particle number and cell number.}\label{fig:dsmccolerr}
-\end{figure}
+\begin{figure*}
+\hspace{-12.5em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfigure{\label{fig:a}\includegraphics[width=0.525\textwidth]{gfx/HomoError}}%
+\subfigure{\label{fig:b}\includegraphics[width=0.525\textwidth]{gfx/HomoError}}%
+\subfigure{\label{fig:c}\includegraphics[width=0.525\textwidth]{gfx/HomoError}}%
+}
+\caption{Error of DSMC method as a function of test particle number and cell number.}\label{fig:dsmccolerr}
+\end{figure*}
 
 Figure \ref{fig:dsmchomoerr} shows how well the DSMC method performs over a wide range of test particle and cell numbers. 
 We can see in the corner the method beginning to fail. 
@@ -80,9 +123,12 @@ This means that there is not enough atoms to perform a collision within a cell.
 One way to avoid this (which has not been implemented here) is to search neighbouring cells for collision pairs when a partner can not be found in the current cell.
 The main thing to observe here is the increase in the error as the number of test particles is reduced.
 
+
 %----------------------------------------------------------------------------------------
 
 \section{Thermalisation}
+
+\cite{Davis1995}, \cite{Anderlini2006}
 
 \subsection{Walraven Thermlisation}
 In \cite{Walraven2010} we are shown that if we perturb the energy of a small fraction of atoms in a single component gas then the rethermalisation time is given by
