@@ -99,7 +99,7 @@ While we do not expect the spin to precess for the first half of the simulation 
 In fact the wiggles after the spin flip occur at the Larmor precision frequency.
 For example, look at one period of oscillation around $t=0.3\,\mathrm{ms}$, here the Larmor precession period will be, $T_L=0.19\,\mathrm{ms}$, exactly as simulated (**MAKE INSET IN FIGURE TO SHOW LARMOR PRECESSION RATE**).
 
-\marginpar{The astute reader may be confuse by line 4 of the pseudo-code in listing \ref{lst:Ehrenfest}.
+\marginpar{The astute reader may be confused by line 4 of the pseudo-code in listing \ref{lst:Ehrenfest}.
 The appearance of the $n+1^\mathrm{th}$ velocity when calculating the $n+1^\mathrm{th}$ position is not how one might implement the standard Euler integration method. 
 Here we have used an implementation of the Symplectic Euler method \cite{??}, which has better energy conserving properties than the standard forward Euler.
 This technique still has the same order accuracy with time, and introduces no added computational complexity, yet we gain some extra stability in the total energy of the atom.}
@@ -117,6 +117,31 @@ Evolve wavefunction using time evolution operator: $\ket{\Psi_{n+1}} = \widehat{
 Evolve velocity using the average force: $\mathbf{v}_{n+1} = \mathbf{v}_n + \mathbf{F}_n \Delta t / m$.
 Evolve position using the new velocity: $\mathbf{x}_{n+1} = \mathbf{x}_n + \mathbf{v}_{n+1} \Delta t$.
 \end{lstlisting}
+
+\begin{figure}
+\hspace{-8em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfloat[Co-rotating frame spins]{\label{fig:ehrenfestSpin}\includegraphics[width=0.525\textwidth]{gfx/Ehrenfest/ehrenfestSpin}}\quad
+\subfloat[Position and velocity]{\label{fig:ehrenfestPos}\includegraphics[width=0.525\textwidth]{gfx/Ehrenfest/ehrenfestPos}}\quad
+\subfloat[Energy]{\label{fig:ehrenfestEnergy}\includegraphics[width=0.525\textwidth]{gfx/Ehrenfest/ehrenfestEnergy}}%
+}
+\caption{No flip and flip in the same simulation.}\label{fig:ehrenfestFlip}
+\end{figure}
+
+Figure \ref{fig:ehrenfestFlip} shows the results from one such simulation.
+This simulation was of a rubidium 87 atom the began at $x=-5\,\mu\mathrm{m}$ with a zero initial velocity.
+Again the initial wavefunction was chosen so that it would be completely spin up in the co-rotating frame.
+The magnetic field was given by $\mathbf{B} = (B_x,0,B_z'z)$, with $B_z=1\,\mu\mathrm{T}$ and $B_z'=2.5\,\mathrm{Tm}^{-1}$\footnote{I am aware that this magnetic field does not satisfy Maxwell's equations, but it serves as a nice example and more closely aligns with the field considered by Majorana.}.
+This is a fabulous example of how well the Ehrenfest method can work.
+Figure \ref{fig:ehrenfestSpin} displays how well the spin populations are simulated.
+Again they agree with the predictions of the Majorana formula and the total probability is conserved.
+\marginpar{Say how I can still use the Majorana formula here. $c =v(t=0) B_z'$.}
+In figure \ref{fig:ehrenfestPos} I have plotted the position and velocity of the atom as it moves through time.
+We can see how the atom remains trapped after the first partial flip and is then completely ejected from the trapped once it has flipped.
+Finally figure \ref{fig:ehrenfestEnergy} shows how the total energy of the atom is conserved throughout the simulation (even after is has flipped).
+So things seem to be working quite well, but earlier I alluded to the fact that the Ehrenfest method is not suitable to this kind of problem, so what is wrong?
+I will let you stew on this few a few sections while we investigate the behaviour of a full gas simulation.
 
 %----------------------------------------------------------------------------------------
 
