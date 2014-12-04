@@ -147,14 +147,54 @@ I will let you stew on this few a few sections while we investigate the behaviou
 
 \section{Full Gas Simulations}
 
-Content
+Convinced that our Ehrenfest method can simulate spin flips and conserves both energy and probability we can begin to run some full gas simulations.
+Majorana spin flips only occur when there is a sharp transition in magnetic field direction, like that transition that is present around the centre of a quadrupole trap.
+An IP trap does not have this kind of transition, thus we would expect a very small number (~0) of spin flips to occur as a result of the IP field configuration.
+As a cautionary test we will simulate a gas trapped in an IP trap using the Ehrenfest method.
 
 %------------------------------------------------
 
 \subsection{Ioffe Pritchard Trap}
 
-Content
+The IP trap will remove any of the complex dynamics (and atom loss) we would experience from Majorana loss.
+This will allow us to simulate the energy and probability conserving characteristics of the method, as well as ensure that the simulated particle dynamics are as expected.
 
+\begin{figure}
+\hspace{-11em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfloat[IP Distribution]{\label{fig:ehrenfestIPDist}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/ehrenfestIPDist}}\quad
+\subfloat[IP Conservation]{\label{fig:ehrenfestIPCons}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/ehrenfestIPConserve}}
+}
+\caption{Ehrenfest method for a gas in an IP trap.}\label{fig:ehrenfestIP}
+\end{figure}
+
+The results from a simulation of $10^6$ rubidium 87 atoms at $2\,\mu\mathrm{K}$ in an IP with $B_0=0.01\,\mathrm{T}$, $B'=20.0\,\mathrm{Tm}^{-1}$ and $B''=40,000\,\mathrm{Tm}^{-2}$ over a period of approximately 10 collision times ($10\tau_c$) are shown in figure \ref{fig:ehrenfestIP}.
+In this figure I have tried to show the conservative properties of the Ehrenfest method.
+Figure \ref{fig:ehrenfestIPDist} illustrates the radial distribution of particles.
+I have drawn the distribution at the beginning and the end of the simulation, as well as contrast it with the analytic result for a thermal gas.
+\marginpar{The density distribution for a thermal gas is $n(\mathbf{r}) = n_0 \exp\left[-\mathcal{U}(\mathbf{r})/k_BT\right]$.}
+As we can see the numerical result is very stable and agrees well with the analytic prediction.
+In figure \ref{fig:ehrenfestIPCons} I have illustrated the change in the quantities we would expect to be conserved in a simulation like this.
+The top graph shows the percentage change in the average total energy, the middle graph shows the percentage change in the average norm of the wavefunction and the bottom graph shows the number of atoms.
+
+First of all we can note there is no change in the number of atoms \ie no Majorana spin flips.
+This simulation has the same evaportaion code running as we developed in section \ref{sec:evaporation}, with the evaporation condition that if $P_z < 0$ the atom is removed.
+This is due to the presence of the non-zero field bias, $B_0$, which ensures that the Larmor precession rate is always greater than the rate of change of the magnetic field direction.
+Second we can see a linear increase in the total energy and wavefunction norm.
+How can this be, I thought we were using fancy symplectic methods that were designed to conserve these quantities.
+I have two responses to that question, the first is can we really call a \%0.005 (that is 1 in 20,000) increase a significant change?
+For the simulation I have run here this corresponds to the total energy changing by $0.3\,\mathrm{nK}$, not we might consider a significant increase in temperature.
+However, we can argue that there is a clear linear trend and if we anticipate running extended simulations this might be something that we wish to keep in mind.
+Although I wouldn't consider this deal breaker.
+My second response would be that the time step I have used is far too large.
+For this simulation I have used the time step, $\Delta t = 5\,\mathrm{ns}$.
+This might seem quite small but compared to the Larmor period at the the average radius, $T_L\approx 10^{-8}\,\mathrm{s}$, it isn't that great.
+Not only does this mean on average we are only sampling the wavefunction twice per Larmor rotation, but out on the edges of the gas we are doing far worse!
+Of course we could reduce the time step, and this would improve our energy conservation, but to be able to run these simulations in a reasonable time frame we must accept a certain level of non-conservation in our total energy and wavefunction norm.
+
+Overall this seems to have worked quite well and yet I keep saying that the Ehrenfest method is not suitable for our simulations.
+Let's now try to run a simulation in a quadrupole trap and see how effective the method is.
 %------------------------------------------------
 
 \subsection{Quadrupole Trap}
