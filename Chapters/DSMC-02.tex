@@ -106,7 +106,7 @@ This technique still has the same order accuracy with time, and introduces no ad
 
 %------------------------------------------------
 
-\section{Single Atom Spin Flips}
+\section{Single Atom Spin Flips} \label{sec:EhrenfestSingleAtom}
 
 Confident in our ability to accurately simulate the Schr\"odinger equation, in our regime of interest, we may begin to apply the Ehrenfest method to simulating spin flips of real atoms.
 The first step is to first see wether or not we can simulate the spin flip of a single atom.
@@ -130,9 +130,9 @@ Evolve position using the new velocity: $\mathbf{x}_{n+1} = \mathbf{x}_n + \math
 \end{figure}
 
 Figure \ref{fig:ehrenfestFlip} shows the results from one such simulation.
-This simulation was of a rubidium 87 atom the began at $x=-5\,\mu\mathrm{m}$ with a zero initial velocity.
+This simulation was of a rubidium 87 atom the began at $z=-5\,\mu\mathrm{m}$ with a zero initial velocity.
 Again the initial wavefunction was chosen so that it would be completely spin up in the co-rotating frame.
-The magnetic field was given by $\mathbf{B} = (B_x,0,B_z'z)$, with $B_z=1\,\mu\mathrm{T}$ and $B_z'=2.5\,\mathrm{Tm}^{-1}$\footnote{I am aware that this magnetic field does not satisfy Maxwell's equations, but it serves as a nice example and more closely aligns with the field considered by Majorana.}.
+The magnetic field was given by $\mathbf{B} = (B_x,0,B_z'z)$, with $B_x=1\,\mu\mathrm{T}$ and $B_z'=2.5\,\mathrm{Tm}^{-1}$\footnote{I am aware that this magnetic field does not satisfy Maxwell's equations, but it serves as a nice example and more closely aligns with the field considered by Majorana.}.
 This is a fabulous example of how well the Ehrenfest method can work.
 Figure \ref{fig:ehrenfestSpin} displays how well the spin populations are simulated.
 Again they agree with the predictions of the Majorana formula and the total probability is conserved.

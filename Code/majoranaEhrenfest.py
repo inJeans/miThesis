@@ -36,7 +36,7 @@ nx = Bx / magB;
 nz = Bz / magB;
 
 a =-0.5 * gs * muB * dBdz * np.array( [ [-1.0, 0.],
-                                  [0., 1.0] ] ) / mRb;
+                                        [ 0., 1.0] ] ) / mRb;
 acc = 0.;
 
 psi      = np.zeros( (2,nsteps), dtype=complex );
@@ -132,7 +132,8 @@ pl.grid()
 ax = pl.gca()
 #ax.set_aspect(5)
 pl.legend(loc='best')
-pl.savefig("/Users/miMac/Documents/versionControlledFiles/miThesis/gfx/Ehrenfest/ehrenfestSpin.eps")
+#pl.savefig("/Users/miMac/Documents/versionControlledFiles/miThesis/gfx/Ehrenfest/ehrenfestSpin.eps")
+np.savez('localPops.npz',t=t,pup=pup,pdn=pdn)
 
 pl.figure(2)
 lns1 = pl.plot(t*1e3, x*1.e6, label=r'$x$')
@@ -149,7 +150,8 @@ ax.grid()
 #pl.axis( [-5, 5, 0, 1] )
 #ax = pl.gca()
 #ax.set_aspect(5)
-pl.savefig("/Users/miMac/Documents/versionControlledFiles/miThesis/gfx/Ehrenfest/ehrenfestPos.eps")
+#pl.savefig("/Users/miMac/Documents/versionControlledFiles/miThesis/gfx/Ehrenfest/ehrenfestPos.eps")
+np.savez('trajectory.npz',t=t,x=x,v=v)
 
 pl.figure(3)
 pl.plot(t*1e3, Ek/kB*1.e6, label=r'$E_k$')
@@ -162,7 +164,22 @@ pl.grid()
 #ax = pl.gca()
 #ax.set_aspect(5)
 pl.legend(loc='best')
-pl.savefig("/Users/miMac/Documents/versionControlledFiles/miThesis/gfx/Ehrenfest/ehrenfestEnergy.eps")
+#pl.savefig("/Users/miMac/Documents/versionControlledFiles/miThesis/gfx/Ehrenfest/ehrenfestEnergy.eps")
+np.savez('energy.npz',t=t,Ehk=Ek,Ehp=Ep)
+
+pl.figure(1)
+pl.plot(t*1e3, pops[0,:], label=r'$\langle\phi_{\uparrow}\vert\phi_{\uparrow}\rangle$')
+pl.plot(t*1e3, pops[1,:], label=r'$\langle\phi_{\downarrow}\vert\phi_{\downarrow}\rangle$')
+pl.plot(t*1e3, pops[0,:]+pops[1,:], label=r'$\langle\Phi\vert\Phi\rangle$')
+pl.plot([t[0]*1e3, t[-1]*1e3], [majProbRot, majProbRot], label=r'$W\left(-\frac{1}{2},\frac{1}{2}\right)$')
+pl.ylabel(r'$\langle\phi_{\uparrow,\downarrow}(t)\vert\phi_{\uparrow,\downarrow}(t)\rangle$')
+pl.xlabel('time (ms)')
+#pl.axis( [0, 1, 0, 1] )
+pl.grid()
+ax = pl.gca()
+#ax.set_aspect(5)
+pl.legend(loc='best')
+#pl.savefig("/Users/miMac/Documents/versionControlledFiles/miThesis/gfx/Ehrenfest/ehrenfestSpin.eps")
 
 end = time.clock()
 print end - start
