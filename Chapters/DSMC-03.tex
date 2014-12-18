@@ -29,6 +29,39 @@ The only difference here is that we must average the result over a large number 
 At last, in figure \ref{fig:mcwfFlip} we have some convincing proof of the failure of the Ehrenfest method.
 First let's get the boring stuff out of the way.
 Figure \ref{fig:mcwfMajoranaSpin} illustrates that the MCWF method conserves probability, similarly figure \ref{fig:mcwfMajoranaEnergy} shows the energy conservation of the method.
+Now let's compare the differences between the Ehrenfest and MCWF methods.
+We'll start by comparing the wavefunction evolution depicted in figure \ref{fig:mcwfMajoranaSpin}.
+Here we see the two methods agree perfectly for the first magnetic field minimum crossing.
+However, at around $1.5\,\mathrm{ms}$ we see the MCWF method make, what looks to be another spin flip, and then another at $2.5\,\mathrm{ms}$.
+How can this be?
+What is it that causes the particles in the MCWF method to experience an extra spin flip?
+This questions is most clearly illustrated in figure \ref{fig:mcwfMajoranaTrajectory}.
+The bold lines indicate the averaged trajectories of the MCWF particles.
+Again up until the $1.5\,\mathrm{ms}$ mark the two approaches (Ehrenfest and MCWF) agree exactly.
+So what is it that happens at $1.5\,\mathrm{ms}$ that causes this deviation?
+Consider the trajectories shown by the dashed lines.
+These lines represent the average trajectories of all the particles who are considered to be in a trapped state.
+Conversely the dash-dotted lines are the untapped state.
+While the average of these two trajectories produces the same result as the Ehrenfest method (as we might expect), the physical path taken by the particles is completely different.
+So the reason for the apparent extra spin flip at $1.5\,\mathrm{ms}$ is due to the extra crossing of the field minimum experienced by the particles that remain in the trapped state.
+So what happens in the Ehrenfest simulation?
+What is it that produces its failure?
+The Ehrenfest method will move particle along the trajectory described by the average force.
+At $0.5\,\mathrm{ms}$ after the first crossing of the field minimum the particle experiences a partial flip.
+Since the particle is moved with the average force the trapping force of the particle is now weaker and it is effectively trapped in a looser magnetic field.
+While on average this may be a reasonable way to think about the problem, we have already seen that it does not produce the correct dynamics for particles moving in a simple one-dimensional trap.
+
+How does this result explain the disagreement of the Ehrenfest method with the test done in section \ref{sec:EhrenfestQuad}?
+When a particle experiences a partial flip the Ehrenfest method will then subject it to a weaker trapping force, essentially loosening or widening the trapping potential.
+So in figure \ref{fig?} as the particles of the gas slowly begin to tip over, from the cumulative effect of many partial flips, the gas begins to unnaturally widen.
+As a result the calculated temperature is higher than what one would physically expect.
+In practice we know that an atom is either in a trapped state or an untrapped state (not partially in both).
+So a real trapped gas that is subjected to Majorana spin flips should not display a widening due to the weakening trapping potential, it should only exhibit atom loss due to the fully flipped atoms leaving the trap\footnote{Of course this will also result in a widening of the trap due to the heating effect cause by the selective removal of the least energetic particles.}.
+
+So why does the Ehrenfest method seem to work for the Ioffe Pritchard trap?
+We do not expect atoms in the IP trap to undergo any kind of spin flip.
+The geometry of the trap is such that the rate of change of the magnetic field direction is always (JUSTIFY?) less than the Larmor precession rate.
+So the particles in the simulation shown in figure \ref{fig:ehrenfestIP} are always subjected to the full trapping potential.
 
 %----------------------------------------------------------------------------------------
 
