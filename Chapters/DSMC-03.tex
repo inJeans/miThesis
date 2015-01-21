@@ -4,6 +4,18 @@
 
 \label{ch:dsmcmcwf} % For referencing the chapter elsewhere, use \autoref{ch:dsmcmcwf} 
 
+%----------------------------------------------------------------------------------------
+
+\begin{flushright}{\slshape    
+The obscure we see eventually. \\ 
+The completely obvious, it seems, takes longer} \\ \medskip
+--- Edward R. Murrow
+\end{flushright}
+
+\bigskip
+
+%----------------------------------------------------------------------------------------
+
 I guess I need to talk about the MCWF method here, this could be difficult.
 
 %---------------------------------------------------------------------------------------
@@ -25,6 +37,8 @@ The only difference here is that we must average the result over a large number 
 }
 \caption{No flip and flip in the same simulation mcwf.}\label{fig:mcwfFlip}
 \end{figure}
+
+**REDO sim with exponential decay fixed**
 
 At last, in figure \ref{fig:mcwfFlip} we have some convincing proof of the failure of the Ehrenfest method.
 First let's get the boring stuff out of the way.
@@ -74,6 +88,16 @@ Content
 \subsection{Ioffe Pritchard Trap}
 
 Content
+
+\begin{figure}
+\hspace{-8em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfloat[MCWF Distribution]{\label{fig:mcwfIPDist}\includegraphics[width=0.75\textwidth]{gfx/MCWF/mcwfIPDist}}\quad
+\subfloat[MCWF Conservation]{\label{fig:mcwfIPCons}\includegraphics[width=0.75\textwidth]{gfx/MCWF/mcwfIPConserve}}
+}
+\caption{mcwf method for a gas in an IP trap.}\label{fig:mcwfIP}
+\end{figure}
 
 %------------------------------------------------
 
