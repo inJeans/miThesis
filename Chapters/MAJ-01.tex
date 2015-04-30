@@ -4,6 +4,227 @@
 
 \label{ch:majinter} % For referencing the chapter elsewhere, use \autoref{ch:dsmcehr} 
 
+%-----------------------------------------------------------------------------------------
+
+General scope for the problem.
+
+Inadequacies in alternative approaches.
+
+Majorana's approach does not require the extension into the imaginary time domain nor does he make dodgey mistakes in an attempt to engineer the solution.
+
+%-----------------------------------------------------------------------------------------
+
+\section{Derivation of the Differential Equation}
+
+To illustrate the theory of an avoided crossing we will consider the case of a static 2-level atom in a dynamic field. 
+The interaction Hamiltonian for a magnetic dipole in a magnetic field is $\widehat{H}_{B} = -\hat{\boldsymbol{\mu}} \cdot \boldsymbol{B}$, written in matrix form is
+\begin{equation}
+	\widehat{H}_{B} = \hbar \gamma \begin{bmatrix} B_{z} & B_{x} - i B_{y}\\
+											B_{x} + i B_{y} & -B_{z} \end{bmatrix}, \label{Eq:MagHam}
+\end{equation}
+where $\gamma = g_{F}\mu_{B}M_{F} / \hbar$ is the gyromagnetic ratio and represents the proportionality between the spin and magnetic moment, $\hat{\boldsymbol{\mu}}$, operators. 
+If we choose the ``spin up,'' $\vert\uparrow\rangle$ and ``spin down,'' $\vert \downarrow\rangle$ states as our basis then, the diagonal elements are the energies of our basis (or diabatic) states and the off diagonal elements represent the coupling between states. 
+The eigenvalues for the hamiltonian in \eqref{Eq:MagHam} are 
+\begin{equation}
+	E_{\pm} = \pm \hbar \gamma \sqrt{{B_{x}}^{2} + {B_{y}}^{2} + {B_{z}}^{2}},
+\end{equation}
+and correspond to the states perfectly aligned (and anti-aligned) with the local magnetic field. 
+We can see the effect of the coupling between states in these eigen-energies through the appearance of the term, $\left\vert\Delta\right\vert^{2} = {B_{x}}^{2} + {B_{y}}^{2}$. 
+More specifically consider the two situations shown in figure \ref{Fig:AvoidedCrossing}. 
+When there is no coupling we get the grey curves and when there is coupling we get the coloured curves \textcolor{red}{(explain)}. 
+If we consider a time-dependant magnetic field in which the coupling is constant and the diagonal field changes from large and negative to large positive very slowly (or \emph{adiabatically}) then the system should follow the one of the curves. 
+If it goes quickly then it might jump across the gap \textcolor{red}{(this is rubbish)}.
+
+The time-dependant magnetic field discussed in Majorana's paper \cite{Majorana1932} is ${\mathbf B} = \left(A, 0 , -Ct\right)$ and so the corresponding coupled time-dependant Schr\"odinger equations for a spin half particle with $\vert\psi(t)\rangle = c_{1}(t) \vert \downarrow\rangle + c_{2}(t) \vert \uparrow \rangle$, are
+\begin{subequations}
+\begin{align}
+	\dot{c_{1}} &= - \gamma i \left(-Ctc_{1} + Ac_{2}\right),\\
+	\dot{c_{2}} &= - \gamma i \left(A c_{1} + Ct c_{2}\right).
+\end{align}
+\end{subequations}
+Using the dimensionless time
+\begin{equation}
+	\tau = \sqrt{\frac{\gamma \, C}{2}} \, t,
+\end{equation}
+and the numerical quantity
+\begin{equation}
+	k = \frac{2\gamma A^{2}}{C},
+\end{equation}
+which describes the ratio of the atom precession frequency to the rotation frequency of the field direction, we can obtain the coupled differential equations
+\begin{subequations} \label{eq:Majprob}
+\begin{align}
+	\frac{dc_{1}}{d\tau} &= - i \left(-2\tau c_{1} + \sqrt{k}c_{2}\right),\\
+	\frac{dc_{2}}{d\tau} &= -i \left(\sqrt{k} c_{1} + 2\tau c_{2}\right).
+\end{align}
+\end{subequations}
+These equations can be further simplified through the application of the integration factor method \cite{Kreyszig2006}, by setting
+\begin{equation}
+	c_{1} = e^{i\tau^{2}}f, \quad \quad
+	c_{2} = e^{-i\tau^{2}}g,
+\end{equation}
+from which it follows
+\begin{subequations}
+\begin{align}
+	\frac{df}{d\tau} &= -i \sqrt{k} e^{-2i\tau^{2}}g,\\
+	\frac{dg}{d\tau} &= -i \sqrt{k} e^{2i\tau^{2}}f. \label{Eq:dgdt}
+\end{align}
+\end{subequations}
+Eliminating $g$, we obtain\footnote{The factor of $4i\tau$ was erroneously printed as $hi\tau$.}
+\begin{equation}
+	\frac{d^{2}f}{d\tau^{2}} + 4 i \tau \frac{df}{d\tau} + kf = 0. \label{Eq:fDiff}
+\end{equation}
+
+%-----------------------------------------------------------------------------------------
+
+\section{Transforming into an Integral Equation}
+
+When obtaining an asymptotic solution to a differential equation it is often preferable to investigate the asymptotic behaviour of an integral solution. 
+It is not always possible to obtain an integral solution, but when possible it provides a global solution from which all asymptotic limits can be obtained, and hence connect solutions from one domain to another. 
+It is with this motivation that we seek to find an integral representation of equation \eqref{Eq:fDiff}. 
+To this end we will assume the solution can be written as an integral of the product between a given kernel $K(s,\tau)$ and some unknown function\cite{White2005} $\chi(s)$
+\begin{equation}
+	f(\tau) = \int_{C} K(s,\tau) \chi(s) \, ds,
+\end{equation}
+where $C$ is an arbitrary contour in the complex plane and $K$ and $\chi$ are \emph{complex functions} of the \emph{complex variable} $s$. 
+We will use the Fourier Laplace kernel, $K(s,\tau) = e^{s\tau}$ so that the differential equation \eqref{Eq:fDiff} becomes
+\begin{equation}
+	\int_{C}\chi(s) \left(s^{2}+k\right)e^{s\tau}\, ds + 4i\int_{C}\chi(s)s\tau e^{s\tau} \, ds = 0.
+\end{equation}
+If we now integrate the second term by parts we have
+\begin{equation}
+	\left.\int_{C}\left[\left(s^{2}+k-4i\right)\chi(s) - 4is \chi'(s)\right] e^{s\tau}\, ds + s\chi(s)e^{s\tau}\right\vert_{C} = 0.
+\end{equation}
+Choosing the contour, $C$, such that the boundary term disappears we are left with the differential equation
+\begin{equation}
+	\left(s^{2}+k-4i\right)\chi(s) - 4is \chi'(s) = 0,
+\end{equation}
+which is separable and has solution the solution
+\begin{equation}
+	\chi(s) = As^{(k/4i) - 1}e^{s^{2}/8i},
+\end{equation}
+so long as $\log_{e}s$ assumes its principle value. 
+Here $A$ is a constant of normalisation, to be determined in section \ref{Sec:Asymp}. 
+Thus we have 
+\begin{equation}
+	f(\tau) = A\int_{C}s^{(k/4i)-1}e^{(s^{2}/8i)+s\tau}\, ds, \label{Eq:AsymInt}
+\end{equation}
+with the boundary condition
+\begin{equation}
+	\left.s^{k/4i}e^{(s^{2}/8i)+s\tau}\right\vert_{C}=0.
+\end{equation}
+\textcolor{red}{(for example consider the rays where $\text{Arg} \,s = -\frac{\pi}{4}, \, \frac{3\pi}{4}$.)}
+
+%-----------------------------------------------------------------------------------------
+
+\section{Asymptotic Solution of the Integral} \label{Sec:Asymp}
+
+The simplest technique for obtaining the asymptotic behaviour as $\tau \to +\infty$ of integrals in which the large parameter $\tau$ appears in an exponential
+\begin{equation}
+	I(\tau) = \int_{a}^{b} h(s) e^{\tau\phi(s)} \, ds,
+\end{equation}
+is Laplace's method \cite{Bender1999} where we assume $h(s)$ and $\phi(s)$ are \emph{real} and \emph{continuous}. 
+The crux of Laplace's method is the idea that if the real continuous function $\phi(s)$ has its \emph{maximum} on the interval $a \le s \le b$ at $t = c$ and if $h(c) \ne 0$, then it is only the \emph{immediate neighbourhood} of $t=c$ that contributes to the full asymptotic expansion of $I(\tau)$ for large $\tau$. 
+That is we may approximate the integral $I(\tau)$ by $I(\tau; \epsilon)$ where
+\begin{align}
+	I(\tau;\epsilon) &= \int_{c-\epsilon}^{c+\epsilon}h(s) e^{\tau\phi(s)}\, ds,\\
+	&\approx \int_{c-\epsilon}^{c+\epsilon}\left[h(c) + \left(s-c\right)h'(c) + {\cal O}(s^{2})\right]e^{\tau\left[\phi(c)+\left(s-c\right)\phi'(c) + \frac{1}{2}\left(s-c\right)^{2}\phi''(c)+{\cal O}(s^{3})\right]}\, ds,\\
+	&\approx h(c)e^{\tau\phi(c)}\int_{-\infty}^{\infty} e^{\tau\left(s-c\right)^{2}\phi''(s)/2}\, ds, \quad \text{as }\tau \to + \infty. \label{Eq:Laplace}
+\end{align}
+However we notice straight away that our function $h(s) = s^{(k/4i)-1}e^{s^{2}/8i}$ is not real, nor is the variable of integration, $s$, thus Laplace's method is not directly applicable, we will instead, employ a technique known as the method of steepest descents \cite{Bender1999}. 
+The method of steepest descents is a technique for finding the asymptotic behaviour of integrals of the form
+\begin{equation}
+	I(\tau) = \int_{C}h(s) e^{\tau \rho(s)} \, ds, \label{Eq:SteepestDescent}
+\end{equation}
+as $\tau \to +\infty$, where $C$ is an integration contour in the complex $s$ plane and $h(s)$ and $\rho(s)$ are \emph{analytic functions} of $s$. 
+Here the idea is to use the analyticity of the integrand to justify deforming the contour $C$ to a new contour $C'$ on which $\rho(s)$ has a constant imaginary part. 
+Once this has been done, $I(s)$ may be evaluated asymptotically as $\tau \to +\infty$ using Laplace's method. 
+To see why, observe that on the contour $C'$ we may write $\rho(s) = \phi(s) + i \psi$, where $\psi$ is a real constant and $\phi(s)$ is a real function. 
+Thus, $I(s)$ in \eqref{Eq:SteepestDescent} takes the form
+\begin{equation}
+	I(s) = e^{is\psi} \int_{C'}h(s) e^{\tau\phi(s)}\, ds.
+\end{equation}
+In our case we cannot simply use $\rho(s) = s$ since it's maximum is infinite and we expect the integral to be convergent, we instead have to consider the entire exponent $\rho(s) = s^{2}/8i+s\tau$. 
+If we plan on using Laplace's method to approximate the integral along the deformed contour then we require that the new contour passes through the stationary point of $\rho(s)$. 
+The stationary point of $\rho(s)$ will be at $ s_{\text{st.pt.}} = -4i\tau$. Now we let $s = p + iq$ so that  
+\begin{equation}
+	\rho(s) = \rho(p,q) = \left[\frac{1}{4}pq + \tau p\right] + i \left[ \frac{1}{8}q^{2} - \frac{1}{8}p^{2} + \tau q\right],
+\end{equation}
+thus the imaginary part of the exponent at the stationary point is $\Im(\rho(s_{\text{st.pt}})) = \Im(\rho(0,-4\tau)) = -2\tau^{2}$. 
+The contours along which the imaginary part of $\rho(s)$ is constant and equal to $\text{Im}(\rho(s_{\text{st.pt.}}))$ are thus given by
+\begin{align}
+	-2\tau^{2} &= \frac{1}{8}q^{2} + q\tau - \frac{1}{8}p^{2},\\
+	\Rightarrow q &= -4\tau \pm p.
+\end{align}
+These two contours are shown in figure \ref{Fig:ContourPlots}. 
+Since we require that the stationary point $s_{\text{st.pt.}}=-4i\tau$ be a maximum we will choose the contour $y=-4\tau-p$ so that we now have
+\begin{equation}
+	s = -4i \tau + \left(1 - i\right)p, \quad ds = \left(1 - i\right) dp.
+\end{equation}
+Making this substitution the integral \eqref{Eq:AsymInt} becomes
+\begin{equation}
+	f(\tau) =A\left(1-i\right)e^{-2i\tau^{2}}\int_{-\infty}^{\infty}\left(-4i\tau + \left(1-i\right)p\right)^{(k/4i)-1}e^{-p^{2}/4}\, dp.
+\end{equation}
+While $\tau < 0$ we can apply equation \eqref{Eq:Laplace} directly to find
+\begin{align}
+	f(\tau) &\approx A\left(1-i\right)e^{-2i\tau^{2}}\left(-4i \tau\right)^{k/4i-1}\int_{-\infty}^{\infty}e^{-p^{2}/4}\, dp, \quad \text{as } \tau \to -\infty\\
+	&= 2A\left(1-i\right)\sqrt{\pi}e^{-2i\tau^{2}}\left(-4i \tau\right)^{k/4i-1}, \quad \text{as } \tau \to -\infty.
+\end{align}
+In the limit $\tau \to -\infty$ we find $f(\tau) = 0$ and using equation \eqref{Eq:dgdt} we have 
+\begin{align}
+	g(\tau) &= \int_{-\infty}^{\tau}2kAi\left(1-i\right)\sqrt{\pi}\left(-4i \tau' \right)^{k/4i-1}\, d\tau', \quad \text{as } \tau \to -\infty\\
+	&= 2A\left(1+i\right)\sqrt{\pi}\left(-4 \tau' \right)^{k/4i}e^{k\pi/8} , \quad \text{as } \tau \to -\infty.
+\end{align}
+We can see that if $\left\vert g\right\vert^{2} = 1$ as $\tau \to - \infty$ we require $A = \sqrt{k}e^{-k\pi/8}/(2(1+i)\sqrt{\pi})$.
+When $\tau >0$ the integration contour will have to cross a branch cut along the negative real axis caused by the fractional powers of $s$. 
+In this case we will follow the path indicated in figure \ref{Fig:IntegrationPaths}. 
+So now let
+\begin{align}
+	f(\tau) &= \int_{\gamma_{1}} + \int_{\gamma_{2}} + \int_{\gamma_{3}} + \int_{\gamma_{4}} + \int_{\gamma_{5}},\\
+	&= f_{1} + f_{2} + f_{3} + f_{4} + f_{5} .
+\end{align}
+Can show $f_{1}$ and $f_{3}$ tend to zero (at least in the limit $\tau \to 0$). Along $\gamma_{2}$ we let $s = pe^{i \pi}$ so that $ds = e^{i \pi}dp$ and
+\begin{equation}
+	f_{2} = \frac{\sqrt{k} e^{-k\pi/8}}{2\left(1+i\right)\sqrt{\pi}}\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{k\pi/4}e^{(p^{2}/8i) -p\tau}\, dp.
+\end{equation}
+Similarly along $\gamma_{4}$ we let $s = pe^{-i\pi}$ so that $ds = e^{-i\pi}dp$ and
+\begin{equation}
+	f_{4} = -\frac{\sqrt{k} e^{-k\pi/8}}{2\left(1+i\right)\sqrt{\pi}}\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{-k\pi/4}e^{(p^{2}/8i) -p\tau}\, dp.
+\end{equation}
+Now adding $f_{2}$ and $f_{4}$ together we have
+\begin{align}
+	f_{2} + f_{4} &= \frac{\sqrt{k} e^{-k\pi/8}}{2\left(1+i\right)\sqrt{\pi}}\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{(p^{2}/8i) -p\tau}\left(e^{k\pi/4}-e^{-k\pi/4}\right)\, dp,\\
+	&= \frac{\sqrt{k} e^{-k\pi/8}}{\left(1+i\right)\sqrt{\pi}}\sinh\left(\frac{k\pi}{4}\right)\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{(p^{2}/8i) -p\tau}\, dp,\\
+	&= \frac{\sqrt{k} e^{-k\pi/8}}{\left(1+i\right)\sqrt{\pi}}\sinh\left(\frac{k\pi}{4}\right)\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{-p\tau}\left(1 + \frac{p^{2}}{8i} + {\cal O}(p^{4})\right)\, dp.
+\end{align}
+Looking at the above equation it is clear that if we make the substitution $p\tau = p'$ so that $dp = \tau^{-1}dp'$ we have will have (to the highest order in $\tau$) the integral form of the gamma function so that
+\begin{equation}
+	f_{2}+f_{4} = \frac{\sqrt{k} e^{-k\pi/8}}{\left(1+i\right)\sqrt{\pi}}\sinh\left(\frac{k\pi}{4}\right)\tau^{-k/4i}\Gamma\left(\frac{k}{4i}\right).
+\end{equation}
+We will also have the contribution from the saddle point and will be the same as for the $\tau < 0$ case so 
+\begin{equation}
+	f_{5} = -i\sqrt{k}e^{k\pi/8-2i\tau^{2}}\left(-4i \tau\right)^{-1-k/4i}, \quad \text{as } \tau \to \infty.
+\end{equation}
+The $\gamma_{1}$ contour will follow the same derivation as the $\gamma_{5}$ except that it's maximum is at $x=-4\tau$ so the Taylor series expansion must be made about this maximum. 
+Thus we have
+\begin{equation}
+	f_{1} = -i\sqrt{k}e^{k\pi/8-2i\tau^{2}}\left(-4 \tau\right)^{-1-k/4i}, \quad \text{as } \tau \to \infty,
+\end{equation}
+which will decay exponentially as $\tau \to \infty$, faster than $f_{5}$.
+Adding all of our results together we find\footnote{The $\tau^{-k/4i}$ was erroneously printed as $e^{-k/4i}$.} in the limit as $\tau \to \infty$
+\begin{equation}
+	f(\tau) =  \frac{\sqrt{k} e^{-k\pi/8}}{\left(1+i\right)\sqrt{\pi}}\sinh\left(\frac{k\pi}{4}\right)\tau^{-k/4i}\Gamma\left(\frac{k}{4i}\right),
+\end{equation}
+and 
+\begin{equation}
+	g(\tau) = (4\tau)^{k/4i}e^{-k\pi/4}.
+\end{equation}
+
+%-----------------------------------------------------------------------------------------
+
+\section{Conclusion}
+
+The probability of the spin adiabatically flipping will be given by $\left\vert g \right\vert^{2} = e^{-k\pi/2}$ as $\tau \to \infty$. \textcolor{red}{(Explain the changing sign of the magnetic field swaps the basis vectors.)}
+
 %----------------------------------------------------------------------------------------
 
 \section{Majornan Spin Flips}
