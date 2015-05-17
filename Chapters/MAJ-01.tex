@@ -4,6 +4,15 @@
 
 \label{ch:majinter} % For referencing the chapter elsewhere, use \autoref{ch:dsmcehr} 
 
+%----------------------------------------------------------------------------------------
+
+\begin{flushright}{\slshape    
+Sweet quote.} \\ \medskip
+--- Smart dude
+\end{flushright}
+
+\bigskip
+
 %-----------------------------------------------------------------------------------------
 
 General scope for the problem.
@@ -11,6 +20,12 @@ General scope for the problem.
 Inadequacies in alternative approaches.
 
 Majorana's approach does not require the extension into the imaginary time domain nor does he make dodgey mistakes in an attempt to engineer the solution.
+
+The print history of the Majorana solution is a little funny.
+Originally printed in il nuova cimento in 19?? it was subsequently translated and reprinted in blah in 19??.
+Unfortunately both the original and the reprint contain some small typographical errors that may make it difficult for readers to follow.
+In an attempt to remedy this problem, as well as elucidate the complex asymptotic method Majorana used in his solution, the following sections will outline, in excruciating detail, the correct solution -- error free.
+Readers may also find this a useful introduction to, and a practical application of the method of steepest descents.
 
 %-----------------------------------------------------------------------------------------
 
@@ -50,7 +65,7 @@ and the numerical quantity
 \begin{equation}
 	k = \frac{2\gamma A^{2}}{C},
 \end{equation}
-which describes the ratio of the atom precession frequency to the rotation frequency of the field direction, we can obtain the coupled differential equations
+which describes the ratio of the atom precession frequency to the rotation frequency of the field direction at the field minimum, we can obtain the coupled differential equations
 \begin{subequations} \label{eq:Majprob}
 \begin{align}
 	\frac{dc_{1}}{d\tau} &= - i \left(-2\tau c_{1} + \sqrt{k}c_{2}\right),\\
@@ -79,9 +94,10 @@ Eliminating $g$, we obtain\footnote{The factor of $4i\tau$ was erroneously print
 \section{Transforming into an Integral Equation}
 
 When obtaining an asymptotic solution to a differential equation it is often preferable to investigate the asymptotic behaviour of an integral solution. 
-It is not always possible to obtain an integral solution, but when possible it provides a global solution from which all asymptotic limits can be obtained, and hence connect solutions from one domain to another. 
+It is not always possible to obtain an integral solution, but when possible it provides a global solution from which all asymptotic limits can be obtained, and hence connect solutions from one end of the domain to another. 
 It is with this motivation that we seek to find an integral representation of equation \eqref{Eq:fDiff}. 
-To this end we will assume the solution can be written as an integral of the product between a given kernel $K(s,\tau)$ and some unknown function\cite{White2005} $\chi(s)$
+NOTE: Find the name of the following method with suitable references and motivation.
+To this end we will assume the solution can be written as an integral of the product between a given kernel $K(s,\tau)$ and some unknown function\cite{White2005} $\chi(s)$,
 \begin{equation}
 	f(\tau) = \int_{C} K(s,\tau) \chi(s) \, ds,
 \end{equation}
@@ -223,14 +239,15 @@ and
 
 \section{Conclusion}
 
-The probability of the spin adiabatically flipping will be given by $\left\vert g \right\vert^{2} = e^{-k\pi/2}$ as $\tau \to \infty$. \textcolor{red}{(Explain the changing sign of the magnetic field swaps the basis vectors.)}
+The probability of the spin adiabatically flipping will be given by 
+\begin{equation}
+    \left\vert g \right\vert^{2} = e^{-k\pi/2} \textrm{ as } \tau \to \infty. \label{eq:majProb}
+\end{equation}
+\textcolor{red}{(Explain the changing sign of the magnetic field swaps the basis vectors.)}
 
 %----------------------------------------------------------------------------------------
 
-\section{Majornan Spin Flips}
-\begin{equation}
-    \frac{\partial}{\partial t} \label{eq:Majprob}
-\end{equation}
+\section{Majorana Spin Flips}
 
 Talk about Majorana problem, history, derive formula etc
 
@@ -242,4 +259,9 @@ Content
 
 \section{Loss Rates 'n' Stuff}
 
-derive the loss rate formulae used in all the literature.
+Now that we have the solution to the Majorana problem we can use this formula to derive loss rates for atoms in real trapping potentials.
+The following section will outline the work done by Porto \cite{Lin2009,Dubessy2014} in a clear methodical manner, allowing the reader to fully understand the assumptions made when deriving the current loss model.
+If we begin with \autoref{eq:Majprob} and make the assumption that atoms who's probability of flipping is great than 50\% (that is $\left\vert g \right\vert^{2} > 0.5$) leave the trap we can find the threshold for flipping with
+\begin{equation}
+    2 \log_{e}2 = \pi k.
+\end{equation}
