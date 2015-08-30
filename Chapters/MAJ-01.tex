@@ -193,35 +193,45 @@ Now that we finally have our contour we can make use of Laplace's method by subs
 \end{equation}
 This might not look any more tractable at first glance, but importantly we have removed the asymptotically large parameter, $\tau$, from the exponent, which allow us to derive far more meaningful asymptotic expressions.
 
-Let's begin with the easy case first.
+We'll begin with the easy case first.
 Let's consider the beginning of time, the limit when $\tau \to -\infty$.
 While $\tau < 0$ we can solve \autoref{eq:laplace_f} directly to find
 \begin{align}
 	f(\tau) &\approx A\left(1-i\right)e^{-2i\tau^{2}}\left(-4i \tau\right)^{k/4i-1}\int_{-\infty}^{\infty}e^{-p^{2}/4}\, dp, \quad \text{as } \tau \to -\infty\\
 	&= 2A\left(1-i\right)\sqrt{\pi}e^{-2i\tau^{2}}\left(-4i \tau\right)^{k/4i-1}, \quad \text{as } \tau \to -\infty.
 \end{align}
-In the limit $\tau \to -\infty$ we find $f(\tau) = 0$ and using equation \eqref{Eq:dgdt} we have 
+In the limit $\tau \to -\infty$ we can see $f(\tau) \to 0$, due mostly to the negative exponential power of $\tau$.
+This asymptotic behaviour matches our initial condition, that the system begins in the spin up state.
+Using \autoref{Eq:dgdt} to find $g(\tau)$ we have 
 \begin{align}
 	g(\tau) &= \int_{-\infty}^{\tau}2kAi\left(1-i\right)\sqrt{\pi}\left(-4i \tau' \right)^{k/4i-1}\, d\tau', \quad \text{as } \tau \to -\infty\\
 	&= 2A\left(1+i\right)\sqrt{\pi}\left(-4 \tau' \right)^{k/4i}e^{k\pi/8} , \quad \text{as } \tau \to -\infty.
 \end{align}
-We can see that if $\left\vert g\right\vert^{2} = 1$ as $\tau \to - \infty$ we require $A = \sqrt{k}e^{-k\pi/8}/(2(1+i)\sqrt{\pi})$.
-When $\tau >0$ the integration contour will have to cross a branch cut along the negative real axis caused by the fractional powers of $s$. 
+Now since we require that $\left\vert g\right\vert^{2} \to 1$ as $\tau \to - \infty$ to satisfy the initial condition we find that $A = \sqrt{k}e^{-k\pi/8}/(2(1+i)\sqrt{\pi})$.
+
+Now when we consider the end of time, $\tau \to 0$, things get a little trickier.
+When describing Laplace's method earlier I stressed the importance of the analyticity of the integrand.
+However when $\tau > 0$ the integration contour will have to cross a branch cut along the negative real axis caused by the fractional powers of $s$. 
 In this case we will follow the path indicated in figure \ref{Fig:IntegrationPaths}. 
+It is easier to evaluate this integral if we split it up into several components.
 So now let
 \begin{align}
 	f(\tau) &= \int_{\gamma_{1}} + \int_{\gamma_{2}} + \int_{\gamma_{3}} + \int_{\gamma_{4}} + \int_{\gamma_{5}},\\
 	&= f_{1} + f_{2} + f_{3} + f_{4} + f_{5} .
 \end{align}
-Can show $f_{1}$ and $f_{3}$ tend to zero (at least in the limit $\tau \to 0$). Along $\gamma_{2}$ we let $s = pe^{i \pi}$ so that $ds = e^{i \pi}dp$ and
+Now the asymptotically dominant component of the integral will actually come from the branch cut, but I will show the behaviour of each component to be sure.
+\textcolor{red}{Can show $f_{1}$ and $f_{3}$ tend to zero (at least in the limit $\tau \to 0$)}. 
+Often the contributions from the branch cuts work together, they will either cancel or add providing some sort of symetry that can be exploited in symplification.
+With that in mind lets consider the two paths along the branch cut.
+Along $\gamma_{2}$ we let $s = pe^{i \pi} = -p$ where $ds = e^{i \pi}dp$, so now \autoref{Eq:AsymInt} becomes
 \begin{equation}
 	f_{2} = \frac{\sqrt{k} e^{-k\pi/8}}{2\left(1+i\right)\sqrt{\pi}}\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{k\pi/4}e^{(p^{2}/8i) -p\tau}\, dp.
 \end{equation}
-Similarly along $\gamma_{4}$ we let $s = pe^{-i\pi}$ so that $ds = e^{-i\pi}dp$ and
+Similarly along $\gamma_{4}$ we let $s = pe^{-i\pi} = p$ where $ds = e^{-i\pi}dp$ so that
 \begin{equation}
 	f_{4} = -\frac{\sqrt{k} e^{-k\pi/8}}{2\left(1+i\right)\sqrt{\pi}}\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{-k\pi/4}e^{(p^{2}/8i) -p\tau}\, dp.
 \end{equation}
-Now adding $f_{2}$ and $f_{4}$ together we have
+Now adding $f_{2}$ and $f_{4}$, and making use of a Taylor series expansion together we have
 \begin{align}
 	f_{2} + f_{4} &= \frac{\sqrt{k} e^{-k\pi/8}}{2\left(1+i\right)\sqrt{\pi}}\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{(p^{2}/8i) -p\tau}\left(e^{k\pi/4}-e^{-k\pi/4}\right)\, dp,\\
 	&= \frac{\sqrt{k} e^{-k\pi/8}}{\left(1+i\right)\sqrt{\pi}}\sinh\left(\frac{k\pi}{4}\right)\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{(p^{2}/8i) -p\tau}\, dp,\\
