@@ -7,8 +7,10 @@
 %----------------------------------------------------------------------------------------
 
 \begin{flushright}{\slshape    
-Sweet quote.} \\ \medskip
---- Smart dude
+It's very hard to talk quantum\\
+using a language originally designed\\
+ to tell other monkeys where the ripe fruit is.} \\ \medskip
+--- Terry Pratchett, Night Watch
 \end{flushright}
 
 \bigskip
@@ -22,10 +24,10 @@ Inadequacies in alternative approaches.
 Majorana's approach does not require the extension into the imaginary time domain nor does he make dodgey mistakes in an attempt to engineer the solution.
 
 The print history of the Majorana solution is a little funny.
-Originally printed in il nuova cimento in 19?? it was subsequently translated and reprinted in blah in 19??.
+Originally printed in il nuova cimento in 1932 \cite{?} it was subsequently translated and reprinted in Societ\'a Italiana di Fisica in 19?? \cite{?}.
 Unfortunately both the original and the reprint contain some small typographical errors that may make it difficult for readers to follow.
 In an attempt to remedy this problem, as well as elucidate the complex asymptotic method Majorana used in his solution, the following sections will outline, in excruciating detail, the correct solution -- error free.
-Readers may also find this a useful introduction to, and a practical application of the method of steepest descents.
+Readers may also find this a useful introduction to, and a practical application of, the method of steepest descents.
 
 %-----------------------------------------------------------------------------------------
 
@@ -88,29 +90,35 @@ Eliminating $g$, we obtain\footnote{The factor of $4i\tau$ was erroneously print
 \begin{equation}
 	\frac{d^{2}f}{d\tau^{2}} + 4 i \tau \frac{df}{d\tau} + kf = 0. \label{Eq:fDiff}
 \end{equation}
-
+This differential equation holds the answers we seek. 
+It describes the evolution of the probability density of the spin up state of the system.
+Thus if we kind find a solution to this equation we will know how the system's spin changes over time.
+Even with modern symbolic computation packages like Mathematica, it is very difficult to find a solution to this equation that satisfies the boundary conditions we have.
+So, we must seek an asymptotic solution, if we can't know what the spin does for all values of time, maybe we can at least have an idea what the spin is doing at the end of time?
 %-----------------------------------------------------------------------------------------
 
 \section{Transforming into an Integral Equation}
 
 When obtaining an asymptotic solution to a differential equation it is often preferable to investigate the asymptotic behaviour of an integral solution. 
-It is not always possible to obtain an integral solution, but when possible it provides a global solution from which all asymptotic limits can be obtained, and hence connect solutions from one end of the domain to another. 
-It is with this motivation that we seek to find an integral representation of equation \eqref{Eq:fDiff}. 
+It is not always possible to obtain an integral solution, but when possible it provides a global solution from which all asymptotic limits can be obtained, and hence connect solutions from one end of the domain to another\footnote{The alternative of course is to use a local method like perturbation analysis to investigate the local behaviour of the solution.}. 
+It is with this motivation that we seek to find an integral representation of \autoref{Eq:fDiff}. 
 NOTE: Find the name of the following method with suitable references and motivation.
 To this end we will assume the solution can be written as an integral of the product between a given kernel $K(s,\tau)$ and some unknown function\cite{White2005} $\chi(s)$,
 \begin{equation}
 	f(\tau) = \int_{C} K(s,\tau) \chi(s) \, ds,
 \end{equation}
 where $C$ is an arbitrary contour in the complex plane and $K$ and $\chi$ are \emph{complex functions} of the \emph{complex variable} $s$. 
-We will use the Fourier Laplace kernel, $K(s,\tau) = e^{s\tau}$ so that the differential equation \eqref{Eq:fDiff} becomes
+Our job now, of course, is to find an expression for $\chi(s)$.
+We will use the Fourier Laplace kernel, $K(s,\tau) = e^{s\tau}$, so that the differential \autoref{Eq:fDiff} becomes
 \begin{equation}
 	\int_{C}\chi(s) \left(s^{2}+k\right)e^{s\tau}\, ds + 4i\int_{C}\chi(s)s\tau e^{s\tau} \, ds = 0.
 \end{equation}
-If we now integrate the second term by parts we have
+Integrating the second term by parts gives
 \begin{equation}
-	\left.\int_{C}\left[\left(s^{2}+k-4i\right)\chi(s) - 4is \chi'(s)\right] e^{s\tau}\, ds + s\chi(s)e^{s\tau}\right\vert_{C} = 0.
+	\left.\int_{C}\left[\left(s^{2}+k-4i\right)\chi(s) - 4is \chi'(s)\right] e^{s\tau}\, ds + \textcolor{blue}{s\chi(s)e^{s\tau}}\right\vert_{C} = 0.
 \end{equation}
-Choosing the contour, $C$, such that the boundary term disappears we are left with the differential equation
+Given that we made no specifications about the contour our arbitrary contour, $C$, we can choose it such that the boundary term, in blue, disappears. 
+In general, if an integral over an arbitrary contour is zero we can say that the integrand must also be equal to zero, this gives the differential equation
 \begin{equation}
 	\left(s^{2}+k-4i\right)\chi(s) - 4is \chi'(s) = 0,
 \end{equation}
@@ -118,8 +126,8 @@ which is separable and has solution the solution
 \begin{equation}
 	\chi(s) = As^{(k/4i) - 1}e^{s^{2}/8i},
 \end{equation}
-so long as $\log_{e}s$ assumes its principle value. 
-Here $A$ is a constant of normalisation, to be determined in section \ref{Sec:Asymp}. 
+so long as $\log s$ assumes its principle value\footnote{i.e. $\log s = \log_e \vert s \vert + \imath \text{Arg}s$.}. 
+Here $A$ is a constant of normalisation that will be determined in \autoref{Sec:Asymp}. 
 Thus we have 
 \begin{equation}
 	f(\tau) = A\int_{C}s^{(k/4i)-1}e^{(s^{2}/8i)+s\tau}\, ds, \label{Eq:AsymInt}
@@ -128,59 +136,66 @@ with the boundary condition
 \begin{equation}
 	\left.s^{k/4i}e^{(s^{2}/8i)+s\tau}\right\vert_{C}=0.
 \end{equation}
-\textcolor{red}{(for example consider the rays where $\text{Arg} \,s = -\frac{\pi}{4}, \, \frac{3\pi}{4}$.)}
+This boundary condition could be easily satisfied by the rays where $\text{Arg} \,s = -\frac{\pi}{4}, \, \frac{3\pi}{4}$ for example.
 
 %-----------------------------------------------------------------------------------------
 
 \section{Asymptotic Solution of the Integral} \label{Sec:Asymp}
 
-The simplest technique for obtaining the asymptotic behaviour as $\tau \to +\infty$ of integrals in which the large parameter $\tau$ appears in an exponential
+The simplest technique for obtaining the asymptotic behaviour of integrals in which an asymptotically large parameter $\tau$ appears as an exponential
 \begin{equation}
 	I(\tau) = \int_{a}^{b} h(s) e^{\tau\phi(s)} \, ds,
 \end{equation}
-is Laplace's method \cite{Bender1999} where we assume $h(s)$ and $\phi(s)$ are \emph{real} and \emph{continuous}. 
-The crux of Laplace's method is the idea that if the real continuous function $\phi(s)$ has its \emph{maximum} on the interval $a \le s \le b$ at $t = c$ and if $h(c) \ne 0$, then it is only the \emph{immediate neighbourhood} of $t=c$ that contributes to the full asymptotic expansion of $I(\tau)$ for large $\tau$. 
+is Laplace's method \cite{Bender1999}, where we assume $h(s)$ and $\phi(s)$ are \emph{real} and \emph{continuous}. 
+The foundation of Laplace's method is the idea that if the real continuous function $\phi(s)$ has its \emph{maximum} on the interval of integration, $a \le s \le b$, at $t = c$ and if this maximum is not equal to zero, $h(c) \ne 0$, then it is only the \emph{immediate neighbourhood} of $t=c$ that contributes to the full asymptotic expansion of $I(\tau)$ for large $\tau$. 
 That is we may approximate the integral $I(\tau)$ by $I(\tau; \epsilon)$ where
 \begin{align}
 	I(\tau;\epsilon) &= \int_{c-\epsilon}^{c+\epsilon}h(s) e^{\tau\phi(s)}\, ds,\\
 	&\approx \int_{c-\epsilon}^{c+\epsilon}\left[h(c) + \left(s-c\right)h'(c) + {\cal O}(s^{2})\right]e^{\tau\left[\phi(c)+\left(s-c\right)\phi'(c) + \frac{1}{2}\left(s-c\right)^{2}\phi''(c)+{\cal O}(s^{3})\right]}\, ds,\\
 	&\approx h(c)e^{\tau\phi(c)}\int_{-\infty}^{\infty} e^{\tau\left(s-c\right)^{2}\phi''(s)/2}\, ds, \quad \text{as }\tau \to + \infty. \label{Eq:Laplace}
 \end{align}
-However we notice straight away that our function $h(s) = s^{(k/4i)-1}e^{s^{2}/8i}$ is not real, nor is the variable of integration, $s$, thus Laplace's method is not directly applicable, we will instead, employ a technique known as the method of steepest descents \cite{Bender1999}. 
-The method of steepest descents is a technique for finding the asymptotic behaviour of integrals of the form
+If we try to apply this to our problem however, we notice straight away that in \autoref{Eq:AsymInt} we have $h(s) = s^{(k/4i)-1}e^{s^{2}/8i}$. This expression isn't real, nor is the variable of integration, thus Laplace's method is not directly applicable.
+We will instead, employ a technique known as the method of steepest descents \cite{Bender1999}. 
+Analogous to Laplace's method, the method of steepest descents is a technique for finding the asymptotic behaviour of integrals of the form
 \begin{equation}
 	I(\tau) = \int_{C}h(s) e^{\tau \rho(s)} \, ds, \label{Eq:SteepestDescent}
 \end{equation}
-as $\tau \to +\infty$, where $C$ is an integration contour in the complex $s$ plane and $h(s)$ and $\rho(s)$ are \emph{analytic functions} of $s$. 
-Here the idea is to use the analyticity of the integrand to justify deforming the contour $C$ to a new contour $C'$ on which $\rho(s)$ has a constant imaginary part. 
-Once this has been done, $I(s)$ may be evaluated asymptotically as $\tau \to +\infty$ using Laplace's method. 
+where $C$ is an integration contour in the complex $s$ plane and $h(s)$ and $\rho(s)$ are \emph{analytic functions} of $s$. 
+Here the idea is to use the analyticity of the integrand to justify deforming the contour $C$ to a new contour $C'$ on which the imaginary part $\rho(s)$ is constant.
+Once this has been done, $I(s)$ may be evaluated asymptotically using Laplace's method. 
 To see why, observe that on the contour $C'$ we may write $\rho(s) = \phi(s) + i \psi$, where $\psi$ is a real constant and $\phi(s)$ is a real function. 
-Thus, $I(s)$ in \eqref{Eq:SteepestDescent} takes the form
+Thus, $I(s)$ in \autoref{Eq:SteepestDescent} takes the form
 \begin{equation}
 	I(s) = e^{is\psi} \int_{C'}h(s) e^{\tau\phi(s)}\, ds.
 \end{equation}
-In our case we cannot simply use $\rho(s) = s$ since it's maximum is infinite and we expect the integral to be convergent, we instead have to consider the entire exponent $\rho(s) = s^{2}/8i+s\tau$. 
+Again our particular problem is not as straight forward. We cannot simply use $\rho(s) = s$ since it's maximum is infinite. As we expect the integral to be convergent, we instead have to consider the entire exponent $\rho(s) = s^{2}/8i+s\tau$. 
 If we plan on using Laplace's method to approximate the integral along the deformed contour then we require that the new contour passes through the stationary point of $\rho(s)$. 
-The stationary point of $\rho(s)$ will be at $ s_{\text{st.pt.}} = -4i\tau$. Now we let $s = p + iq$ so that  
+The stationary point of $\rho(s)$ will be at $ s_{\text{st.pt.}} = -4i\tau$. 
+Recall that we are looking to deform our contour so that the imaginary part of $\rho(s)$ is constant and equal to it's maximum value, the value at the stationary point, $\psi = \Im(\rho(s_{\text{st.pt}})) = \Im(-4\imath\tau) = -2\tau^{2}$.
+
+To parameterise the deformed contour, $C'$, we let $s = p + iq$ so that  
 \begin{equation}
-	\rho(s) = \rho(p,q) = \left[\frac{1}{4}pq + \tau p\right] + i \left[ \frac{1}{8}q^{2} - \frac{1}{8}p^{2} + \tau q\right],
+	\rho(s) = \rho(p,q) = \left[\frac{1}{4}pq + \tau p\right] + i \left[ \frac{1}{8}q^{2} - \frac{1}{8}p^{2} + \tau q\right].
 \end{equation}
-thus the imaginary part of the exponent at the stationary point is $\Im(\rho(s_{\text{st.pt}})) = \Im(\rho(0,-4\tau)) = -2\tau^{2}$. 
-The contours along which the imaginary part of $\rho(s)$ is constant and equal to $\text{Im}(\rho(s_{\text{st.pt.}}))$ are thus given by
+The contours along which the imaginary part of $\rho(s)$ is constant and equal to $\psi=-2\tau^{2}$ are thus given by
 \begin{align}
 	-2\tau^{2} &= \frac{1}{8}q^{2} + q\tau - \frac{1}{8}p^{2},\\
 	\Rightarrow q &= -4\tau \pm p.
 \end{align}
-These two contours are shown in figure \ref{Fig:ContourPlots}. 
-Since we require that the stationary point $s_{\text{st.pt.}}=-4i\tau$ be a maximum we will choose the contour $y=-4\tau-p$ so that we now have
+These two contours are shown in \autoref{Fig:ContourPlots}. 
+Since we require that the stationary point $s_{\text{st.pt.}}=-4i\tau$ be a maximum we will choose the contour $q=-4\tau-p$ so that we now have
 \begin{equation}
-	s = -4i \tau + \left(1 - i\right)p, \quad ds = \left(1 - i\right) dp.
+	s = -4i \tau + \left(1 - i\right)p, \quad ds = \left(1 - i\right) dp. \label{eq:deformed_contour}
 \end{equation}
-Making this substitution the integral \eqref{Eq:AsymInt} becomes
+Now that we finally have our contour we can make use of Laplace's method by substituting \autoref{eq:deformed_contour} into \autoref{Eq:AsymInt}
 \begin{equation}
-	f(\tau) =A\left(1-i\right)e^{-2i\tau^{2}}\int_{-\infty}^{\infty}\left(-4i\tau + \left(1-i\right)p\right)^{(k/4i)-1}e^{-p^{2}/4}\, dp.
+	f(\tau) =A\left(1-i\right)e^{-2i\tau^{2}}\int_{-\infty}^{\infty}\left(-4i\tau + \left(1-i\right)p\right)^{(k/4i)-1}e^{-p^{2}/4}\, dp. \label{eq:laplace_f}
 \end{equation}
-While $\tau < 0$ we can apply equation \eqref{Eq:Laplace} directly to find
+This might not look any more tractable at first glance, but importantly we have removed the asymptotically large parameter, $\tau$, from the exponent, which allow us to derive far more meaningful asymptotic expressions.
+
+Let's begin with the easy case first.
+Let's consider the beginning of time, the limit when $\tau \to -\infty$.
+While $\tau < 0$ we can solve \autoref{eq:laplace_f} directly to find
 \begin{align}
 	f(\tau) &\approx A\left(1-i\right)e^{-2i\tau^{2}}\left(-4i \tau\right)^{k/4i-1}\int_{-\infty}^{\infty}e^{-p^{2}/4}\, dp, \quad \text{as } \tau \to -\infty\\
 	&= 2A\left(1-i\right)\sqrt{\pi}e^{-2i\tau^{2}}\left(-4i \tau\right)^{k/4i-1}, \quad \text{as } \tau \to -\infty.
@@ -261,7 +276,41 @@ Content
 
 Now that we have the solution to the Majorana problem we can use this formula to derive loss rates for atoms in real trapping potentials.
 The following section will outline the work done by Porto \cite{Lin2009,Dubessy2014} in a clear methodical manner, allowing the reader to fully understand the assumptions made when deriving the current loss model.
-If we begin with \autoref{eq:Majprob} and make the assumption that atoms who's probability of flipping is great than 50\% (that is $\left\vert g \right\vert^{2} > 0.5$) leave the trap we can find the threshold for flipping with
+
+Before we begin, lets first consider the meaning of the $k$ parameter used above in Marjorana's derivation
 \begin{equation}
-    2 \log_{e}2 = \pi k.
+    k = \frac{g \mu_{0} A^2} {\hbar C}.
 \end{equation}
+Majorana describes this as, 
+\begin{displayquote}
+    \dots the ratio of the atom precession frequency to the rotation frequency of the field direction when this ratio reaches its minimum value.
+\end{displayquote}
+In the context of real gases we may interpret this as the ratio of the Larmor precession frequency to the apparent rotation frequency of the magnetic field.
+Since Majorana is simply considering the probability that an atom flips at $\tau = 0$, i.e. at the crossing of field minimum we could extend the above to find the probability of flipping at any point so long as we could find explicit expressions for the Larmor frequency and the rotation frequency of the magnetic field.
+Fortunately this is very easy.
+First of all, the Larmor precesiion frequncy is given by
+\begin{equation}
+    \omega_{\textrm{L}} = \gamma \vert \mathbf{B}(\mathbf{r}) \vert,
+\end{equation}
+where $\gamma = ?$ and $\vert \mathbf{B}(\mathbf{r}) \vert$ is the magnitude of the magnetic field at $\mathbf{r}$.
+Secondly, using some simple geometry it is easy to see that the rotation rate of the magnetic field would be described by
+\begin{equation}
+    \omega_\mathrm{B} = \frac{\dot{ \left\vert \mathbf{B} \right \vert } } { \left \vert \mathbf{B} \right \vert}.
+\end{equation}
+So a more general expression for the ratio, $k$, would be
+\begin{equation}
+    k = \frac{\omega_\textrm{L}}{\omega_\textrm{B}} = \frac{\gamma \left\vert \mathbf{B} \right\vert^2}{\dot{ \left\vert \mathbf{B} \right \vert } }.
+\end{equation}
+The only thing that may not be obvious, is how to calculate the time derivate of the magnetic field from the perspective of a moving atom.
+Again, we are fortunate because this is a simple problem, and has been well established in the field of fluid dynamics.
+What we need to calculate is known as the material derivative, which (in cartesian coordinates) is given by
+\begin{align}
+    \frac{D \mathbf{B}}{Dt} &= \frac{\partial \mathbf{B}}{\partial t} + \mathbf{v} \cdot \nabla \mathbf{B},\\
+    &= \frac{\partial \mathbf{B}}{\partial t} + v_x  \frac{\partial \mathbf{B}}{\partial x} + v_y \frac{\partial \mathbf{B}}{\partial y} + v_z \frac{\partial \mathbf{B}}{\partial z},
+\end{align}
+where $\mathbf{v} = \left(v_x,v_y,v_z\right)$ is the velocity of the atom.
+
+
+
+
+
