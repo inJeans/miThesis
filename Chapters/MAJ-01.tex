@@ -231,7 +231,7 @@ Similarly along $\gamma_{4}$ we let $s = pe^{-i\pi} = p$ where $ds = e^{-i\pi}dp
 \begin{equation}
 	f_{4} = -\frac{\sqrt{k} e^{-k\pi/8}}{2\left(1+i\right)\sqrt{\pi}}\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{-k\pi/4}e^{(p^{2}/8i) -p\tau}\, dp.
 \end{equation}
-Now adding $f_{2}$ and $f_{4}$, and making use of a Taylor series expansion together we have
+Now adding together $f_{2}$ and $f_{4}$, and making use of a Taylor series expansion we have
 \begin{align}
 	f_{2} + f_{4} &= \frac{\sqrt{k} e^{-k\pi/8}}{2\left(1+i\right)\sqrt{\pi}}\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{(p^{2}/8i) -p\tau}\left(e^{k\pi/4}-e^{-k\pi/4}\right)\, dp,\\
 	&= \frac{\sqrt{k} e^{-k\pi/8}}{\left(1+i\right)\sqrt{\pi}}\sinh\left(\frac{k\pi}{4}\right)\int_{-4\tau}^{\epsilon} p^{(k/4i)-1}e^{(p^{2}/8i) -p\tau}\, dp,\\
@@ -241,17 +241,19 @@ Looking at the above equation it is clear that if we make the substitution $p\ta
 \begin{equation}
 	f_{2}+f_{4} = \frac{\sqrt{k} e^{-k\pi/8}}{\left(1+i\right)\sqrt{\pi}}\sinh\left(\frac{k\pi}{4}\right)\tau^{-k/4i}\Gamma\left(\frac{k}{4i}\right).
 \end{equation}
-We will also have the contribution from the saddle point and will be the same as for the $\tau < 0$ case so 
+The contributions from $f_1$ and $f_5$ can be found by using Laplace's method.
+In $f_5$ the contribution comes from the saddle point at $\tau= -4\imath\tau$ and can be found the same way as for the $\tau < 0$ case so 
 \begin{equation}
 	f_{5} = -i\sqrt{k}e^{k\pi/8-2i\tau^{2}}\left(-4i \tau\right)^{-1-k/4i}, \quad \text{as } \tau \to \infty.
 \end{equation}
-The $\gamma_{1}$ contour will follow the same derivation as the $\gamma_{5}$ except that it's maximum is at $x=-4\tau$ so the Taylor series expansion must be made about this maximum. 
+The $\gamma_{1}$ contour will follow the same derivation as the $\gamma_{5}$ except that it's maximum is at the $x$-intercept, $x=-4\tau$, so the Taylor series expansion must be made about this maximum. 
 Thus we have
 \begin{equation}
-	f_{1} = -i\sqrt{k}e^{k\pi/8-2i\tau^{2}}\left(-4 \tau\right)^{-1-k/4i}, \quad \text{as } \tau \to \infty,
+	f_{1} = -i\sqrt{k}e^{k\pi/8-2i\tau^{2}}\left(-4 \tau\right)^{-1-k/4i}, \quad \text{as } \tau \to \infty.
 \end{equation}
-which will decay exponentially as $\tau \to \infty$, faster than $f_{5}$.
-Adding all of our results together we find\footnote{The $\tau^{-k/4i}$ was erroneously printed as $e^{-k/4i}$.} in the limit as $\tau \to \infty$
+Both of these terms will decay exponentially as $\tau \to \infty$, again due to the negative exponential in $\tau$.
+This means the only asymptotically non-zero contribution comes from the branch cut.
+So finally we have\footnote{The $\tau^{-k/4i}$ was erroneously printed as $e^{-k/4i}$.} in the limit as $\tau \to \infty$
 \begin{equation}
 	f(\tau) =  \frac{\sqrt{k} e^{-k\pi/8}}{\left(1+i\right)\sqrt{\pi}}\sinh\left(\frac{k\pi}{4}\right)\tau^{-k/4i}\Gamma\left(\frac{k}{4i}\right),
 \end{equation}
@@ -262,7 +264,7 @@ and
 
 %-----------------------------------------------------------------------------------------
 
-\section{Conclusion}
+\section{Conclusion} \label{sec:majorana_conc}
 
 The probability of the spin adiabatically flipping will be given by 
 \begin{equation}
@@ -287,6 +289,27 @@ Content
 Now that we have the solution to the Majorana problem we can use this formula to derive loss rates for atoms in real trapping potentials.
 The following section will outline the work done by Porto \cite{Lin2009,Dubessy2014} in a clear methodical manner, allowing the reader to fully understand the assumptions made when deriving the current loss model.
 
+We begin with the heuristic derivation given by Petrich et al in \cite{Petrich1995}.
+In \autoref{sec:majorana_conc} we saw that, very broadly, for an atom to undergo a non-adiabatic spin flip we require that the Larmor precession frequency must be smaller than the rate of change of the magnetic field direction.
+The Larmor precession frequency is given by
+\begin{equation}
+    \omega_{\textrm{L}} = \gamma \vert \mathbf{B}(\mathbf{r}) \vert.
+\end{equation}
+For an atom passing a minimum distance of $b$, in a trap with a radial gradient $\partial B_r / \partial r = B_q'$, we have $\omega_{\textrm{L}} \sim \gamma B_q' b$. 
+We can also, very approximately, estimate the rate of change of the magnetic field direction for an atom moving with a velocity $v$ to be, $\omega_{\mathrm{B}} \sim v / b$ (see \autoref{sec:maj_loss_der} for a more accurate estimate).
+Thus we may define the surface of a sphere at which the conditions for a transition are met, with a radius $b_0$
+\begin{align}
+    \omega_{\textrm{L}} &\approx \omega_{\textrm{B}},\\
+    \gamma B_q' b_0 &\approx \frac{v}{b_0},\\
+    b_0 &\approx \sqrt{\frac{v}{\gamma B_q'}}.
+\end{align}
+We can now pick up with the work from Porto, which tries a little harder to eliminate unnecessary assumptions.
+So far we can describe the velocity dependant surface through which an atom must travel to undergo a non-adiabtic transition.
+To be able to estimate a loss rate we must find the number of atoms flowing through this surface.
+The local particle flux through this surface is given by, $j = v n( \mathbf{r}(v),p)$, where $n(\mathbf{r}(v),p)$ is the local atom density.
+
+\section{Diffren' sexion} \label{sec:maj_loss_der}
+
 Before we begin, lets first consider the meaning of the $k$ parameter used above in Marjorana's derivation
 \begin{equation}
     k = \frac{g \mu_{0} A^2} {\hbar C}.
@@ -298,18 +321,18 @@ Majorana describes this as,
 In the context of real gases we may interpret this as the ratio of the Larmor precession frequency to the apparent rotation frequency of the magnetic field.
 Since Majorana is simply considering the probability that an atom flips at $\tau = 0$, i.e. at the crossing of field minimum we could extend the above to find the probability of flipping at any point so long as we could find explicit expressions for the Larmor frequency and the rotation frequency of the magnetic field.
 Fortunately this is very easy.
-First of all, the Larmor precesiion frequncy is given by
+First of all, the Larmor precesion frequency is given by
 \begin{equation}
     \omega_{\textrm{L}} = \gamma \vert \mathbf{B}(\mathbf{r}) \vert,
 \end{equation}
 where $\gamma = ?$ and $\vert \mathbf{B}(\mathbf{r}) \vert$ is the magnitude of the magnetic field at $\mathbf{r}$.
 Secondly, using some simple geometry it is easy to see that the rotation rate of the magnetic field would be described by
 \begin{equation}
-    \omega_\mathrm{B} = \frac{\dot{ \left\vert \mathbf{B} \right \vert } } { \left \vert \mathbf{B} \right \vert}.
+    \omega_\mathrm{B} = \left \vert \frac{\mathbf{B} \times \dot{ \mathbf{B} } } { \left \vert \mathbf{B} \right \vert ^ 2} \right \vert.
 \end{equation}
 So a more general expression for the ratio, $k$, would be
 \begin{equation}
-    k = \frac{\omega_\textrm{L}}{\omega_\textrm{B}} = \frac{\gamma \left\vert \mathbf{B} \right\vert^2}{\dot{ \left\vert \mathbf{B} \right \vert } }.
+    k = \frac{\omega_\textrm{L}}{\omega_\textrm{B}} = \frac{\gamma \left\vert \mathbf{B} \right\vert^3}{\left\vert \mathbf{B} \times \dot{ \mathbf{B} }\right \vert }.
 \end{equation}
 The only thing that may not be obvious, is how to calculate the time derivate of the magnetic field from the perspective of a moving atom.
 Again, we are fortunate because this is a simple problem, and has been well established in the field of fluid dynamics.
