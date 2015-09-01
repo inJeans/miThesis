@@ -301,12 +301,28 @@ Thus we may define the surface of a sphere at which the conditions for a transit
 \begin{align}
     \omega_{\textrm{L}} &\approx \omega_{\textrm{B}},\\
     \gamma B_q' b_0 &\approx \frac{v}{b_0},\\
-    b_0 &\approx \sqrt{\frac{v}{\gamma B_q'}}.
+    b_0(v) &\approx \sqrt{\frac{v}{\gamma B_q'}}.
 \end{align}
 We can now pick up with the work from Porto, which tries a little harder to eliminate unnecessary assumptions.
 So far we can describe the velocity dependant surface through which an atom must travel to undergo a non-adiabtic transition.
 To be able to estimate a loss rate we must find the number of atoms flowing through this surface.
-The local particle flux through this surface is given by, $j = v n( \mathbf{r}(v),p)$, where $n(\mathbf{r}(v),p)$ is the local atom density.
+The local particle flux through this surface is given by, $j(v) = v n( \mathbf{r}(v),p)$, where $n(\mathbf{r}(v),p)$ is the local atom density. 
+As the radius of the above sphere is typically very small, we can make that assumption that local atom density is constant and equal to the central density of the cloud, $n(\mathbf{r}(v),p) \approx n(0,p) = n_0$.
+Thus if the flux is constant we can find the number of atoms crossing the surface of the velocity dependant sphere by multiplying the flux by the surface area of the sphere
+\begin{align}
+    \Gamma_{\textrm{M}}(v)N &= 4\pi C b_0^2(v)j(v),\\ 
+    &= \frac{ 4\pi C n_0 v^2 } { \gamma B_q'}.
+\end{align}
+At this point we have introduced a constant $C$ to account for the approximations we have made above.
+This is essentially a geometric factor that will change depending of the shape and structure of the trapping potential.
+We can now average this loss rate over all velocities
+\begin{align}
+    \Gamma_\textrm{M}N &= \frac{ 4\pi C n_0 } { \gamma B_q'} \left< v^2 \right>,\\
+    &= \frac{ 4\pi C n_0 } { \gamma B_q'} \frac{ \iiint v^2 e^{-\frac{p^2}{2mk_\textrm{B}T}}\, d^3p}{\iiint e^{-\frac{p^2}{2mk_\textrm{B}T}}\,d^3p},\\
+    &= \frac{ 4\pi C n_0 } { \gamma B_q'} \frac{ \int v^4 e^{-\frac{mv^2}{2k_\textrm{B}T}}\, dv}{\int v^2 e^{-\frac{mv^2}{2k_\textrm{B}T}}\,dv},\\
+    &= \frac{ 4\pi C n_0 } { \gamma B_q'} \frac{3k_\textrm{B}T}{m}.
+\end{align}
+
 
 \section{Diffren' sexion} \label{sec:maj_loss_der}
 
@@ -342,7 +358,21 @@ What we need to calculate is known as the material derivative, which (in cartesi
     &= \frac{\partial \mathbf{B}}{\partial t} + v_x  \frac{\partial \mathbf{B}}{\partial x} + v_y \frac{\partial \mathbf{B}}{\partial y} + v_z \frac{\partial \mathbf{B}}{\partial z},
 \end{align}
 where $\mathbf{v} = \left(v_x,v_y,v_z\right)$ is the velocity of the atom.
-
+If we now consider specifically the quadrupole field as given in \autoref{eq:quad_field} we can specify an explicit expression for $k$
+\begin{equation}
+    k = \frac{\gamma  B_z' \left(x^2+y^2+4 z^2\right)^{3/2}}{2 \sqrt{(v_y x- v_x y)^2+4 (v_z x-v_x z)^2+4 (v_z y-v_y z)^2}}.
+\end{equation}
+Instead of making the approximation of a sphere centered on the origin we can now physically see what the Majorana hole looks like.
+\begin{figure}
+\hspace{-8em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfloat[Walraven homegeneous gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 1.2$ should equal 3?]{\label{fig:walravenHomo}\includegraphics[width=0.525\textwidth]{gfx/Majorana/majorana_hole_low_res}}\quad
+\subfloat[Walraven ip gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 1.6$ should equal 6?]{\label{fig:walravenIP}\includegraphics[width=0.525\textwidth]{gfx/Thermalisation/walravenIP}}\quad
+\subfloat[Walraven quad gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 10.45$ should equal 9?]{\label{fig:walravenQ}\includegraphics[width=0.525\textwidth]{gfx/Thermalisation/walravenQuad}}%
+}
+\caption{Walraven rethermalisation. I want to do this simulation for some different perturbation temperatures. One more higher and one lower too.}\label{fig:walravenTherm}
+\end{figure}
 
 
 
