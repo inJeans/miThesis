@@ -1,6 +1,6 @@
 % Chapter X
 
-\chapter{Majorana Interulde} % Chapter title
+\chapter{Majorana Interlude} % Chapter title
 
 \label{ch:majinter} % For referencing the chapter elsewhere, use \autoref{ch:dsmcehr} 
 
@@ -9,7 +9,7 @@
 \begin{flushright}{\slshape    
 It's very hard to talk quantum\\
 using a language originally designed\\
- to tell other monkeys where the ripe fruit is.} \\ \medskip
+to tell other monkeys where the ripe fruit is.} \\ \medskip
 --- Terry Pratchett, Night Watch
 \end{flushright}
 
@@ -19,9 +19,14 @@ using a language originally designed\\
 
 General scope for the problem.
 
-Inadequacies in alternative approaches.
+Inadequacies in alternative approaches. Should mention some of the full quantum models of the Stern Gerlach problem ie: Sukmar and Brink etc.
 
 Majorana's approach does not require the extension into the imaginary time domain nor does he make dodgey mistakes in an attempt to engineer the solution.
+
+As mentioned in section \autoref{ch:intro} the original experimental realisations of BEC were hindered by the unwanted selective loss of the coldest atoms in the gas cloud \cite{Cornell2002, Ketterle2002}.
+This loss, it was found, was caused by non-adiabatic spin transitions of atoms close to the minimum of the magnetic trapping potential.
+
+Papers I should reference in this introduction are \cite{Bloch1945,Giacomo2005,Wittig2005,Ma2006, Vutha2010}.
 
 The print history of the Majorana solution is a little funny.
 Originally printed in il nuova cimento in 1932 \cite{?} it was subsequently translated and reprinted in Societ\'a Italiana di Fisica in 19?? \cite{?}.
@@ -272,19 +277,11 @@ The probability of the spin adiabatically flipping will be given by
 \end{equation}
 \textcolor{red}{(Explain the changing sign of the magnetic field swaps the basis vectors.)}
 
-%----------------------------------------------------------------------------------------
-
-\section{Majorana Spin Flips}
-
-Talk about Majorana problem, history, derive formula etc
-
-%----------------------------------------------------------------------------------------
-
 \section{Landau Zener Formula}
 
 Content
 
-\section{Loss Rates 'n' Stuff}
+\section{Loss Rates 'n' Stuff} \label{sec:majorana_loss_rates}
 
 Now that we have the solution to the Majorana problem we can use this formula to derive loss rates for atoms in real trapping potentials.
 The following section will outline the work done by Porto \cite{Lin2009,Dubessy2014} in a clear methodical manner, allowing the reader to fully understand the assumptions made when deriving the current loss model.
@@ -301,7 +298,7 @@ Thus we may define the surface of a sphere at which the conditions for a transit
 \begin{align}
     \omega_{\textrm{L}} &\approx \omega_{\textrm{B}},\\
     \gamma B_q' b_0 &\approx \frac{v}{b_0},\\
-    b_0(v) &\approx \sqrt{\frac{v}{\gamma B_q'}}.
+    b_0(v) &\approx \sqrt{\frac{v}{\gamma B_q'}}. \label{eq:majorana_radius}
 \end{align}
 We can now pick up with the work from Porto, which tries a little harder to eliminate unnecessary assumptions.
 So far we can describe the velocity dependant surface through which an atom must travel to undergo a non-adiabtic transition.
@@ -355,7 +352,7 @@ Again, we are fortunate because this is a simple problem, and has been well esta
 What we need to calculate is known as the material derivative, which (in cartesian coordinates) is given by
 \begin{align}
     \frac{D \mathbf{B}}{Dt} &= \frac{\partial \mathbf{B}}{\partial t} + \mathbf{v} \cdot \nabla \mathbf{B},\\
-    &= \frac{\partial \mathbf{B}}{\partial t} + v_x  \frac{\partial \mathbf{B}}{\partial x} + v_y \frac{\partial \mathbf{B}}{\partial y} + v_z \frac{\partial \mathbf{B}}{\partial z},
+    &= \frac{\partial \mathbf{B}}{\partial t} + v_x  \frac{\partial \mathbf{B}}{\partial x} + v_y \frac{\partial \mathbf{B}}{\partial y} + v_z \frac{\partial \mathbf{B}}{\partial z}, \label{eq:majorana_surface}
 \end{align}
 where $\mathbf{v} = \left(v_x,v_y,v_z\right)$ is the velocity of the atom.
 If we now consider specifically the quadrupole field as given in \autoref{eq:quad_field} we can specify an explicit expression for $k$
@@ -367,13 +364,14 @@ Instead of making the approximation of a sphere centered on the origin we can no
 \hspace{-8em}
 \makebox[1.8\linewidth][l]{%
 \centering
-\subfloat[Walraven homegeneous gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 1.2$ should equal 3?]{\label{fig:walravenHomo}\includegraphics[width=0.525\textwidth]{gfx/Majorana/majorana_hole_low_res}}\quad
-\subfloat[Walraven ip gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 1.6$ should equal 6?]{\label{fig:walravenIP}\includegraphics[width=0.525\textwidth]{gfx/Thermalisation/walravenIP}}\quad
-\subfloat[Walraven quad gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 10.45$ should equal 9?]{\label{fig:walravenQ}\includegraphics[width=0.525\textwidth]{gfx/Thermalisation/walravenQuad}}%
+\subfloat[Walraven homegeneous gas thermalisation. $\tau_{c}^{-1} / \tau^{-1} = 1.2$ should equal 3?]{\label{fig:whole_hole}\includegraphics[width=0.525\textwidth]{gfx/Majorana/majorana_hole_low_res}}%
 }
-\caption{Walraven rethermalisation. I want to do this simulation for some different perturbation temperatures. One more higher and one lower too.}\label{fig:walravenTherm}
+\caption{Walraven rethermalisation. I want to do this simulation for some different perturbation temperatures. One more higher and one lower too.}\label{fig:majorana_hole}
 \end{figure}
-
+In \autoref{fig:majorana_hole} we can see this surface looks like a disc that has been punctured either side along the axis of the trajectory of the atom.
+This is because an atom that passes directly through the field minimum has a zero probability of making a non-adiabatic transition.
+Of course this visualisation is only for a particular velocity, and since we have a thermal spread of velocities the average Majorana hole will look something more like the disc approximated by \autoref{eq:majorana_radius}.
+So on average the approach taken in \autoref{sec:majorana_loss_rates} will be reasonably accurate however \autoref{eq:majorana_surface} may be more useful for a direct numerical approach.
 
 
 
