@@ -1,8 +1,8 @@
 % Chapter X
 
-\chapter{Majorana Interlude} % Chapter title
+\chapter{The Majorana Problem} % Chapter title
 
-\label{ch:majinter} % For referencing the chapter elsewhere, use \autoref{ch:dsmcehr} 
+\label{ch:majinter} % For referencing the chapter elsewhere, use \autoref{ch:majinter} 
 
 %----------------------------------------------------------------------------------------
 
@@ -17,19 +17,40 @@ to tell other monkeys where the ripe fruit is.} \\ \medskip
 
 %-----------------------------------------------------------------------------------------
 
-General scope for the problem.
+%- Connection of problem to BEC (and hence connection to previous chapter), how they solved the problem.
+%- Connection of problem to Stern Gerlach (allusion to next chapter), ie: why Majorana was interested in the problem.
+%- Applications of the transition
+%- Some of the alternate solutions, but don't go through solutions in depth.
+%- Why it is necessary that I go through this approach in depth. Can discuss Majorana a little here too - his skill with integrals, symmetries and the eloquence of his solution.
+%- Set up the problem.
+%- Solve problem.
+%- Discuss results in context of Majorana loss
 
-Inadequacies in alternative approaches. Should mention some of the full quantum models of the Stern Gerlach problem ie: Sukmar and Brink etc.
+In \autoref{ch:intro} we spoke about how the original experimental realisations of BEC were hindered by the selective loss of the coldest atoms \cite{Cornell2002, Ketterle2002} in the gas cloud.
+I even alluded to a problem in \autoref{sec:dsmcevaporation} when we were evaporating atoms to low temperatures in the quadrupole trap.
+We saw a deviation of the numerical simulations from the experimental results, suggesting another physical element is present in the experiment that is not captured in the simulation.
+The key piece of physics that is missing from our DSMC simulations and that which was the devil in the first BEC experiments is that of the Majorana spin flip.
+Studied by Ettore Majorana in the early 1900's, the Majorana spin flip is a non-adiabatic spin transition experienced  by magnetically trapped atoms passing by the minimum of the trapping potential.
+The early BEC labs where able to avoid this trapped minimum by plugging it with a repulsive optical potential (MIT \cite{ketterle}) and by smoothing out the sharp trap bottom with a time-averaged orbiting potential (TOP) trap (JILA \cite{Wienman}).
+Since then many alternate approaches to avoiding the trap minimum have been developed; Ioffe Pritchard traps \cite{IP}, something else \cite{??} and the combined magnetic optical traps \cite{Lin2009} which were the original inspiration for my investigation into this field.
 
-Majorana's approach does not require the extension into the imaginary time domain nor does he make dodgey mistakes in an attempt to engineer the solution.
+What was it that caused Majorana to begin thinking about this problem?
+A few years after the seminal work of Stern and Gerlach \cite{?} on spatial quantisation (a problem we will consider with some more depth in \autoref{ch:dsmcehr}), Stern became interested in quantitatively checking theoretical predictions \cite{Darwin,Lande} of the atomic transition probabilities in the non-adiabatic case.
+After having encouraged the development of a useful theoretical framework \cite{Guttinger} and devised a useful experimental procedure \cite{Phipps and Stern} Stern passed his experiment on to Frisch and Segr\'e who soon realised that, due to some technical difficulties, was not going to work.
+They concocted a new plan \cite{FrischSegre} that involved passing a beam of vapour near to a magnetic field minimum to induce non-adiabatic spin transitions.
+Naturally Segr\'e turned to his long time friend and colleague Majorana for the establishment of a quantitative theory for the experiment, and thus his solution to the problem was born.
+\marginpar{Some sort of side note on the strange disappearance of Majorana and his short but influential career in science.}
 
-As mentioned in section \autoref{ch:intro} the original experimental realisations of BEC were hindered by the unwanted selective loss of the coldest atoms in the gas cloud \cite{Cornell2002, Ketterle2002}.
-This loss, it was found, was caused by non-adiabatic spin transitions of atoms close to the minimum of the magnetic trapping potential.
+Since Majorana's solution there has been many applications of the physics across a range of different fields.
+Analysis of polarised neutron beams \cite{Stanford1954}.
+Neutron spectrometers \cite{Nathans1959}.
+Double resonance spectroscopy \cite{Brossel1952}.
+Pulsed atom laser \cite{Ma2006}.
 
-Papers I should reference in this introduction are \cite{Bloch1945,Giacomo2005,Wittig2005,Ma2006, Vutha2010}.
+Discuss alternate solutions of Rabi, Bloch \cite{Bloch1945}, Landau, Zener, Stuckelberg \cite{Giacomo2005}, Wittig \cite{Wittig2005}, Vutha \cite{Vutha2010}.
 
 The print history of the Majorana solution is a little funny.
-Originally printed in il nuova cimento in 1932 \cite{Majorana1932-orig} it was subsequently translated and reprinted in Societ\'a Italiana di Fisica in 19?? \cite{?}.
+Originally printed in il nuova cimento in 1932 \cite{Majorana1932-orig} it was subsequently translated and reprinted in Ettore Majorana Scientific Papers in 2006 \cite{Majorana1932-trans}.
 Unfortunately both the original and the reprint contain some small typographical errors that may make it difficult for readers to follow.
 In an attempt to remedy this problem, as well as elucidate the complex asymptotic method Majorana used in his solution, the following sections will outline, in excruciating detail, the correct solution -- error free.
 Readers may also find this a useful introduction to, and a practical application of, the method of steepest descents.
@@ -151,7 +172,7 @@ The simplest technique for obtaining the asymptotic behaviour of integrals in wh
 \begin{equation}
 	I(\tau) = \int_{a}^{b} h(s) e^{\tau\phi(s)} \, ds,
 \end{equation}
-is Laplace's method \cite{Bender1999}, where we assume $h(s)$ and $\phi(s)$ are \emph{real} and \emph{continuous}. 
+is Laplace's method \cite{Laplace1986}, where we assume $h(s)$ and $\phi(s)$ are \emph{real} and \emph{continuous}. 
 The foundation of Laplace's method is the idea that if the real continuous function $\phi(s)$ has its \emph{maximum} on the interval of integration, $a \le s \le b$, at $t = c$ and if this maximum is not equal to zero, $h(c) \ne 0$, then it is only the \emph{immediate neighbourhood} of $t=c$ that contributes to the full asymptotic expansion of $I(\tau)$ for large $\tau$. 
 That is we may approximate the integral $I(\tau)$ by $I(\tau; \epsilon)$ where
 \begin{align}
@@ -267,19 +288,11 @@ and
 	g(\tau) = (4\tau)^{k/4i}e^{-k\pi/4}.
 \end{equation}
 
-%-----------------------------------------------------------------------------------------
-
-\section{Conclusion} \label{sec:majorana_conc}
-
 The probability of the spin adiabatically flipping will be given by 
 \begin{equation}
     \left\vert g \right\vert^{2} = e^{-k\pi/2} \textrm{ as } \tau \to \infty. \label{eq:majProb}
 \end{equation}
 \textcolor{red}{(Explain the changing sign of the magnetic field swaps the basis vectors.)}
-
-\section{Landau Zener Formula}
-
-Content
 
 \section{Loss Rates 'n' Stuff} \label{sec:majorana_loss_rates}
 

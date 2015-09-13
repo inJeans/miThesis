@@ -15,8 +15,6 @@ just as you know less than you want to know.} \\ \medskip
 
 %----------------------------------------------------------------------------------------
 
-\label{ch:dsmcehr} % For referencing the chapter elsewhere, use \autoref{ch:dsmcehr} 
-
 To include the effects of Majorana spin flips in our DSMC simulations we will obviously have to develop some semiclassical method \ie simulate the positions of the atoms classically using the DSMC method and simulate the internal state of the atom with a quantum mechanical approach.
 One such approach would be to use the Ehrenfest theorem \cite{Ehrenfest1927} to calculate the average force applied to an atom based on its current internal state (I have given a brief pseudo-code in \autoref{lst:Ehrenfest}).
 Using this method we would evolve the internal state of the atom using the Schr\"odinger equation then, using the internal state of the atom, we can calculate the expectation value of the force to use in evolving the position of the atom.
