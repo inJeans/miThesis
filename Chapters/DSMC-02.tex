@@ -14,6 +14,8 @@ just as you know less than you want to know.} \\ \medskip
 \bigskip
 
 %----------------------------------------------------------------------------------------
+I want to motivate/connect with previous chapter and stern gerlach. Talk about other simulation methods of the stern gerlach problem, why we have chosen not to include them and why we have decided to go with dsmc.\\
+%----------------------------------------------------------------------------------------
 
 To include the effects of Majorana spin flips in our DSMC simulations we will obviously have to develop some semiclassical method \ie simulate the positions of the atoms classically using the DSMC method and simulate the internal state of the atom with a quantum mechanical approach.
 One such approach would be to use the Ehrenfest theorem \cite{Ehrenfest1927} to calculate the average force applied to an atom based on its current internal state (I have given a brief pseudo-code in \autoref{lst:Ehrenfest}).
@@ -27,11 +29,11 @@ While we are able to capture some of the interesting physics (usually short term
 
 \section{Simulating Schr\"odinger Equation}
 
-To make use of the proposed Ehrenfest method (EM) we need to be able to accurate solve the Sch\"odinger equation.
-Some of the more straight forward approached might be to apply a finite difference technique directly to the pde, however these methods are not generally conservative \cite{?}.
-In fact the techniques that are considered more stable generally have some non-physical numerical dissipation as a results of the approximations made \cite{?} (or even show?).
+To make use of the proposed Ehrenfest method (EM) we need to be able to accurately solve the Sch\"odinger equation.
+Some of the more straight forward approaches might be to apply a finite difference technique directly to the pde, however these methods are not generally conservative \cite{?}.
+In fact the techniques that are considered more stable generally have some non-physical numerical dissipation built in \cite{?} (or even show?).
 
-The approach we have employed here, and in chapter \ref{ch:dsmcmcwf}, is to make use of the unitary time evolution operator \cite{?}.
+The approach we have employed here, and in \autoref{ch:dsmcmcwf}, is to make use of the unitary time evolution operator \cite{?}.
 The main benefit of this approach is, as the name suggests, the operator is unitary and hence inherently conserves probability.
 The unitary time evolution operator is defined as follows
 \begin{equation}
@@ -42,7 +44,7 @@ That is for a time dependant Hamiltonian we can evolve the state of our wavefunc
     \ket{ \psi (t_0+\Delta t) } = \widehat{U}(t_0,t_0+\Delta t) \ket{ \psi (t_0) }.
 \end{equation*}
 This method is especially useful for our two level system as we can explicitly derive an expression for the $2\times2$ matrix form of $\widehat{U}$.
-Recall from section \ref{sec:intromag} that the Hamiltonian for a magnetic moment in a magnetic field is given by
+Recall from \autoref{sec:intromag} that the Hamiltonian for a magnetic moment in a magnetic field is given by
 \begin{equation*}
     \widehat{H} = -\hat{\boldsymbol{\mu}} \cdot \mathbf{B},
 \end{equation*}
@@ -52,7 +54,7 @@ which can be expressed in matrix form as
                                                       B_x + \imath B_y & -B_z \end{bmatrix}.                                          
 \end{equation*}
 In general the magnetic field components are functions of position, which, for the atoms is a function of time.
-For a general magnetic field we do not know explicitly what the time dependance will be and so we will not be able to explicitly integrate the Hamiltonian as required by equation \eqref{eq:timeEvolution}.
+For a general magnetic field we do not know explicitly what the time dependance will be and so we will not be able to explicitly integrate the Hamiltonian as required by \autoref{eq:timeEvolution}.
 \marginpar{Make a side note about higher order integration.}
 So we will have to make the assumption that our time steps are very small, $\Delta t \ll 1$, so that over the time step the Hamiltonian remains relatively constant.
 In this limit we have, $\int\widehat{H}\,dt = \widehat{H}\Delta t$, so that the time evolution operator becomes
@@ -69,9 +71,9 @@ This simple closed form expression makes it very easy to implement the unitary e
 
 \section{Schr\"odinger Simulations}
 
-To test out this technique lets just numerically solve the original Majorana problem \eqref{eq:Majprob}.
-In figure \ref{fig:majprob} I have simulated two scenarios: a spin flip (figs \ref{fig:labframeFlip}, \ref{fig:rotframeFlip}) and a not flip (figs \ref{fig:labframeNoFlip}, \ref{fig:rotframeNoFlip}).
-Each scenario is plotted in two seperate refernce frames: the laboratory frame and the co-rotating frame.
+To test out this technique lets just numerically solve the original Majorana problem \autoref{eq:Majprob}.
+In \autoref{fig:majprob} I have simulated two scenarios: a spin flip (\autoref{fig:labframeFlip}, \autoref{fig:rotframeFlip}) and a not flip (\autoref{fig:labframeNoFlip}, \autoref{fig:rotframeNoFlip}).
+Each scenario is plotted in two separate reference frames: the laboratory frame and the co-rotating frame.
 The laboratory frame is the frame in which the spin up direction is aligned with the $z$-axis, the co-rotating frame is the frame in which the spin up direction is aligned with the magnetic field.
 \marginpar{We find the spin up and spin down components in the co-rotating frame by projecting onto the "local" magnetic field. We do this using the projection operator, $ \ket{\phi_{\uparrow,\downarrow}} = \widehat{P}_{\uparrow,\downarrow} \ket{\Psi}$, where the projection operator is given by $\widehat{P} = ??$.}
 The laboratory frame is the frame in which the differential equation is set, however in this frame it can become a little confusing about wether a particular spin state is flipped our not.
@@ -94,13 +96,13 @@ In the co-rotating frame it is always clear which state is the spin up state.
 \caption{Simulating the no majorana spin flip }\label{fig:majprob}
 \end{figure}
 
-Figures \ref{fig:labframeFlip} and \ref{fig:rotframeFlip} both illustrate a Majorana spin flip.
-In this simulation we used the magnetic field $\mathbf{B}=(0.1,0.0,2500t)\,\mathrm{mT}$, and began at $t=-15\,\mathrm{ms}$ where the population in the spin component in the lab frame is less than $10^6$ (although we have plotted a smaller time window in figure \ref{fig:majprob}).
+\autoref{fig:labframeFlip} and \autoref{fig:rotframeFlip} both illustrate a Majorana spin flip.
+In this simulation we used the magnetic field $\mathbf{B}=(0.1,0.0,2500t)\,\mathrm{mT}$, and began at $t=-15\,\mathrm{ms}$ where the population in the spin down component in the lab frame is less than $10^{6}$ (we have plotted a smaller time window in \autoref{fig:majprob}). \textcolor{red}{(Not sure what that sentence was supposed to be about? Maybe it is alking about the number of simulated atoms?)}
 We can see the distinct different between the behaviour of the spin populations in the two different reference frames.
 The initial wavefunction was chosen such that the population of the spin up component in the lab frame was 1.
-Figure \ref{fig:rotframeFlip} clearly displays a change in the most probable state, whereas in figure \ref{fig:labframeFlip} it is not so clear.
+\autoref{fig:rotframeFlip} clearly displays a change in the most probable state, whereas in \autoref{fig:labframeFlip} it is not so clear.
 Again this is because in the lab frame the spin up direction changes at $t=0$ when the sign of the $z$ component of the magnetic field moves from negative to positive.
-Figures \ref{fig:labframeNoFlip} and \ref{fig:rotframeNoFlip} results from a simulation with $\mathbf{B}=(0.2,0.0,2500t)\,\mathrm{mT}$.
+\autoref{fig:labframeNoFlip} and \autoref{fig:rotframeNoFlip} results from a simulation with $\mathbf{B}=(0.2,0.0,2500t)\,\mathrm{mT}$.
 In these plots we see the converse behaviour in the state populations, indicating that no spin flip has occurred.
 
 For both simulations we have used a time step of $\Delta t = 1\,\mu\mathrm{s}$.
@@ -121,7 +123,7 @@ This technique still has the same order accuracy with time, and introduces no ad
 
 Confident in our ability to accurately simulate the Schr\"odinger equation, in our regime of interest, we may begin to apply the Ehrenfest method to simulating spin flips of real atoms.
 The first step is to first see wether or not we can simulate the spin flip of a single atom.
-I have given a pseudo-code example for a single time step of the Ehrenfest algorithm in listing \ref{lst:Ehrenfest}\footnote{Note in listing \ref{lst:Ehrenfest} that we have denoted the discrete approximation to a continuous variable as, $g_n \approx g(t_n)$.}.
+I have given a pseudo-code example for a single time step of the Ehrenfest algorithm in \autoref{lst:Ehrenfest}\footnote{Note in \autoref{lst:Ehrenfest} that we have denoted the discrete approximation to a continuous variable as, $g_n \approx g(t_n)$.}.
 \begin{lstlisting}[float,caption=Psuedo-code algorithm for a single Ehrenfest method time step, mathescape,label= lst:Ehrenfest,stepnumber=1]
 Calculate force using current spin state: $\mathbf{F}_n = \bra{\Psi_n}\widehat{\mathbf{F}}_n\ket{\Psi_n}$.
 Evolve wavefunction using time evolution operator: $\ket{\Psi_{n+1}} = \widehat{U}_n \ket{\Psi_{n}}$.
@@ -140,17 +142,17 @@ Evolve position using the new velocity: $\mathbf{x}_{n+1} = \mathbf{x}_n + \math
 \caption{No flip and flip in the same simulation.}\label{fig:ehrenfestFlip}
 \end{figure}
 
-Figure \ref{fig:ehrenfestFlip} shows the results from one such simulation.
-This simulation was of a rubidium 87 atom the began at $z=-5\,\mu\mathrm{m}$ with a zero initial velocity.
+\autoref{fig:ehrenfestFlip} shows the results from one such simulation.
+This simulation was of a rubidium 87 atom that began at $z=-5\,\mu\mathrm{m}$ with a zero initial velocity.
 Again the initial wavefunction was chosen so that it would be completely spin up in the co-rotating frame.
 The magnetic field was given by $\mathbf{B} = (B_x,0,B_z'z)$, with $B_x=1\,\mu\mathrm{T}$ and $B_z'=2.5\,\mathrm{Tm}^{-1}$\footnote{I am aware that this magnetic field does not satisfy Maxwell's equations, but it serves as a nice example and more closely aligns with the field considered by Majorana.}.
 This is a fabulous example of how well the Ehrenfest method can work.
-Figure \ref{fig:ehrenfestSpin} displays how well the spin populations are simulated.
+\autoref{fig:ehrenfestSpin} displays how well the spin populations are simulated.
 Again they agree with the predictions of the Majorana formula and the total probability is conserved.
 \marginpar{Say how I can still use the Majorana formula here. $c =v(t=0) B_z'$.}
-In figure \ref{fig:ehrenfestPos} I have plotted the position and velocity of the atom as it moves through time.
+In \autoref{fig:ehrenfestPos} I have plotted the position and velocity of the atom as it moves through time.
 We can see how the atom remains trapped after the first partial flip and is then completely ejected from the trapped once it has flipped.
-Finally figure \ref{fig:ehrenfestEnergy} shows how the total energy of the atom is conserved throughout the simulation (even after is has flipped).
+Finally \autoref{fig:ehrenfestEnergy} shows how the total energy of the atom is conserved throughout the simulation (even after it has flipped).
 So things seem to be working quite well, but earlier I alluded to the fact that the Ehrenfest method is not suitable to this kind of problem, so what is wrong?
 I will let you stew on this few a few sections while we investigate the behaviour of a full gas simulation.
 
@@ -160,7 +162,7 @@ I will let you stew on this few a few sections while we investigate the behaviou
 
 Convinced that our Ehrenfest method can simulate spin flips and conserves both energy and probability we can begin to run some full gas simulations.
 Majorana spin flips only occur when there is a sharp transition in magnetic field direction, like that transition that is present around the centre of a quadrupole trap.
-An IP trap does not have this kind of transition, thus we would expect a very small number (~0) of spin flips to occur as a result of the IP field configuration.
+An IP trap does not have this kind of transition, thus we would expect a very small number ($\sim 0$) of spin flips to occur as a result of the IP field configuration.
 As a cautionary test we will simulate a gas trapped in an IP trap using the Ehrenfest method.
 
 %------------------------------------------------
@@ -180,24 +182,24 @@ This will allow us to simulate the energy and probability conserving characteris
 \caption{Ehrenfest method for a gas in an IP trap.}\label{fig:ehrenfestIP}
 \end{figure}
 
-The results from a simulation of $10^6$ rubidium 87 atoms at $2\,\mu\mathrm{K}$ in an IP with $B_0=0.01\,\mathrm{T}$, $B'=20.0\,\mathrm{Tm}^{-1}$ and $B''=40,000\,\mathrm{Tm}^{-2}$ over a period of approximately 10 collision times ($10\tau_c$) are shown in figure \ref{fig:ehrenfestIP}.
+The results from a simulation of $10^6$ rubidium 87 atoms at $2\,\mu\mathrm{K}$ in an IP with $B_0=0.01\,\mathrm{T}$, $B'=20.0\,\mathrm{Tm}^{-1}$ and $B''=40,000\,\mathrm{Tm}^{-2}$ over a period of approximately 10 collision times ($10\tau_c$) are shown in \autoref{fig:ehrenfestIP}.
 In this figure I have tried to show the conservative properties of the Ehrenfest method.
-Figure \ref{fig:ehrenfestIPDist} illustrates the radial distribution of particles.
-I have drawn the distribution at the beginning and the end of the simulation, as well as contrast it with the analytic result for a thermal gas.
+\autoref{fig:ehrenfestIPDist} illustrates the radial distribution of particles.
+I have drawn the distribution at the beginning and the end of the simulation, as well as contrast it with the analytic result for a thermal gas at this temperature.
 \marginpar{The density distribution for a thermal gas is $n(\mathbf{r}) = n_0 \exp\left[-\mathcal{U}(\mathbf{r})/k_BT\right]$.}
 As we can see the numerical result is very stable and agrees well with the analytic prediction.
-In figure \ref{fig:ehrenfestIPCons} I have illustrated the change in the quantities we would expect to be conserved in a simulation like this.
+In \autoref{fig:ehrenfestIPCons} I have illustrated the change in the quantities we would expect to be conserved in a simulation like this.
 The top graph shows the percentage change in the average total energy, the middle graph shows the percentage change in the average norm of the wavefunction and the bottom graph shows the number of atoms.
 
 First of all we can note there is no change in the number of atoms \ie no Majorana spin flips.
-This simulation has the same evaportaion code running as we developed in section \ref{sec:evaporation}, with the evaporation condition that if $P_z < 0$ the atom is removed.
+This simulation has the same evaportaion code running as we developed in \autoref{sec:evaporation}, with the evaporation condition that if $P_z < 0$ the atom is removed.
 This is due to the presence of the non-zero field bias, $B_0$, which ensures that the Larmor precession rate is always greater than the rate of change of the magnetic field direction.
 Second we can see a linear increase in the total energy and wavefunction norm.
-How can this be, I thought we were using fancy symplectic methods that were designed to conserve these quantities.
+How can this be, I thought we were using fancy symplectic methods that were designed to conserve these quantities?
 I have two responses to that question, the first is can we really call a \%0.005 (that is 1 in 20,000) increase a significant change?
-For the simulation I have run here this corresponds to the total energy changing by $0.3\,\mathrm{nK}$, not we might consider a significant increase in temperature.
+For the simulation I have run here this corresponds to the total energy changing by $0.3\,\mathrm{nK}$, not what we might consider a significant increase in temperature.
 However, we can argue that there is a clear linear trend and if we anticipate running extended simulations this might be something that we wish to keep in mind.
-Although I wouldn't consider this deal breaker.
+Although I wouldn't consider this a deal breaker.
 My second response would be that the time step I have used is far too large.
 For this simulation I have used the time step, $\Delta t = 5\,\mathrm{ns}$.
 This might seem quite small but compared to the Larmor period at the the average radius, $T_L\approx 10^{-8}\,\mathrm{s}$, it isn't that great.
