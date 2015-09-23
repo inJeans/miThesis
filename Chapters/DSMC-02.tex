@@ -50,8 +50,8 @@ Recall from \autoref{sec:intromag} that the Hamiltonian for a magnetic moment in
 \end{equation*}
 which can be expressed in matrix form as
 \begin{equation*}
-    \widehat{H} = \frac{1}{2}g_s\mu_B \begin{bmatrix} B_z & B_x - \imath B_y \\
-                                                      B_x + \imath B_y & -B_z \end{bmatrix}.                                          
+    \widehat{H} = \hbar\gamma \begin{bmatrix} B_z & B_x - \imath B_y \\
+                                                      B_x + \imath B_y & -B_z \end{bmatrix}.                                         
 \end{equation*}
 In general the magnetic field components are functions of position, which, for the atoms is a function of time.
 For a general magnetic field we do not know explicitly what the time dependance will be and so we will not be able to explicitly integrate the Hamiltonian as required by \autoref{eq:timeEvolution}.
@@ -69,14 +69,31 @@ This simple closed form expression makes it very easy to implement the unitary e
 
 %------------------------------------------------
 
+\marginpar{We find the spin up and spin down components in the co-rotating frame by projecting onto the "local" magnetic field. We do this using the projection operator, $ \ket{\phi_{\uparrow,\downarrow}} = \widehat{P}_{\uparrow,\downarrow} \ket{\Psi}$, where the projection operator is given by $\widehat{P} = ??$.}
+
 \section{Schr\"odinger Simulations}
 
-To test out this technique lets just numerically solve the original Majorana problem \autoref{eq:Majprob}.
+To test out this technique we will numerically solve the original Majorana problem \autoref{eq:Majprob}.
 In \autoref{fig:majprob} I have simulated two scenarios: a spin flip (\autoref{fig:labframeFlip}, \autoref{fig:rotframeFlip}) and a not flip (\autoref{fig:labframeNoFlip}, \autoref{fig:rotframeNoFlip}).
 Each scenario is plotted in two separate reference frames: the laboratory frame and the co-rotating frame.
-The laboratory frame is the frame in which the spin up direction is aligned with the $z$-axis, the co-rotating frame is the frame in which the spin up direction is aligned with the magnetic field.
-\marginpar{We find the spin up and spin down components in the co-rotating frame by projecting onto the "local" magnetic field. We do this using the projection operator, $ \ket{\phi_{\uparrow,\downarrow}} = \widehat{P}_{\uparrow,\downarrow} \ket{\Psi}$, where the projection operator is given by $\widehat{P} = ??$.}
+The laboratory frame is the frame in which the spin up direction is aligned with the $z$-axis, the co-rotating frame is the frame in which the spin up direction is aligned with the local magnetic field.
 The laboratory frame is the frame in which the differential equation is set, however in this frame it can become a little confusing about wether a particular spin state is flipped our not.
+
+The formalism of moving between frames is actually very straight forward.
+First let's calculate exactly the vectors we are talking about when we say locally aligned with the magnetic field.
+These are simply \textcolor{red}{(Is it that simple? Why is this so obvious?)} the normalised eigenvectors of the hamiltonian in \autoref{Eq:MagHam}
+\begin{equation}
+    \ket{\uparrow,\downarrow} = \frac{1}{\sqrt{2\pm 2n_z}} \begin{bmatrix} n_z \pm 1\\
+                                                                           n_x + \imath n_y \end{bmatrix}.
+\end{equation}
+These are very useful since once we have another complete basis it is very straight forward to transform from one to the other by using the rotation operator\footnote{For those of you more comfortable with linear algebra, $\hat{R}$ can be thought of as the matrix whose columns are the eigenvectors of our new northonormal basis set, \ie $\left[\ket{\uparrow}\, \ket{\downarrow}\right]$.} $\hat{R}$, where $\hat{R}_{ij} = \bra{\psi_i}\left.\phi_j\right>$ so that for our spin half system we would have
+\begin{equation}
+    \hat{R} = \begin{bmatrix} \bra{\uparrow_z}\left.\uparrow\right>   & \bra{\uparrow_z}\left.\downarrow\right>\\
+                              \bra{\downarrow_z}\left.\uparrow\right> & \bra{\downarrow_z}\left.\downarrow\right>
+              \end{bmatrix}.
+\end{equation}
+To move between frames we use the mapping, $\ket{\phi} = \hat{R}^{\dagger} \ket{\psi}$.
+
 In both of the simulations the direction of the magnetic field changes at $t=0$, so the orientation of the spin up direction in the lab frame also changes.
 In the co-rotating frame it is always clear which state is the spin up state.
 
