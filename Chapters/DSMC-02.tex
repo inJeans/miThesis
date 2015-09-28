@@ -17,21 +17,20 @@ just as you know less than you want to know.} \\ \medskip
 I want to motivate/connect with previous chapter and stern gerlach. Talk about other simulation methods of the stern gerlach problem, why we have chosen not to include them and why we have decided to go with dsmc.\\
 %----------------------------------------------------------------------------------------
 
-To include the effects of Majorana spin flips in our DSMC simulations we will obviously have to develop some semiclassical method \ie simulate the positions of the atoms classically using the DSMC method and simulate the internal state of the atom with a quantum mechanical approach.
-One such approach would be to use the Ehrenfest theorem \cite{Ehrenfest1927} to calculate the average force applied to an atom based on its current internal state (I have given a brief pseudo-code in \autoref{lst:Ehrenfest}).
-Using this method we would evolve the internal state of the atom using the Schr\"odinger equation then, using the internal state of the atom, we can calculate the expectation value of the force to use in evolving the position of the atom.
+One approach to including the effects of Majorana spin flips in our DSMC simulations would be to develop a semiclassical method \ie simulate the positions of the atoms classically using the DSMC method and simulate the internal state of the atom with a quantum mechanical approach.
+One such approach might be to use the Ehrenfest theorem \cite{Ehrenfest1927} to calculate the average force applied to an atom based on its current internal state (I have given a brief pseudo-code in \autoref{lst:Ehrenfest}).
+Using this method we would evolve the internal state of the atom using the Schr\"odinger equation then, using the internal state of the atom, we can calculate the expectation value of the force to use in evolving the position of the atom.\\
 
 Unfortunately this technique is not a viable solution, as we will demonstrate in this chapter.
-While we are able to capture some of the interesting physics (usually short term) of the Majorana spin flip using the Ehrenfest approach, it just fails over long simulation periods.
+While we are able to capture some of the interesting physics (usually short term) of the Majorana spin flip using the Ehrenfest approach, the method fails over long simulation periods.
 
 
 %----------------------------------------------------------------------------------------
 
 \section{Simulating Schr\"odinger Equation}
 
-To make use of the proposed Ehrenfest method (EM) we need to be able to accurately solve the Sch\"odinger equation.
-Some of the more straight forward approaches might be to apply a finite difference technique directly to the pde, however these methods are not generally conservative \cite{?}.
-In fact the techniques that are considered more stable generally have some non-physical numerical dissipation built in \cite{?} (or even show?).
+To apply any sort of semi-classical approach we need to be able to accurately solve the Sch\"odinger equation.
+One approach might be to apply a finite difference technique directly to the pde, however this technique is not generally conservative \cite{mi_eng}. %unitary evolution conserves probability, inherently stable. % for majorana equation can get explicit expression for u % approximation to integral equation bounded hence stable and easier for higher accuracy.
 
 The approach we have employed here, and in \autoref{ch:dsmcmcwf}, is to make use of the unitary time evolution operator \cite{?}.
 The main benefit of this approach is, as the name suggests, the operator is unitary and hence inherently conserves probability.
