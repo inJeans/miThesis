@@ -30,7 +30,7 @@ While we are able to capture some of the interesting physics (usually short term
 \section{Simulating Schr\"odinger Equation}
 
 To apply any sort of semi-classical approach we need to be able to accurately solve the Sch\"odinger equation.
-One approach might be to apply a finite difference technique directly to the pde, however this technique is not generally conservative \cite{mi_eng}. %unitary evolution conserves probability, inherently stable. % for majorana equation can get explicit expression for u % approximation to integral equation bounded hence stable and easier for higher accuracy.
+The simplest approach would be to apply a differencing scheme directly, however the schemes that have the simplest implementation generally lack the numerical properties we require; high order accuracy, stability and conservation \cite{mi_eng}. %unitary evolution conserves probability, inherently stable. % for majorana equation can get explicit expression for u % approximation to integral equation bounded hence stable and easier for higher accuracy.
 
 The approach we have employed here, and in \autoref{ch:dsmcmcwf}, is to make use of the unitary time evolution operator \cite{?}.
 The main benefit of this approach is, as the name suggests, the operator is unitary and hence inherently conserves probability.
@@ -38,11 +38,12 @@ The unitary time evolution operator is defined as follows
 \begin{equation}
     \widehat{U}(t_0,t_0+\Delta t) = \exp\left[-\frac{\imath}{\hbar}\int_{t_0}^{t_0+\Delta t} \widehat{H}(t)\,dt \right]. \label{eq:timeEvolution}
 \end{equation}
-That is for a time dependant Hamiltonian we can evolve the state of our wavefunction, $\vert \psi \rangle$, through a moment of time $\Delta t$, through the application of the time evolution operator, $\widehat{U}$,
+That is for a time dependant Hamiltonian we can evolve the state of our wavefunction, $\vert \psi \rangle$, through a moment of time $\Delta t$, with the application of the time evolution operator\footnote{It should be made obvious here that as written in \autoref{eq:timeEvolution} the evolution is exact. We can evolve through any size time step, $\Delta t$, and obtain an exact answer.}, $\widehat{U}$,
 \begin{equation*}
     \ket{ \psi (t_0+\Delta t) } = \widehat{U}(t_0,t_0+\Delta t) \ket{ \psi (t_0) }.
 \end{equation*}
-This method is especially useful for our two level system as we can explicitly derive an expression for the $2\times2$ matrix form of $\widehat{U}$.
+This method is especially useful for our two level system.
+Owing to the lack of a kinetic energy term in the Hamiltonian, we can explicitly derive an expression for the $2\times2$ matrix form of $\widehat{U}$ for the immediate application to an explicit numerical scheme.
 Recall from \autoref{sec:intromag} that the Hamiltonian for a magnetic moment in a magnetic field is given by
 \begin{equation*}
     \widehat{H} = -\hat{\boldsymbol{\mu}} \cdot \mathbf{B},
@@ -53,10 +54,10 @@ which can be expressed in matrix form as
                                                       B_x + \imath B_y & -B_z \end{bmatrix}.                                         
 \end{equation*}
 In general the magnetic field components are functions of position, which, for the atoms is a function of time.
-For a general magnetic field we do not know explicitly what the time dependance will be and so we will not be able to explicitly integrate the Hamiltonian as required by \autoref{eq:timeEvolution}.
-\marginpar{Make a side note about higher order integration.}
-So we will have to make the assumption that our time steps are very small, $\Delta t \ll 1$, so that over the time step the Hamiltonian remains relatively constant.
-In this limit we have, $\int\widehat{H}\,dt = \widehat{H}\Delta t$, so that the time evolution operator becomes
+For a general magnetic field we do not know explicitly what the time dependance will be thus we will be unable to explicitly integrate the Hamiltonian as required by \autoref{eq:timeEvolution}.
+\marginpar{The integration scheme we have used here is equivalent to a left handed rectangle rule, which is of order ${\cal O}(\Delta t ^2)$. It is possible to employ higher order numerical integration methods \ie midpoint, trapezoidal, Simpson's rule, although they were found not to increase performance substantially \cite{miThesis}.}
+We will instead make the assumption that our time steps are very small, $\Delta t \ll 1$, so that over the time step the Hamiltonian remains relatively constant.
+In this limit we have, $\int\widehat{H}(t)\,dt = \widehat{H}(t_0)\Delta t$, so that the time evolution operator becomes
 \begin{align}
     \widehat{U}(t_0,t_0+\Delta t) &= \exp\left[  -\imath\frac{g_s\mu_B\Delta t}{2 \hbar} \begin{bmatrix} B_z & B_x - \imath B_y \\
                                                       B_x + \imath B_y & -B_z \end{bmatrix} \right],\\
@@ -67,8 +68,6 @@ where $\theta = g_s \mu_B \Delta t \vert \mathbf{B} \vert / 2\hbar$ and $n_k = B
 This simple closed form expression makes it very easy to implement the unitary evolution operator method numerically.
 
 %------------------------------------------------
-
-\marginpar{We find the spin up and spin down components in the co-rotating frame by projecting onto the "local" magnetic field. We do this using the projection operator, $ \ket{\phi_{\uparrow,\downarrow}} = \widehat{P}_{\uparrow,\downarrow} \ket{\Psi}$, where the projection operator is given by $\widehat{P} = ??$.}
 
 \section{Schr\"odinger Simulations}
 
