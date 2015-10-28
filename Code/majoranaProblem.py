@@ -3,6 +3,12 @@ import scipy.stats as stats
 import pylab as pl
 import os
 import time
+import seaborn as sns
+
+# sns.set(style='ticks', palette='Set2')
+sns.set_palette('Set2')
+set2_colours = sns.color_palette(palette=None)
+# sns.set(color_codes=True)
 
 start = time.clock()
 
@@ -96,6 +102,22 @@ ax = pl.gca()
 ax.set_aspect(5)
 pl.legend(loc='best')
 pl.savefig("/Users/miMac/Documents/versionControlledFiles/miThesis/gfx/Ehrenfest/rotframeNoFlip.eps")
+
+pl.figure(3)
+# plops = np.row_stack((pops[0,:],pops[1,:]))
+# fig = pl.stackplot( t*1e3, plops )
+# sns.tsplot(pops[0,:])
+pl.fill_between(t*1e3,0,pops[1,:]+pops[0,:],linewidth=0.0,facecolor=set2_colours[0])
+pl.fill_between(t*1e3,0,pops[0,:],linewidth=0.0,facecolor=set2_colours[1])
+pl.ylabel(r'$\langle\psi_{\uparrow,\downarrow}(t)\vert\psi_{\uparrow,\downarrow}(t)\rangle$')
+pl.xlabel('time (ms)')
+pl.axis( [-5, 5, 0, 1] )
+# pl.setp(fig, edgecolor=set2_colours[0])
+# pl.setp(fig, linewidth=0.0)
+ax = pl.gca()
+ax.set_aspect(5)
+pl.savefig("/Users/miMac/Desktop/test.eps")
+pl.show()
 
 end = time.clock()
 print end - start
