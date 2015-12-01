@@ -4,39 +4,56 @@ import numpy as np
 class Vector(object):
     def __init__(self, args):
         """ Create a vector, example: v = Vector([1,2]) """
-        if len(args) == 0:
-            self.x = 0.
-            self.y = 0.
-            self.values = np.array([0., 0.])
-        elif len(args) == 1:
-            self.x = args[0]
-            self.values = np.array([self.x])
-        elif len(args) == 2:
-            self.x = args[0]
-            self.y = args[1]
-            self.values = np.array([self.x, self.y])
-        elif len(args) == 3:
-            self.x = args[0]
-            self.y = args[1]
-            self.z = args[2]
-            self.values = np.array([self.x, self.y, self.z])
-        elif len(args) == 4:
-            self.x = args[0]
-            self.y = args[1]
-            self.z = args[2]
-            self.w = args[3]
-            self.values = np.array([self.x, self.y, self.z, self.w])
-        else:
-            self.values = np.array(args).astype(np.float64)
+        self._values = np.zeros(len(args))
+        for i, element in enumerate(args):
+            self._values[i] = element
+
+    def norm(self):
+        return np.linalg.norm(self._values)
+
+    def unit(self):
+        return Vector(self._values / self.norm())
+
+    @property
+    def x(self):
+        return self._values[0]
+
+    @x.setter
+    def x(self, x):
+        self._values[0] = x
+
+    @property
+    def y(self):
+        return self._values[1]
+
+    @y.setter
+    def y(self, y):
+        self._values[1] = y
+
+    @property
+    def z(self):
+        return self._values[2]
+
+    @z.setter
+    def z(self, z):
+        self._values[2] = z
+
+    @property
+    def w(self):
+        return self._values[3]
+
+    @w.setter
+    def w(self, w):
+        self._values[3] = w
 
     def __floordiv__(self, scalar):
-        return Vector(self.values // scalar)
+        return Vector(self._values // scalar)
 
     def __truediv__(self, scalar):
-        return Vector(self.values / scalar)
+        return Vector(self._values / scalar)
 
     def __repr__(self):
-        return "{0}".format(self.values)
+        return "{0}".format(self._values)
 
     def __str__(self):
-        return "{0}".format(self.values)
+        return "{0}".format(self._values)
