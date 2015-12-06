@@ -64,6 +64,7 @@ In this limit we have, $\int\widehat{H}(t)\,dt = \widehat{H}(t_0)\Delta t$, so t
                 &= \begin{bmatrix} \cos\theta - \imath n_z \sin\theta & -\left(n_y+\imath n_x\right)\sin\theta \\
                                    \left(n_y-\imath n_x\right)\sin\theta & \cos\theta + \imath n_z \sin\theta\end{bmatrix}, 
 \end{align}
+where $\theta = g_s \mu_B \Delta t \vert \mathbf{B} \vert / 2\hbar$ and $n_k = B_k / \vert \mathbf{B} \vert$ are the directional components of the magnetic field normal vector.
 where $\theta = g_s \mu_B \Delta t \vert \mathbf{B} \vert / 2\hbar$ is the Larmor precession frequency(check?) and $n_k = B_k / \vert \mathbf{B} \vert$ are the directional components of the magnetic field normal vector.
 This simple closed form expression makes it very easy to implement the unitary evolution operator method numerically.
 
@@ -99,18 +100,24 @@ We can also transform our differential equation such that $\imath\hbar \partial_
 I would like to comment on the form of the transformed equation, but I cannot get it into a simplified form at the moment. I should check out my honours thesis or talk to Russ, it is all in there, although it has been framed with a different language.
 
 \begin{figure}
-\hspace{-6em}
+\_
+\hspace{-14em}
 \makebox[1.8\linewidth][l]{%
 \centering
-\subfloat[Lab frame flip, $B_t=1\times10^{-7}$]{\label{fig:labframeFlip}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/labframeFlip}}\quad
-\subfloat[Rotating frame flip]{\label{fig:rotframeFlip}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/rotframeFlip}}
+\subfloat[Lab frame flip, $B_t=1\times10^{-7}$]{\label{fig:labframeFlip}\includegraphics{gfx/Chapter-4/flip_lab_frame}}\quad
+\subfloat[Rotating frame flip]{\label{fig:rotframeFlip}\includegraphics{gfx/Chapter-4/flip_rot_frame}}
 }\\\_
-\hspace{-6em}
+\hspace{-14em}
 \makebox[1.8\linewidth][l]{%
 \centering
-\subfloat[Lab frame no flip, $B_t=2\times10^{-7}$]{\label{fig:labframeNoFlip}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/labframeNoFlip}}\quad
-%\subfloat[Rotating frame no flip]{\label{fig:rotframeNoFlip}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/rotframeNoFlip}}
-\subfloat[Rotating frame no flip]{\label{fig:rotframeNoFlip}\includegraphics[width=0.75\textwidth]{/Users/miMacbookPro/Desktop/test.pdf}}
+\subfloat[Lab frame no flip, $B_t=2\times10^{-7}$]{\label{fig:labframeNoFlip}\includegraphics{gfx/Chapter-4/no_flip_lab_frame}}\quad
+\subfloat[Rotating frame no flip]{\label{fig:rotframeNoFlip}\includegraphics{gfx/Chapter-4/no_flip_rot_frame}}
+}\\\_
+\hspace{-12em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfloat{\label{fig:lab_frame_legend}\includegraphics{gfx/Chapter-4/labframe_legend}}\quad
+\subfloat{\label{fig:rot_frame_legend}\includegraphics{gfx/Chapter-4/rotframe_legend}}
 }
 \caption{Simulating the no majorana spin flip }\label{fig:majprob}
 \end{figure}
@@ -154,9 +161,9 @@ Evolve position using the new velocity: $\mathbf{x}_{n+1} = \mathbf{x}_n + \math
 \hspace{-8em}
 \makebox[1.8\linewidth][l]{%
 \centering
-\subfloat[Co-rotating frame spins]{\label{fig:ehrenfestSpin}\includegraphics[width=0.525\textwidth]{gfx/Ehrenfest/ehrenfestSpin}}\quad
-\subfloat[Position and velocity]{\label{fig:ehrenfestPos}\includegraphics[width=0.525\textwidth]{gfx/Ehrenfest/ehrenfestPos}}\quad
-\subfloat[Energy]{\label{fig:ehrenfestEnergy}\includegraphics[width=0.525\textwidth]{gfx/Ehrenfest/ehrenfestEnergy}}%
+\subfloat[Co-rotating frame spins]{\label{fig:ehrenfestSpin}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestSpin}}\quad
+\subfloat[Position and velocity]{\label{fig:ehrenfestPos}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestPos}}\quad
+\subfloat[Energy]{\label{fig:ehrenfestEnergy}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestEnergy}}%
 }
 \caption{No flip and flip in the same simulation.}\label{fig:ehrenfestFlip}
 \end{figure}
@@ -195,8 +202,8 @@ This will allow us to simulate the energy and probability conserving characteris
 \hspace{-11em}
 \makebox[1.8\linewidth][l]{%
 \centering
-\subfloat[IP Distribution]{\label{fig:ehrenfestIPDist}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/ehrenfestIPDist}}\quad
-\subfloat[IP Conservation]{\label{fig:ehrenfestIPCons}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/ehrenfestIPConserve}}
+\subfloat[IP Distribution]{\label{fig:ehrenfestIPDist}\includegraphics[width=0.75\textwidth]{gfx/Chapter-4/ehrenfestIPDist}}\quad
+\subfloat[IP Conservation]{\label{fig:ehrenfestIPCons}\includegraphics[width=0.75\textwidth]{gfx/Chapter-4/ehrenfestIPConserve}}
 }
 \caption{Ehrenfest method for a gas in an IP trap.}\label{fig:ehrenfestIP}
 \end{figure}
