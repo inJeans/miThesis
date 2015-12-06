@@ -64,7 +64,7 @@ In this limit we have, $\int\widehat{H}(t)\,dt = \widehat{H}(t_0)\Delta t$, so t
                 &= \begin{bmatrix} \cos\theta - \imath n_z \sin\theta & -\left(n_y+\imath n_x\right)\sin\theta \\
                                    \left(n_y-\imath n_x\right)\sin\theta & \cos\theta + \imath n_z \sin\theta\end{bmatrix}, 
 \end{align}
-where $\theta = g_s \mu_B \Delta t \vert \mathbf{B} \vert / 2\hbar$ and $n_k = B_k / \vert \mathbf{B} \vert$ are the directional components of the magnetic field normal vector.
+where $\theta = g_s \mu_B \Delta t \vert \mathbf{B} \vert / 2\hbar$ is the Larmor precession frequency(check?) and $n_k = B_k / \vert \mathbf{B} \vert$ are the directional components of the magnetic field normal vector.
 This simple closed form expression makes it very easy to implement the unitary evolution operator method numerically.
 
 %------------------------------------------------
@@ -94,8 +94,8 @@ These eigenvectors are very useful since once we have an alternative complete ba
                               \bra{\downarrow_z}\left.\uparrow\right> & \bra{\downarrow_z}\left.\downarrow\right>
               \end{bmatrix}.
 \end{equation}
-To move between frames we use the mapping, $\ket{\phi} = \widehat{R}^{\dagger} \ket{\psi}$.
-We can also transform our differential equation such that $\partial_t \ket{\phi} = \widehat{H}' \ket{\phi}$, where $\widehat{H}'\,=\,\widehat{R}^{\dagger} \widehat{H} \widehat{R}$.
+To move between frames we use the mapping, $\ket{\chi} = \widehat{R}^{\dagger} \ket{\psi}$.
+We can also transform our differential equation such that $\imath\hbar \partial_t \ket{\chi} = -\imath\hbar \partial_t\widehat{R}^{\dagger}\ket{\chi} + \widehat{H}' \ket{\chi}$, where $\widehat{H}'\,=\,\widehat{R}^{\dagger} \widehat{H} \widehat{R}$.
 I would like to comment on the form of the transformed equation, but I cannot get it into a simplified form at the moment. I should check out my honours thesis or talk to Russ, it is all in there, although it has been framed with a different language.
 
 \begin{figure}
@@ -109,7 +109,8 @@ I would like to comment on the form of the transformed equation, but I cannot ge
 \makebox[1.8\linewidth][l]{%
 \centering
 \subfloat[Lab frame no flip, $B_t=2\times10^{-7}$]{\label{fig:labframeNoFlip}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/labframeNoFlip}}\quad
-\subfloat[Rotating frame no flip]{\label{fig:rotframeNoFlip}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/rotframeNoFlip}}
+%\subfloat[Rotating frame no flip]{\label{fig:rotframeNoFlip}\includegraphics[width=0.75\textwidth]{gfx/Ehrenfest/rotframeNoFlip}}
+\subfloat[Rotating frame no flip]{\label{fig:rotframeNoFlip}\includegraphics[width=0.75\textwidth]{/Users/miMacbookPro/Desktop/test.pdf}}
 }
 \caption{Simulating the no majorana spin flip }\label{fig:majprob}
 \end{figure}
