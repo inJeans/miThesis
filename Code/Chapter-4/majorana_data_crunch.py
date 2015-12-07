@@ -6,7 +6,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import font_manager as font_manager
 import argparse
-import plotly.plotly as py
+# import plotly.plotly as py
 import seaborn as sns
 
 
@@ -17,7 +17,8 @@ def main(infile='majorana_data',
     # py.sign_in('inJeans', 'hl1vdk1zv2')
 
     # Set some common figure properties
-    path = '/Users/miMac/Library/Fonts/AvenirNext-Regular.ttf'
+    # path = '/Users/miMac/Library/Fonts/AvenirNext-Regular.ttf'
+    path = '/Users/miMacbookPro/Library/Fonts/avenir-next-regular.ttf'
     prop = font_manager.FontProperties(fname=path, size=10)
     figure_dim = (3.8, 2.25)
 
@@ -146,7 +147,7 @@ def load_npz(filename='majorana_data.npz'):
     lab_prob = npz_file['lab_prob']
     rot_prob = npz_file['rot_prob']
     f.close()
-    return k, nz, t, rot_prob, lab_prob
+    return k, nz, t, lab_prob, rot_prob
 
 
 def data_crunch_cli():
