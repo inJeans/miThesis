@@ -76,11 +76,13 @@ To illustrate the efficacy of this technique we will numerically solve the origi
 The outcome of a spin half Majorana system is necessarily binary.
 To this end in \autoref{fig:majprob} I have simulated two scenarios: a spin flip (\autoref{fig:labframeFlip}, \autoref{fig:rotframeFlip}) and a not flip (\autoref{fig:labframeNoFlip}, \autoref{fig:rotframeNoFlip}).
 Each scenario is plotted in two separate reference frames: the laboratory frame and the co-rotating frame.
-The laboratory frame is the frame in which the spin up direction is aligned with the $z$-axis, the co-rotating frame is the frame in which the spin up direction is aligned with the local magnetic field.
-The laboratory frame is the frame in which the differential equation is set, however in this frame it can become a little confusing about whether a particular spin state is flipped our not.
+The laboratory frame is the frame in which the spin up direction is aligned with the stationary $z$-axis, the co-rotating frame is the frame in which the spin up direction is aligned with the local, dynamic magnetic field.
+The differential equation has been set in the laboratory frame, however in this frame it can become a little confusing about whether a particular spin state is flipped our not.
 
-In both of the simulations the direction of the magnetic field changes at $t=0$, so the orientation of the spin up direction in the lab frame also changes.
-In the co-rotating frame it is always clear which state is the spin up state.
+In the Majorana problem simulations the $z$ component of the magnetic field changes direction at $t=0$, so the orientation of the spin up direction in the lab frame also changes.
+That is to say for $t<0$ a dominance of $\ket{\uparrow_z}$ represents a partially aligned state, while for $t>0$ a dominance of $\ket{\downarrow_z}$ represents a partially aligned state.
+In the co-rotating frame it is always clear when the atom is aligned since this will be illustrated by a dominance of the $\ket{\uparrow}$ state.
+To simplify analysis it is therefore more convenient to talk about local alignment, or the state of the atom in the corotating frame.
 
 The formalism of moving between frames is actually very straight forward.
 First let's calculate exactly the vectors we are talking about when we say locally aligned with the magnetic field.
@@ -89,7 +91,8 @@ These are simply \textcolor{red}{(Is it that simple? Why is this so obvious?)} t
     \ket{\uparrow,\downarrow} = \frac{1}{\sqrt{2\pm 2n_z}} \begin{bmatrix} n_z \pm 1\\
                                                                            n_x + \imath n_y \end{bmatrix}.
 \end{equation}
-These eigenvectors are very useful since once we have an alternative complete basis it is very straight forward to transform from one to the other by using the rotation operator\footnote{For those of you more comfortable with linear algebra, $\widehat{R}$ can be thought of as the matrix whose columns are the eigenvectors of our new orthonormal basis set, \ie $\left[\ket{\uparrow}\, \ket{\downarrow}\right]$.} $\widehat{R}$, where $\widehat{R}_{ij} = \bra{\psi_i}\left.\phi_j\right>$ so that for our spin half system we would have
+These eigenvectors are very useful since once we have an alternative complete (\textcolor{red}{orthonormal?}) basis it is very straight forward to transform from one to the other by using the rotation operator\footnote{For those of you more comfortable with linear algebra, $\widehat{R}$ can be thought of as the matrix whose columns are the eigenvectors of our new orthonormal basis set, \ie $\left[\ket{\uparrow}\, \ket{\downarrow}\right]$.} $\widehat{R}$, where $\widehat{R}_{ij} = \bra{\psi_i}\left.\phi_j\right>$.
+For the spin half system we are considering here we would have
 \begin{equation}
     \widehat{R} = \begin{bmatrix} \bra{\uparrow_z}\left.\uparrow\right>   & \bra{\uparrow_z}\left.\downarrow\right>\\
                               \bra{\downarrow_z}\left.\uparrow\right> & \bra{\downarrow_z}\left.\downarrow\right>
@@ -97,7 +100,7 @@ These eigenvectors are very useful since once we have an alternative complete ba
 \end{equation}
 To move between frames we use the mapping, $\ket{\chi} = \widehat{R}^{\dagger} \ket{\psi}$.
 We can also transform our differential equation such that $\imath\hbar \partial_t \ket{\chi} = -\imath\hbar \partial_t\widehat{R}^{\dagger}\ket{\chi} + \widehat{H}' \ket{\chi}$, where $\widehat{H}'\,=\,\widehat{R}^{\dagger} \widehat{H} \widehat{R}$.
-I would like to comment on the form of the transformed equation, but I cannot get it into a simplified form at the moment. I should check out my honours thesis or talk to Russ, it is all in there, although it has been framed with a different language.
+\textcolor{red}{I would like to comment on the form of the transformed equation, but I cannot get it into a simplified form at the moment. I should check out my honours thesis or talk to Russ, it is all in there, although it has been framed with a different language.}
 
 \begin{figure}
 \_
@@ -116,14 +119,14 @@ I would like to comment on the form of the transformed equation, but I cannot ge
 \hspace{-12em}
 \makebox[1.8\linewidth][l]{%
 \centering
-\subfloat{\label{fig:lab_frame_legend}\includegraphics{gfx/Chapter-4/labframe_legend}}\quad
-\subfloat{\label{fig:rot_frame_legend}\includegraphics{gfx/Chapter-4/rotframe_legend}}
+\subfloat{\label{fig:lab_frame_legend}\includegraphics{gfx/Chapter-4/lab_frame_legend}}\quad
+\subfloat{\label{fig:rot_frame_legend}\includegraphics{gfx/Chapter-4/rot_frame_legend}}
 }
 \caption{Simulating the no majorana spin flip }\label{fig:majprob}
 \end{figure}
 
 \autoref{fig:labframeFlip} and \autoref{fig:rotframeFlip} both illustrate a Majorana spin flip.
-In this simulation we used the magnetic field $\mathbf{B}=(0.1,0.0,2500t)\,\mathrm{mT}$, and began at $t=-15\,\mathrm{ms}$ where the population in the spin down component in the lab frame is less than $10^{6}$ (we have plotted a smaller time window in \autoref{fig:majprob}). \textcolor{red}{(Not sure what that sentence was supposed to be about? Maybe it is alking about the number of simulated atoms?)}
+In this simulation we used the magnetic field $\mathbf{B}=(0.1,0.0,2500\,t)\,\mathrm{mT}$, and began at $t=-15\,\mathrm{ms}$ where the population in the spin down component in the lab frame is less than $10^{6}$ (we have plotted a smaller time window in \autoref{fig:majprob}). \textcolor{red}{(Not sure what that sentence was supposed to be about? Maybe it is alking about the number of simulated atoms?)}
 We can see the distinct different between the behaviour of the spin populations in the two different reference frames.
 The initial wavefunction was chosen such that the population of the spin up component in the lab frame was 1.
 \autoref{fig:rotframeFlip} clearly displays a change in the most probable state, whereas in \autoref{fig:labframeFlip} it is not so clear.
@@ -157,16 +160,16 @@ Evolve velocity using the average force: $\mathbf{v}_{n+1} = \mathbf{v}_n + \mat
 Evolve position using the new velocity: $\mathbf{x}_{n+1} = \mathbf{x}_n + \mathbf{v}_{n+1} \Delta t$.
 \end{lstlisting}
 
-\begin{figure}
-\hspace{-8em}
-\makebox[1.8\linewidth][l]{%
-\centering
-\subfloat[Co-rotating frame spins]{\label{fig:ehrenfestSpin}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestSpin}}\quad
-\subfloat[Position and velocity]{\label{fig:ehrenfestPos}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestPos}}\quad
-\subfloat[Energy]{\label{fig:ehrenfestEnergy}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestEnergy}}%
-}
-\caption{No flip and flip in the same simulation.}\label{fig:ehrenfestFlip}
-\end{figure}
+%\begin{figure}
+%\hspace{-8em}
+%\makebox[1.8\linewidth][l]{%
+%\centering
+%\subfloat[Co-rotating frame spins]{\label{fig:ehrenfestSpin}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestSpin}}\quad
+%\subfloat[Position and velocity]{\label{fig:ehrenfestPos}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestPos}}\quad
+%\subfloat[Energy]{\label{fig:ehrenfestEnergy}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestEnergy}}%
+%}
+%\caption{No flip and flip in the same simulation.}\label{fig:ehrenfestFlip}
+%\end{figure}
 
 \autoref{fig:ehrenfestFlip} shows the results from one such simulation.
 This simulation was of a rubidium 87 atom that began at $z=-5\,\mu\mathrm{m}$ with a zero initial velocity.
@@ -198,15 +201,15 @@ As a cautionary test we will simulate a gas trapped in an IP trap using the Ehre
 The IP trap will remove any of the complex dynamics (and atom loss) we would experience from Majorana loss.
 This will allow us to simulate the energy and probability conserving characteristics of the method, as well as ensure that the simulated particle dynamics are as expected.
 
-\begin{figure}
-\hspace{-11em}
-\makebox[1.8\linewidth][l]{%
-\centering
-\subfloat[IP Distribution]{\label{fig:ehrenfestIPDist}\includegraphics[width=0.75\textwidth]{gfx/Chapter-4/ehrenfestIPDist}}\quad
-\subfloat[IP Conservation]{\label{fig:ehrenfestIPCons}\includegraphics[width=0.75\textwidth]{gfx/Chapter-4/ehrenfestIPConserve}}
-}
-\caption{Ehrenfest method for a gas in an IP trap.}\label{fig:ehrenfestIP}
-\end{figure}
+%\begin{figure}
+%\hspace{-11em}
+%\makebox[1.8\linewidth][l]{%
+%\centering
+%\subfloat[IP Distribution]{\label{fig:ehrenfestIPDist}\includegraphics[width=0.75\textwidth]{gfx/Chapter-4/ehrenfestIPDist}}\quad
+%\subfloat[IP Conservation]{\label{fig:ehrenfestIPCons}\includegraphics[width=0.75\textwidth]{gfx/Chapter-4/ehrenfestIPConserve}}
+%}
+%\caption{Ehrenfest method for a gas in an IP trap.}\label{fig:ehrenfestIP}
+%\end{figure}
 
 The results from a simulation of $10^6$ rubidium 87 atoms at $2\,\mu\mathrm{K}$ in an IP with $B_0=0.01\,\mathrm{T}$, $B'=20.0\,\mathrm{Tm}^{-1}$ and $B''=40,000\,\mathrm{Tm}^{-2}$ over a period of approximately 10 collision times ($10\tau_c$) are shown in \autoref{fig:ehrenfestIP}.
 In this figure I have tried to show the conservative properties of the Ehrenfest method.
