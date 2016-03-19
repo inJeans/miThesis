@@ -33,7 +33,7 @@ To apply any sort of semi-classical approach we need to be able to accurately so
 The simplest approach would be to apply a differencing scheme directly, however the schemes that have the simplest implementation generally lack the numerical properties we require; high order accuracy, stability and conservation \cite{mi_eng}. %unitary evolution conserves probability, inherently stable. % for majorana equation can get explicit expression for u % approximation to integral equation bounded hence stable and easier for higher accuracy.
 
 The approach we have employed here, and in \autoref{ch:dsmcmcwf}, is to make use of the unitary time evolution operator \cite{?}.
-The main benefit of this approach is, as the name suggests, the operator is unitary and hence inherently conserves probability.
+The main benefit of this approach is, as the name suggests, the operator is unitary and hence inherently conserves probability\footnote{At least it does analytically. Round off errors where the source of a major headache in the development of this method (How to show round off?)}.
 The unitary time evolution operator is defined as follows
 \begin{equation}
     \widehat{U}(t_0,t_0+\Delta t) = \exp\left[-\frac{\imath}{\hbar}\int_{t_0}^{t_0+\Delta t} \widehat{H}(t)\,dt \right]. \label{eq:timeEvolution}
@@ -43,7 +43,7 @@ That is for a time dependant Hamiltonian we can evolve the state of our wavefunc
     \ket{ \psi (t_0+\Delta t) } = \widehat{U}(t_0,t_0+\Delta t) \ket{ \psi (t_0) }.
 \end{equation*}
 This method is especially useful for our two level system.
-Owing to the lack of a kinetic energy term in the Hamiltonian, we can explicitly derive an expression for the $2\times2$ matrix form of $\widehat{U}$ for the immediate application to an explicit numerical scheme.
+Owing (not wholey) to the lack of a kinetic energy term in the Hamiltonian, we can explicitly derive an expression for the $2\times2$ matrix form of $\widehat{U}$ for the immediate application to an explicit numerical scheme.
 Recall from \autoref{sec:intromag} that the Hamiltonian for a magnetic moment in a magnetic field is given by
 \begin{equation*}
     \widehat{H} = -\hat{\boldsymbol{\mu}} \cdot \mathbf{B},
@@ -57,14 +57,13 @@ In general the magnetic field components are functions of position, which, for t
 For a general magnetic field we do not know explicitly what the time dependance will be thus we will be unable to explicitly integrate the Hamiltonian as required by \autoref{eq:timeEvolution}.
 \marginpar{The integration scheme we have used here is equivalent to a left handed rectangle rule, which is of order ${\cal O}(\Delta t ^2)$. It is possible to employ higher order numerical integration methods \ie midpoint, trapezoidal, Simpson's rule, although they were found not to increase performance substantially \cite{miThesis}.}
 We will instead make the assumption that our time steps are very small, $\Delta t \ll 1$, so that over the time step the Hamiltonian remains relatively constant.
-In this limit we have, $\int\widehat{H}(t)\,dt = \widehat{H}(t_0)\Delta t$, so that the time evolution operator becomes
+In this limit we have, $\int\widehat{H}(t)\,dt \approx \widehat{H}(t_0)\Delta t$, so that the time evolution operator becomes
 \begin{align}
     \widehat{U}(t_0,t_0+\Delta t) &= \exp\left[  -\imath\frac{g_s\mu_B\Delta t}{2 \hbar} \begin{bmatrix} B_z & B_x - \imath B_y \\
                                                       B_x + \imath B_y & -B_z \end{bmatrix} \right],\\
                 &= \begin{bmatrix} \cos\theta - \imath n_z \sin\theta & -\left(n_y+\imath n_x\right)\sin\theta \\
                                    \left(n_y-\imath n_x\right)\sin\theta & \cos\theta + \imath n_z \sin\theta\end{bmatrix}, 
 \end{align}
-where $\theta = g_s \mu_B \Delta t \vert \mathbf{B} \vert / 2\hbar$ and $n_k = B_k / \vert \mathbf{B} \vert$ are the directional components of the magnetic field normal vector.
 where $\theta = g_s \mu_B \Delta t \vert \mathbf{B} \vert / 2\hbar$ is the Larmor precession frequency(check?) and $n_k = B_k / \vert \mathbf{B} \vert$ are the directional components of the magnetic field normal vector.
 This simple closed form expression makes it very easy to implement the unitary evolution operator method numerically.
 
@@ -76,11 +75,11 @@ To illustrate the efficacy of this technique we will numerically solve the origi
 The outcome of a spin half Majorana system is necessarily binary.
 To this end in \autoref{fig:majprob} I have simulated two scenarios: a spin flip (\autoref{fig:labframeFlip}, \autoref{fig:rotframeFlip}) and a not flip (\autoref{fig:labframeNoFlip}, \autoref{fig:rotframeNoFlip}).
 Each scenario is plotted in two separate reference frames: the laboratory frame and the co-rotating frame.
-The laboratory frame is the frame in which the spin up direction is aligned with the stationary $z$-axis, the co-rotating frame is the frame in which the spin up direction is aligned with the local, dynamic magnetic field.
-The differential equation has been set in the laboratory frame, however in this frame it can become a little confusing about whether a particular spin state is flipped our not.
+The laboratory frame is the frame in which the spin up direction is aligned with the stationary $z$-axis, the co-rotating frame is the frame in which the spin up direction is aligned with the local, dynamic magnetic field. \textcolor{red}{Expand a little bit, be a bit more precise.)}
+The differential equation has been set in the laboratory frame, however in this frame it can become a little confusing about whether a particular spin state is flipped or not, when considering populations in the global eigenstates.
 
 In the Majorana problem simulations the $z$ component of the magnetic field changes direction at $t=0$, so the orientation of the spin up direction in the lab frame also changes.
-That is to say for $t<0$ a dominance of $\ket{\uparrow_z}$ represents a partially aligned state, while for $t>0$ a dominance of $\ket{\downarrow_z}$ represents a partially aligned state.
+That is to say for $t<0$ a dominance of $\ket{\uparrow_z}$ represents a partially aligned state\textcolor{red}{explain what is meant by alignment}, while for $t>0$ a dominance of $\ket{\downarrow_z}$ represents a partially aligned state.
 In the co-rotating frame it is always clear when the atom is aligned since this will be illustrated by a dominance of the $\ket{\uparrow}$ state.
 To simplify analysis it is therefore more convenient to talk about local alignment, or the state of the atom in the corotating frame.
 
@@ -91,14 +90,14 @@ These are simply \textcolor{red}{(Is it that simple? Why is this so obvious?)} t
     \ket{\uparrow,\downarrow} = \frac{1}{\sqrt{2\pm 2n_z}} \begin{bmatrix} n_z \pm 1\\
                                                                            n_x + \imath n_y \end{bmatrix}.
 \end{equation}
-These eigenvectors are very useful since once we have an alternative complete (\textcolor{red}{orthonormal?}) basis it is very straight forward to transform from one to the other by using the rotation operator\footnote{For those of you more comfortable with linear algebra, $\widehat{R}$ can be thought of as the matrix whose columns are the eigenvectors of our new orthonormal basis set, \ie $\left[\ket{\uparrow}\, \ket{\downarrow}\right]$.} $\widehat{R}$, where $\widehat{R}_{ij} = \bra{\psi_i}\left.\phi_j\right>$.
+These eigenvectors are very useful since once we have an alternative, complete (\textcolor{red}{orthonormal?}) basis, it is very straight forward to transform from one to the other by using the rotation operator\footnote{For those of you more comfortable with linear algebra, $\widehat{R}$ can be thought of as the matrix whose columns are the eigenvectors of our new orthonormal basis set, \ie $\left[\ket{\uparrow}\, \ket{\downarrow}\right]$.} $\widehat{R}$, where $\widehat{R}_{ij} = \bra{\psi_i}\left.\phi_j\right>$. \textcolor{red}{not exactly obvious what psi and phi are}
 For the spin half system we are considering here we would have
 \begin{equation}
     \widehat{R} = \begin{bmatrix} \bra{\uparrow_z}\left.\uparrow\right>   & \bra{\uparrow_z}\left.\downarrow\right>\\
                               \bra{\downarrow_z}\left.\uparrow\right> & \bra{\downarrow_z}\left.\downarrow\right>
               \end{bmatrix}.
 \end{equation}
-To move between frames we use the mapping, $\ket{\chi} = \widehat{R}^{\dagger} \ket{\psi}$.
+To move between frames we use the mapping, $\ket{\chi} = \widehat{R}^{\dagger} \ket{\psi}$. \textcolor{red}{mixing chis and phis?}
 We can also transform our differential equation such that $\imath\hbar \partial_t \ket{\chi} = -\imath\hbar \partial_t\widehat{R}^{\dagger}\ket{\chi} + \widehat{H}' \ket{\chi}$, where $\widehat{H}'\,=\,\widehat{R}^{\dagger} \widehat{H} \widehat{R}$.
 \textcolor{red}{I would like to comment on the form of the transformed equation, but I cannot get it into a simplified form at the moment. I should check out my honours thesis or talk to Russ, it is all in there, although it has been framed with a different language.}
 
@@ -126,16 +125,16 @@ We can also transform our differential equation such that $\imath\hbar \partial_
 \end{figure}
 
 \autoref{fig:labframeFlip} and \autoref{fig:rotframeFlip} both illustrate a Majorana spin flip.
-In this simulation we used the magnetic field $\mathbf{B}=(0.1,0.0,2500\,t)\,\mathrm{mT}$, and began at $t=-15\,\mathrm{ms}$ where the population in the spin down component in the lab frame is less than $10^{6}$ (we have plotted a smaller time window in \autoref{fig:majprob}). \textcolor{red}{(Not sure what that sentence was supposed to be about? Maybe it is alking about the number of simulated atoms?)}
-We can see the distinct different between the behaviour of the spin populations in the two different reference frames.
-The initial wavefunction was chosen such that the population of the spin up component in the lab frame was 1.
+In this simulation we used the magnetic field $\mathbf{B}=(0.1,0.0,2500\,t)\,\mu\mathrm{T}$, and began at $t=-15\,\mathrm{ms}$ where the population in the spin down component in the lab frame is less than $10^{6}$ (we have plotted a smaller time window in \autoref{fig:majprob}). \textcolor{red}{(Not sure what that sentence was supposed to be about? Maybe it is talking about the number of simulated atoms?)}
+We can see the distinct difference between the behaviour of the spin populations in the two different reference frames.
+The initial wavefunction was chosen such that the population of the spin up component in the lab frame was 1.\textcolor{red}{footnote how I can caluclate the populations for a locally aligned state.}
 \autoref{fig:rotframeFlip} clearly displays a change in the most probable state, whereas in \autoref{fig:labframeFlip} it is not so clear.
 Again this is because in the lab frame the spin up direction changes at $t=0$ when the sign of the $z$ component of the magnetic field moves from negative to positive.
-\autoref{fig:labframeNoFlip} and \autoref{fig:rotframeNoFlip} results from a simulation with $\mathbf{B}=(0.2,0.0,2500t)\,\mathrm{mT}$.
+\autoref{fig:labframeNoFlip} and \autoref{fig:rotframeNoFlip} results from a simulation with $\mathbf{B}=(0.2,0.0,2500t)\,\mu\mathrm{T}$.
 In these plots we see the converse behaviour in the state populations, indicating that no spin flip has occurred.
 
 For both simulations we have used a time step of $\Delta t = 1\,\mu\mathrm{s}$.
-This may seem overkill given the rate of change of the magnetic field can be characterised by $\tau_B=\vert\mathbf{B}\vert / \partial_t\vert\mathbf{B}\vert = 15\,\mathrm{ms}$ at the beginning of the simulation.
+This may seem overkill given the rate of change of the magnetic field can be characterised by $\tau_B=\vert\mathbf{B}\vert / \partial_t\vert\mathbf{B}\vert = 15\,\mathrm{ms}$ at the beginning of the simulation.\textcolor{red}{footnote why I have specified at the start of the simulation.}
 However there is another time scale that must be considered in a simulation like this, that is the period of a Larmor precession, $T_L = 2\pi\hbar / g_s \mu_B \vert\mathbf{B}\vert = 3.81\,\mu\mathrm{s}$ at the begining of the simulation.
 While we do not expect the spin to precess for the first half of the simulation when it is completely aligned with the magnetic field, it is the period close to the field minimum and beyond that will experience Larmor precession.
 In fact the wiggles after the spin flip occur at the Larmor precision frequency.
@@ -152,7 +151,7 @@ This technique still has the same order accuracy with time, and introduces no ad
 
 Confident in our ability to accurately simulate the Schr\"odinger equation, in our regime of interest, we may begin to apply the Ehrenfest method to simulating spin flips of real atoms.
 The first step is to first see wether or not we can simulate the spin flip of a single atom.
-I have given a pseudo-code example for a single time step of the Ehrenfest algorithm in \autoref{lst:Ehrenfest}\footnote{Note in \autoref{lst:Ehrenfest} that we have denoted the discrete approximation to a continuous variable as, $g_n \approx g(t_n)$.}.
+I have given a pseudo-code example for a single time step of the Ehrenfest algorithm in \autoref{lst:Ehrenfest}\footnote{Note in \autoref{lst:Ehrenfest} that we have denoted the discrete approximation to a continuous variable as, $g_n \approx g(t_n)$.}.\textcolor{red}{maybe outline the ehrenfest appraoch again or in more detail or both.}
 \begin{lstlisting}[float,caption=Psuedo-code algorithm for a single Ehrenfest method time step, mathescape,label= lst:Ehrenfest,stepnumber=1]
 Calculate force using current spin state: $\mathbf{F}_n = \bra{\Psi_n}\widehat{\mathbf{F}}_n\ket{\Psi_n}$.
 Evolve wavefunction using time evolution operator: $\ket{\Psi_{n+1}} = \widehat{U}_n \ket{\Psi_{n}}$.
@@ -177,20 +176,20 @@ Again the initial wavefunction was chosen so that it would be completely spin up
 The magnetic field was given by $\mathbf{B} = (B_x,0,B_z'z)$, with $B_x=1\,\mu\mathrm{T}$ and $B_z'=2.5\,\mathrm{Tm}^{-1}$\footnote{I am aware that this magnetic field does not satisfy Maxwell's equations, but it serves as a nice example and more closely aligns with the field considered by Majorana.}.
 This is a fabulous example of how well the Ehrenfest method can work.
 \autoref{fig:ehrenfestSpin} displays how well the spin populations are simulated.
-Again they agree with the predictions of the Majorana formula and the total probability is conserved.
+Again they agree with the predictions of the Majorana formula and the total probability is conserved.\textcolor{red}{numbers, how much is it conserved?}
 \marginpar{Say how I can still use the Majorana formula here. $c =v(t=0) B_z'$.}
 In \autoref{fig:ehrenfestPos} I have plotted the position and velocity of the atom as it moves through time.
-We can see how the atom remains trapped after the first partial flip and is then completely ejected from the trapped once it has flipped.
+We can see how the atom remains trapped after the first partial flip and is then completely ejected from the trap once it has flipped.
 Finally \autoref{fig:ehrenfestEnergy} shows how the total energy of the atom is conserved throughout the simulation (even after it has flipped).
 So things seem to be working quite well, but earlier I alluded to the fact that the Ehrenfest method is not suitable to this kind of problem, so what is wrong?
-I will let you stew on this few a few sections while we investigate the behaviour of a full gas simulation.
+I will let you stew on this for a few sections while we investigate the behaviour of a full gas simulation.
 
 %----------------------------------------------------------------------------------------
 
 \section{Full Gas Simulations}
 
 Convinced that our Ehrenfest method can simulate spin flips and conserves both energy and probability we can begin to run some full gas simulations.
-Majorana spin flips only occur when there is a sharp transition in magnetic field direction, like that transition that is present around the centre of a quadrupole trap.
+Majorana spin flips only occur when there is a sharp transition in magnetic field direction, like the transition that is present around the centre of a quadrupole trap.
 An IP trap does not have this kind of transition, thus we would expect a very small number ($\sim 0$) of spin flips to occur as a result of the IP field configuration.
 As a cautionary test we will simulate a gas trapped in an IP trap using the Ehrenfest method.
 
@@ -211,7 +210,7 @@ This will allow us to simulate the energy and probability conserving characteris
 %\caption{Ehrenfest method for a gas in an IP trap.}\label{fig:ehrenfestIP}
 %\end{figure}
 
-The results from a simulation of $10^6$ rubidium 87 atoms at $2\,\mu\mathrm{K}$ in an IP with $B_0=0.01\,\mathrm{T}$, $B'=20.0\,\mathrm{Tm}^{-1}$ and $B''=40,000\,\mathrm{Tm}^{-2}$ over a period of approximately 10 collision times ($10\tau_c$) are shown in \autoref{fig:ehrenfestIP}.
+The results from a simulation of $10^6$ rubidium 87 atoms at $2\,\mu\mathrm{K}$ in an IP with $B_0=0.01\,\mathrm{T}$, $B'=20.0\,\mathrm{Tm}^{-1}$ and $B''=40,000\,\mathrm{Tm}^{-2}$ over a period of approximately 10 collision times ($10\tau_c$\textcolor{red}{=??s}) are shown in \autoref{fig:ehrenfestIP}.
 In this figure I have tried to show the conservative properties of the Ehrenfest method.
 \autoref{fig:ehrenfestIPDist} illustrates the radial distribution of particles.
 I have drawn the distribution at the beginning and the end of the simulation, as well as contrast it with the analytic result for a thermal gas at this temperature.
