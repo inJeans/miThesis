@@ -44,7 +44,7 @@ def main(initial_pos,
 
     # Set initial values
     # nsteps = np.ceil(-initial_time / dt * 2).astype(int)
-    nsteps = int(5e4)
+    nsteps = int(3e4)
 
     print("Initialising simulation arrays")
     pos = np.ndarray(shape=(nsteps,),

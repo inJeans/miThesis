@@ -159,28 +159,32 @@ Evolve velocity using the average force: $\mathbf{v}_{n+1} = \mathbf{v}_n + \mat
 Evolve position using the new velocity: $\mathbf{x}_{n+1} = \mathbf{x}_n + \mathbf{v}_{n+1} \Delta t$.
 \end{lstlisting}
 
-%\begin{figure}
-%\hspace{-8em}
-%\makebox[1.8\linewidth][l]{%
-%\centering
-%\subfloat[Co-rotating frame spins]{\label{fig:ehrenfestSpin}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestSpin}}\quad
-%\subfloat[Position and velocity]{\label{fig:ehrenfestPos}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestPos}}\quad
-%\subfloat[Energy]{\label{fig:ehrenfestEnergy}\includegraphics[width=0.525\textwidth]{gfx/Chapter-4/ehrenfestEnergy}}%
-%}
-%\caption{No flip and flip in the same simulation.}\label{fig:ehrenfestFlip}
-%\end{figure}
+\begin{figure}
+\hspace{-12em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfloat[Co-rotating frame spins]{\label{fig:ehrenfestSpin}\includegraphics{gfx/Chapter-4/ehrenfest_spin}}\quad
+\subfloat[Energy. Note shifted energy minimum.]{\label{fig:ehrenfestEnergy}\includegraphics{gfx/Chapter-4/ehrenfest_energy}}%
+}
+\\\_
+\hspace{-12em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfloat{\label{fig:spin_legend}\includegraphics{gfx/Chapter-4/spin_legend}}\quad
+\subfloat{\label{fig:energy_legend}\includegraphics{gfx/Chapter-4/energy_legend}}
+}
+\caption{Ehrenfest}\label{fig:ehrenfestFlip}
+\end{figure}
 
 \autoref{fig:ehrenfestFlip} shows the results from one such simulation.
-This simulation was of a rubidium 87 atom that began at $z=-5\,\mu\mathrm{m}$ with a zero initial velocity.
+This simulation was of a rubidium 87 atom that began at \st{$z=-5\,\mu\mathrm{m}$} a position such that the rate of change of the magentic field at $z=0$ would be equivalent to $C=??$ and with a zero initial velocity.
 Again the initial wavefunction was chosen so that it would be completely spin up in the co-rotating frame.
-The magnetic field was given by $\mathbf{B} = (B_x,0,B_z'z)$, with $B_x=1\,\mu\mathrm{T}$ and $B_z'=2.5\,\mathrm{Tm}^{-1}$\footnote{I am aware that this magnetic field does not satisfy Maxwell's equations, but it serves as a nice example and more closely aligns with the field considered by Majorana.}.
+The magnetic field was given by $\mathbf{B} = (B_x,0,B_z'z)$, with $B_x=1.45\,\mu\mathrm{T}$ and $B_z'=2.5\,\mathrm{Tm}^{-1}$\footnote{I am aware that this magnetic field does not satisfy Maxwell's equations, but it serves as a nice example and more closely aligns with the field considered by Majorana.}.
 This is a fabulous example of how well the Ehrenfest method can work.
 \autoref{fig:ehrenfestSpin} displays how well the spin populations are simulated.
 Again they agree with the predictions of the Majorana formula and the total probability is conserved.\textcolor{red}{numbers, how much is it conserved?}
 \marginpar{Say how I can still use the Majorana formula here. $c =v(t=0) B_z'$.}
-In \autoref{fig:ehrenfestPos} I have plotted the position and velocity of the atom as it moves through time.
-We can see how the atom remains trapped after the first partial flip and is then completely ejected from the trap once it has flipped.
-Finally \autoref{fig:ehrenfestEnergy} shows how the total energy of the atom is conserved throughout the simulation (even after it has flipped).
+In \autoref{fig:ehrenfestEnergy} the total energy of the atom is shown to be conserved throughout the simulation (even after it has flipped).
 So things seem to be working quite well, but earlier I alluded to the fact that the Ehrenfest method is not suitable to this kind of problem, so what is wrong?
 I will let you stew on this for a few sections while we investigate the behaviour of a full gas simulation.
 
