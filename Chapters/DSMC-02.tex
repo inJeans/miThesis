@@ -55,7 +55,7 @@ which can be expressed in matrix form as
 \end{equation*}
 In general the magnetic field components are functions of position, which, for the atoms is a function of time.
 For a general magnetic field we do not know explicitly what the time dependance will be thus we will be unable to explicitly integrate the Hamiltonian as required by \autoref{eq:timeEvolution}.
-\marginpar{The integration scheme we have used here is equivalent to a left handed rectangle rule, which is of order ${\cal O}(\Delta t ^2)$. It is possible to employ higher order numerical integration methods \ie midpoint, trapezoidal, Simpson's rule, although they were found not to increase performance substantially \cite{miThesis}.}
+\marginpar{The integration scheme we have used here is equivalent to a left handed rectangle rule, which is of order ${\cal O}(\Delta t)$. It is possible to employ higher order numerical integration methods \ie midpoint, trapezoidal, Simpson's rule, although they were found not to increase performance substantially \cite{miThesis}.}
 We will instead make the assumption that our time steps are very small, $\Delta t \ll 1$, so that over the time step the Hamiltonian remains relatively constant.
 In this limit we have, $\int\widehat{H}(t)\,dt \approx \widehat{H}(t_0)\Delta t$, so that the time evolution operator becomes
 \begin{align}
@@ -199,7 +199,7 @@ As a cautionary test we will simulate a gas trapped in an IP trap using the Ehre
 
 %------------------------------------------------
 
-\subsection{Ioffe Pritchard Trap}
+\subsection{Ioffe Pritchard Trap} \label{sec:EhrenfestIP}
 
 The IP trap will remove any of the complex dynamics (and atom loss) we would experience from Majorana loss.
 This will allow us to simulate the energy and probability conserving characteristics of the method, as well as ensure that the simulated particle dynamics are as expected.
@@ -244,4 +244,68 @@ Let's now try to run a simulation in a quadrupole trap and see how effective the
 
 \subsection{Quadrupole Trap} \label{sec:EhrenfestQuad}
 
-Content
+The laboratory system we are interested in is the magnetic quadrupole trap.
+We can repeat the simulation above but with a new trapping potential (that given by \autoref{eq:quad_field}). 
+We can choose a trapping configuration that yields similar collision rates to those above: a system of one million physical Rb$^{87}$ atoms, $N_p = 10^6$, at a temperature, $T = 20\,\mu$K and a magnetic field gradient, $B_z' = 2\,$Tm$^{-1}$.
+Using the computational parameters: $N_s=10^5$ simulated atoms, 35 cells per axis, a time step, $\Delta t = 0.1\,\mu$s and performing a collision step every $1\,$ms we can produce the results in \autoref{fig:ehrenfestQuad}.
+
+Comparing these results to that of the previous section, \autoref{sec:EhrenfestIP}, the first most obvious difference is a loss in atom number.
+Of course this isn't a bad thing, in fact this is what we were hoping for!
+We expect there to be some atom loss for such a cold gas in a quadrupole trap.
+Using the currently accepted estimation methods in the literature \cite{Lin2009,Wade2011}, we could predict a loss of \textcolor{red}{XX} over the 0.1 simulated seconds of this simulation.
+Our simulation is contrasted with this estimate in \autoref{fig:quadrupoleEnergy}, where we see agreement within \textcolor{red}{XX}.
+
+Again we energy conservation within \textcolor{red}{XX$\mu K$} in \autoref{fig:quadrupoleEnergy}.
+It should be made clear that the average energy plotted in \autoref{fig:quadrupoleEnergy} is the average energy of the atoms considered to be trapped (that is atoms who's local spin projections are greater than 0).
+If we try to include the un trapped atoms in the averaging calculation we do see the energy conservation fail.
+There is an exponential increase in the total energy of the atoms.
+This is due to the rapid increase in the magnitude of the magnetic field (and hence the Larmor precession rate, $\omega_L$) as the atoms moves away from the trap minimum.
+Beyond a typical trap radius of \textcolor{red}{XX mm} the Larmor frequency exceeds \textcolor{red}{XX s}.
+Trying to catch the dynamics of such oscillations with our simulation time step of $\Delta t = 0.1\, \mu$s is not numerically possible, and is the source of the unphysical increase in energy.
+For our simulations this is not a problem as we are not interested in the effects of untrapped atoms beyond the boundaries of our gas.
+
+
+\begin{figure}
+\hspace{-12em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfloat[Energy]{\label{fig:quadrupoleEnergy}\includegraphics{gfx/Chapter-4/quadrupole_energy}}\quad
+\subfloat[Distribution]{\label{fig:quadrupoleDist}\includegraphics{gfx/Chapter-4/quadrupole_distribution}}%
+}
+\\\_
+\hspace{-12em}
+\makebox[1.8\linewidth][l]{%
+\centering
+\subfloat{\includegraphics{gfx/Chapter-4/quad_energy_legend}}\quad
+\subfloat{\includegraphics{gfx/Chapter-4/quad_energy_legend}}
+}
+\caption{Ehrenfest in quadrupole trap}\label{fig:ehrenfestQuad}
+\end{figure}
+
+\autoref{fig:quadrupoleDist} and \autoref{fig:quadrupoleDist} capture some unexpected results.
+In \autoref{fig:quadrupoleDist} we can see a decline in the spin projection\footnote{Again, keep in mind this is the spin projection of the remaining trapped atoms (so the average is not being skewed by a few negative projections from those atoms that have been lost from the trap).}.
+After looking at the results shown in \autoref{fig:majprob} maybe this isn't so surprising.
+All we are seeing is merely the result of consecutive partial flips as atoms slowly fall away from the truly aligned state.
+However, we must ask ourselves, "is this physical?"
+Our interpretation of quantum mechanics tells us that our atoms can only physically be in the spin up state or the spin down state.
+They cannot exist in some hybrid state.
+The manifestation of this artefact is convincingly shown in \autoref{fig:quadrupoleDist}.
+The two curves represent the distribution at the begining of the simulation and 0.1 s later at the end of the simulation.
+They are not congruent!
+While the area under the final distribution may have shrunk marginally due to the loss of atoms, its width has also increased.
+This behaviour is \emph{not} replicated in experiment.
+The cause of this unphysical expansion is the gradual tipping of the atoms after subsequent passes of the trap minimum.
+Every time an atom passes close to the trap minimum it will experience a partial spin flip, or a tipping of its \textcolor{red}{Bloch sphere angle}.
+As the spin tips, its projection onto the local magnetic field reduces, which in results in a weaker trapping potential.
+Thus as the trapping potential weakens the gas will expand.
+This is seems very logical, and in fact the simulation is doing exactky what we have programmed it to do.
+Unfortunately this observation is not physical!
+This kind of behaviour is not what is detected in a real experimental laboratory.
+Our simulation suggests that as a gas is left trapped in a quadrupole trap over time it will slowly ooze out into a large amorphous very weakly trapped blob.
+However laboratory experience indicates this is not so.
+Atoms remain either trapped, or not trapped, so the gas will remain tightly bound to the trap minimum.
+
+Another consequence of this unphysical trap expansion is the reduction in the collision rate. 
+Shown in \autoref{fig:quadrupoleDist} we can see that as the gas begin to expand slightly the collision rate begins to reduce.
+As the gas expands its density decreases and as we saw in \autoref{eq:collision_rate} if the density decreases so too will the collision rate.
+There is also the fact that we are loosing atoms which will also decrease the collision rate, but you can show the reduction the number of trapped atoms is not commensurate with the drop in the simulated collision rate.\footnote{Give some scaling arguments and some numbers to support this.}
