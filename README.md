@@ -1,1 +1,1 @@
-[![Stories in Ready](https://badge.waffle.io/inJeans/miThesis.png?label=In%20Progress&title=In%20Progress)](https://waffle.io/inJeans/miThesis)
+waffle.io status:[![Stories in Ready](https://badge.waffle.io/inJeans/miThesis.png?label=Ready&title=Ready)](https://waffle.io/inJeans/miThesis)[![Stories in Ready](https://badge.waffle.io/inJeans/miThesis.png?label=In%20Progress&title=In%20Progress)](https://waffle.io/inJeans/miThesis)[![Stories in Ready](https://badge.waffle.io/inJeans/miThesis.png?label=Done&title=Done)](https://waffle.io/inJeans/miThesis)
